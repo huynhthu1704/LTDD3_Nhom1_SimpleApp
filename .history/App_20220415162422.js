@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {FONTS } from "./app/constants/theme";
+//import FontLoading from './app/constants/font';
 
 class FontLoading extends Component {
  
@@ -15,7 +16,7 @@ class FontLoading extends Component {
 async loadFonts() {
   await Font.loadAsync({
     // Load a font `Montserrat` from a static resource
-    "Poppins-Bold": require("./assets/fonts/Poppins-Italic.ttf"),
+    "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
   });
   this.setState({ fontsLoaded: true });
 }
@@ -29,3 +30,13 @@ render() {
 }
 }
 export default FontLoading;
+// const App = () => {    
+//  // console.log(FontLoading.check);
+//   // if (!FontLoading.check) {
+//   //   return <AppLoading/>;
+//   // } else {
+//   //   console.log(FONTS.h1);
+//     return <SafeAreaView><FontLoading /><Text style = {{fontFamily: "Poppins-Bold"}}>Jello</Text></SafeAreaView>
+  
+// }
+// export default App;

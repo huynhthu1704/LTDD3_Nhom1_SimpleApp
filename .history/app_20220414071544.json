@@ -4,9 +4,9 @@
     "slug": "Nhom1_SimpleApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icons8_sleeping_in_bed_40px.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/images/icons8_sleeping_in_bed_40px.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,12 +21,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icons8_sleeping_in_bed_40px.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/images/icons8_sleeping_in_bed_40px.png"
+      "favicon": "./assets/favicon.png"
     }
   }
 }

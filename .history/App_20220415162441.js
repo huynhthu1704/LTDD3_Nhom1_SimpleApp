@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {FONTS } from "./app/constants/theme";
+//import FontLoading from './app/constants/font';
 
 class FontLoading extends Component {
  
@@ -29,3 +30,4 @@ render() {
 }
 }
 export default FontLoading;
+\
