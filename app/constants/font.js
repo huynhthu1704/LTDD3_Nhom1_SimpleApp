@@ -1,3 +1,4 @@
+//Huynh Thi Ngoc Thu
 import { React, useState, Component } from "react";
 import * as Font from "expo-font";
 import { View, Text } from "react-native-web";
