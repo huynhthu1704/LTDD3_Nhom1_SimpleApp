@@ -1,4 +1,8 @@
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "@expo-google-fonts/poppins";
 import { Dimensions } from "react-native-web";
+import FontLoading from "./font";
 
 const { width, height } = Dimensions.get("window");
 export const COLOR = {

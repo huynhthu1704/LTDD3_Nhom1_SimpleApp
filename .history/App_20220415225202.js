@@ -28,6 +28,7 @@ class App extends Component {
     this.loadFonts();
   }     
   render() {
+    console.log("hi");
      return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>

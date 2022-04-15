@@ -19,7 +19,7 @@ class App extends Component {
 
   async loadFonts() {
     await Font.loadAsync({
-      "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
+      "Poppins-Bold": require("./assets/fonts/Poppins-Italic.ttf"),
     });
     this.setState({ fontsLoaded: true });
   }
@@ -28,6 +28,7 @@ class App extends Component {
     this.loadFonts();
   }     
   render() {
+    console.log("hi");
      return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>

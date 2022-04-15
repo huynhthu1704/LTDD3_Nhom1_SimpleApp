@@ -5,21 +5,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TestFontScreen from './app/screens/TestFont';
 import HomeScreen from './app/screens/HomeScreen';
 import SleepingScreen from './app/screens/Sleeping';
-import { Component } from 'react/cjs/react.development';
-import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
-import { FONTS } from "./app/constants/theme";
 
 const Stack = createStackNavigator();
 
-class App extends Component {     
+class App {     
   state = {
     fontsLoaded: false,
   };
 
   async loadFonts() {
     await Font.loadAsync({
-      "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
+      "Poppins-Bold": require("./assets/fonts/Poppins-Italic.ttf"),
     });
     this.setState({ fontsLoaded: true });
   }

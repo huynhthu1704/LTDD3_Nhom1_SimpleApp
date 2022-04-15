@@ -7,10 +7,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { FONTS } from "../constants/theme";
 
 class FontLoading extends Component {
+  state = {
+    fontsLoaded: false,
+  };
+
+  async loadFonts() {
+    await Font.loadAsync({
+      "Poppins-Bold": require("../../assets/fonts/Poppins-Italic.ttf"),
+    });
+    this.setState({ fontsLoaded: true });
+  }
+
+  componentDidMount() {
+    this.loadFonts();
+  }
+
   render() {
     return (
       <SafeAreaView>
-        <Text style={FONTS.h1}>Hello</Text>
+        <Text style={FONTS.h1}>Jello</Text>
       </SafeAreaView>
     );
   }

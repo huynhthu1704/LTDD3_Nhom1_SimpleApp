@@ -8,6 +8,7 @@ import SleepingScreen from './app/screens/Sleeping';
 import { Component } from 'react/cjs/react.development';
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+import { createStackNavigator } from "@react-navigation/stack";
 import { FONTS } from "./app/constants/theme";
 
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ class App extends Component {
 
   async loadFonts() {
     await Font.loadAsync({
-      "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
+      "Poppins-Bold": require("./assets/fonts/Poppins-Italic.ttf"),
     });
     this.setState({ fontsLoaded: true });
   }
@@ -28,6 +29,7 @@ class App extends Component {
     this.loadFonts();
   }     
   render() {
+    console.log("hi");
      return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
