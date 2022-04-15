@@ -1,0 +1,1 @@
+export const lauchScreenImg = require('../../assets/images/lauchScreenImg')
