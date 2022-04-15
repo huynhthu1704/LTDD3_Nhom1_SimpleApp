@@ -35,6 +35,6 @@ export const SIZES = {
 };
 
 export const FONTS = {
-  h1: { fontFamily: "Poppins-SemiBoldItalic", fontSize: SIZES.h1, lineHeight: 36 },
+  h1: { fontFamily: "Poppins-Bold", fontSize: SIZES.h1, lineHeight: 36 },
   h2: { fontFamily: "Poppins-SemiBoldItalic", fontSize: SIZES.h2, lineHeight: 36 },
 };
