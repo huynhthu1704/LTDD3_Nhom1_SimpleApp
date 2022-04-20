@@ -32,13 +32,13 @@ export default function MainContainer() {
               <MaterialCommunityIcons
                 name={icons[route.name]}
                 size={size}
-                color={focused? COLORS.black : COLORS.black6}
+                color={focused? COLORS.black : COLORS.black4}
               />
             );
           },
         })}
-        activeTintColor={COLORS.black}
-        inactiveTintColor={COLORS.red}
+        activeTintColor="black"
+        inactiveTintColor="red"
       >
         {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
       <Tab.Screen name="Home" component={HomeScreen}/>

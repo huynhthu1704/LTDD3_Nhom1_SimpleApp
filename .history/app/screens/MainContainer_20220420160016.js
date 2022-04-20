@@ -37,8 +37,8 @@ export default function MainContainer() {
             );
           },
         })}
-        activeTintColor={COLORS.black}
-        inactiveTintColor={COLORS.red}
+        activeTintColor="black"
+        inactiveTintColor="red"
       >
         {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
       <Tab.Screen name="Home" component={HomeScreen}/>

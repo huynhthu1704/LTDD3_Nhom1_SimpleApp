@@ -10,7 +10,6 @@ import WorkspaceScreen from "./WorkspaceScreen";
 import SleepingScreen from "./Sleeping";
 import ProfileScreen from "./ProfileScreen";
 import { StatusBar } from "react-native-web";
-import { COLORS } from "../constants/theme";
 const Tab = createBottomTabNavigator();
 export default function MainContainer() {
   return (
@@ -19,7 +18,6 @@ export default function MainContainer() {
         initialRouteName="Home"
         tabBarOptions = {{showLabel : false}}
         screenOptions={({ route }) => ({
-          headerShown : false,
           tabBarIcon: ({ focused, color, size }) => {
             const icons = {
               Home: "home",
@@ -32,16 +30,16 @@ export default function MainContainer() {
               <MaterialCommunityIcons
                 name={icons[route.name]}
                 size={size}
-                color={focused? COLORS.black : COLORS.black6}
+                color={focused? "#000" : "rgba(0, 0, 0, 0.8)"}
               />
             );
           },
         })}
-        activeTintColor={COLORS.black}
-        inactiveTintColor={COLORS.red}
+        activeTintColor="black"
+        inactiveTintColor="red"
       >
         {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
-      <Tab.Screen name="Home" component={HomeScreen}/>
+        <Tab.Screen name="Home" component={HomeScreen} showLabel = false />
         <Tab.Screen name="Meditation" component={MeditationScreen} />
         <Tab.Screen name="Workspace" component={WorkspaceScreen} />
         <Tab.Screen name="Sleeping" component={SleepingScreen} />

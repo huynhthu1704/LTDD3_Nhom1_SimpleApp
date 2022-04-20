@@ -7,7 +7,6 @@ export const COLORS = {
   black4: "rgba(0, 0, 0, 0.4)",
   black6: "rgba(0, 0, 0, 0.6)",
   black8: "rgba(0, 0, 0, 0.8)",
-  red : "#FF0000",
   white: "#FFF",
   gray: "3F414E",
   blue: "#7583CA",
