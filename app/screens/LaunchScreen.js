@@ -1,3 +1,6 @@
+/*Author: Huynh Thi Ngoc Thu
+  Date: 04/21/2022
+*/
 import { StyleSheet, ImageBackground, View, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
