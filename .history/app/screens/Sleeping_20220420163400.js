@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function Sleeping() {
   const renderHeader = () => {
     return (
-      <View style = {{width : "100%", height : 100, backgroundColor : COLORS.purple}}>
+      <View style = {{width : "100%", height : 100, backgroundColor : COLORS.black}}>
         <Text>Hello</Text>
       </View>
     );
