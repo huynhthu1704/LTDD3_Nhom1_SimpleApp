@@ -20,6 +20,7 @@ export default function WelcomeMeditationScreen() {
         backgroundColor="#002142"
         barStyle="dark-content"
         hidden={false}
+        translucent={true}
       /> 
       <ImageBackground style={styles.background} source={require('../../assets/images/welcometomeditaion.jpg')}>
         <Text style={styles.meditation}>{data.meditation}</Text>
