@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native-web";
+import { Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 export const COLORS = {

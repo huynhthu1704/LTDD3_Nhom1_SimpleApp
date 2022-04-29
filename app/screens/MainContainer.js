@@ -2,9 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import HomeScreen from "./HomeScreen";
-import MeditationScreen from "./MeditationScreen";
+import MindfulnessOfBreathing from "./MindfulnessOfBreathing";
+import WelcomeMeditationScreen from "./WelcomeMeditationScreen";
 import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
 import SleepingScreen from "./Sleeping";
@@ -12,14 +15,24 @@ import ProfileScreen from "./ProfileScreen";
 import { StatusBar } from "react-native-web";
 import { COLORS } from "../constants/theme";
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const MeditationNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} />
+    </Stack.Navigator>
+  );
+}
 export default function MainContainer() {
   return (
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          headerShown : false,
-          showLabel : false,
+          headerShown: false,
+          showLabel: false,
           tabBarIcon: ({ focused, color, size }) => {
             const icons = {
               Home: "home",
@@ -32,7 +45,7 @@ export default function MainContainer() {
               <MaterialCommunityIcons
                 name={icons[route.name]}
                 size={size}
-                color={focused? COLORS.black : COLORS.black6}
+                color={focused ? COLORS.black : COLORS.black6}
               />
             );
           },
@@ -41,8 +54,8 @@ export default function MainContainer() {
         inactiveTintColor={COLORS.red}
       >
         {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
-      <Tab.Screen name="Home" component={HomeScreen}/>
-        <Tab.Screen name="Meditation" component={MeditationScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Meditation" component={MeditationNavigator} />
         <Tab.Screen name="Workspace" component={WorkspaceScreen} />
         <Tab.Screen name="Sleeping" component={SleepingScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
