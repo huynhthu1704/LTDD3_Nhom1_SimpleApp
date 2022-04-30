@@ -37,12 +37,6 @@ export function CategoryItem({ item }) {
 }
 
 export default function SleepingHome({navigation}) {
-  const list = listInCategory.filter((itemList) => {
-   if (audio.find((itemAudio) => itemAudio.idList == itemList.id) != undefined){
-     return true;
-   }
-
-  } )
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.purple, flex: 1 }}>
       <HeaderBar
@@ -67,7 +61,7 @@ export default function SleepingHome({navigation}) {
       </View>
       <View>
         <FlatList
-          data={list}
+          data={listInCategory}
           renderItem={({ item }) => <ListInCategory list={item} navigation = {navigation} />}
         />
       </View>

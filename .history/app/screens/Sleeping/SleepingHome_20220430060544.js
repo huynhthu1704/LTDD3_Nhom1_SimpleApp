@@ -38,10 +38,8 @@ export function CategoryItem({ item }) {
 
 export default function SleepingHome({navigation}) {
   const list = listInCategory.filter((itemList) => {
-   if (audio.find((itemAudio) => itemAudio.idList == itemList.id) != undefined){
-     return true;
-   }
-
+   console.log(audio.find((itemAudio) => itemAudio.idList == itemList.id) )
+return false;
   } )
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.purple, flex: 1 }}>

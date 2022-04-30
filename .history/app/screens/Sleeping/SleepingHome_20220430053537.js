@@ -37,12 +37,6 @@ export function CategoryItem({ item }) {
 }
 
 export default function SleepingHome({navigation}) {
-  const list = listInCategory.filter((itemList) => {
-   if (audio.find((itemAudio) => itemAudio.idList == itemList.id) != undefined){
-     return true;
-   }
-
-  } )
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.purple, flex: 1 }}>
       <HeaderBar
@@ -58,7 +52,7 @@ export default function SleepingHome({navigation}) {
           marginBottom: SIZES.padding / 2,
         }}
       >
-       {/* <TouchableWithoutFeedback onPress={() => navigation.navigate("ListInCategory")}><Text>Hi</Text></TouchableWithoutFeedback> */}
+       <TouchableWithoutFeedback onPress={() => navigation.navigate("ListInCategory")}><Text>Hi</Text></TouchableWithoutFeedback>
         <FlatList
           data={musicCategory}
           horizontal={true}
@@ -67,8 +61,8 @@ export default function SleepingHome({navigation}) {
       </View>
       <View>
         <FlatList
-          data={list}
-          renderItem={({ item }) => <ListInCategory list={item} navigation = {navigation} />}
+          data={listInCategory}
+          renderItem={({ item }) => <ListInCategory list={item} />}
         />
       </View>
     </SafeAreaView>

@@ -7,7 +7,6 @@ import SleepingOnBoardingScreen from "./SleepingOnBoardingScreen";
 import SleepingHome from "./SleepingHome";
 import ListDetail from "./ListDetail";
 import ListInCategory from "./ListInCategory";
-import PlayAudio from "./PlayAudio";
 const SleepingStack = createStackNavigator();
 
 export default function Sleeping() {
@@ -20,7 +19,6 @@ export default function Sleeping() {
       <SleepingStack.Screen name="SleepingHome" component={SleepingHome} />
       <SleepingStack.Screen name="ListDetail" component={ListDetail} />
       <SleepingStack.Screen name="ListInCategory" component={ListInCategory} />
-      <SleepingStack.Screen name="PlayAudio" component={PlayAudio} />
     </SleepingStack.Navigator>
   );
 }

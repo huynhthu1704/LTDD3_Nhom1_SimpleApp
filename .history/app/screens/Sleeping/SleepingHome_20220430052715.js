@@ -16,8 +16,6 @@ import HeaderBar from "../../components/HeaderBar";
 import { FontAwesome } from "@expo/vector-icons";
 import { musicCategory, listInCategory, audio } from "../../constants/data";
 import ListInCategory from "./ListInCategory";
-import { Button } from "react-native-web";
-import { NavigationContainer } from "@react-navigation/native";
 export function CategoryItem({ item }) {
   const [isSelected, setSelected] = useState(false);
   return (
@@ -36,13 +34,9 @@ export function CategoryItem({ item }) {
   );
 }
 
-export default function SleepingHome({navigation}) {
-  const list = listInCategory.filter((itemList) => {
-   if (audio.find((itemAudio) => itemAudio.idList == itemList.id) != undefined){
-     return true;
-   }
 
-  } )
+
+export default function SleepingHome() {
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.purple, flex: 1 }}>
       <HeaderBar
@@ -58,7 +52,6 @@ export default function SleepingHome({navigation}) {
           marginBottom: SIZES.padding / 2,
         }}
       >
-       {/* <TouchableWithoutFeedback onPress={() => navigation.navigate("ListInCategory")}><Text>Hi</Text></TouchableWithoutFeedback> */}
         <FlatList
           data={musicCategory}
           horizontal={true}
@@ -67,8 +60,8 @@ export default function SleepingHome({navigation}) {
       </View>
       <View>
         <FlatList
-          data={list}
-          renderItem={({ item }) => <ListInCategory list={item} navigation = {navigation} />}
+          data={listInCategory}
+          renderItem={({ item }) => <ListInCategory list={item} />}
         />
       </View>
     </SafeAreaView>
