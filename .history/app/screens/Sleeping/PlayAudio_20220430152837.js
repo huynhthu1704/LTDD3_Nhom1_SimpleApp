@@ -1,19 +1,16 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
-import React, {useState} from "react";
+import React from "react";
 import HeaderBar from "../../components/HeaderBar";
 import { SIZES, COLORS, FONTS } from "../../constants/index";
 import data from "../../constants/data";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-// import Slider from '@react-native-community/slider';
 
 export default function PlayAudio({ route }) {
   console.log(route.params);
   const audio = data.audio.find((item) => item.id == route.params.id);
   const minute = Math.floor(audio.duration / 60);
   const sec = audio.duration - minute * 60;
-  const [playTime, setPlayTime] = useState(0);
-  const [like, setLike] = useState(false)
   return (
     <View style={{ backgroundColor: "red", flex: 1 }}>
       <ImageBackground
@@ -23,8 +20,8 @@ export default function PlayAudio({ route }) {
       {/* Header bar */}
         <HeaderBar
           bgColor="transparent"
-          color={COLORS.white} rightIcon='heart'
-          
+          color={COLORS.white}
+          rightIcon="heart-o"
         />
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -64,16 +61,13 @@ export default function PlayAudio({ route }) {
             <View
               style={{
                 borderRadius: 50,
+              //  backgroundColor: "rgba(0, 0, 0, 0.6)",
                 padding: 20,
                 marginTop: 10,
               }}
             >
               <FontAwesome
                 style={{ fontSize: 50, color: COLORS.white }}
-                name="pause"
-              />
-              <FontAwesome
-                style={{ fontSize: 50, color: COLORS.white , display :'none'}}
                 name="play"
               />
             </View>
@@ -92,13 +86,6 @@ export default function PlayAudio({ route }) {
             </View>
           </View>
           {/* Slider */}
-          {/* <Slider
-          style = {{width : '100%', height : 2}}
-                    value={value}
-                    minimumValue = {playTime}
-                    maximumValue = {sec}
-                    onValueChange={({value}) => setPlayTime(value)}
-                /> */}
         </View>
       </ImageBackground>
     </View>

@@ -12,6 +12,9 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
     "@expo-google-fonts/poppins": "^0.2.2",
+    "@miblanchard/react-native-slider": "^2.1.0",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
+    "@react-native-community/slider": "^4.2.2",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",

@@ -5,7 +5,7 @@ import { SIZES, COLORS, FONTS } from "../../constants/index";
 import data from "../../constants/data";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-// import Slider from '@react-native-community/slider';
+import Slider from '@react-native-community/slider';
 
 export default function PlayAudio({ route }) {
   console.log(route.params);
@@ -23,7 +23,8 @@ export default function PlayAudio({ route }) {
       {/* Header bar */}
         <HeaderBar
           bgColor="transparent"
-          color={COLORS.white} rightIcon='heart'
+          color={COLORS.white} rightIcon=
+          {like? "heart-o" : ""}
           
         />
         <View
@@ -64,16 +65,13 @@ export default function PlayAudio({ route }) {
             <View
               style={{
                 borderRadius: 50,
+              //  backgroundColor: "rgba(0, 0, 0, 0.6)",
                 padding: 20,
                 marginTop: 10,
               }}
             >
               <FontAwesome
                 style={{ fontSize: 50, color: COLORS.white }}
-                name="pause"
-              />
-              <FontAwesome
-                style={{ fontSize: 50, color: COLORS.white , display :'none'}}
                 name="play"
               />
             </View>
@@ -92,13 +90,13 @@ export default function PlayAudio({ route }) {
             </View>
           </View>
           {/* Slider */}
-          {/* <Slider
+          <Slider
           style = {{width : '100%', height : 2}}
                     value={value}
                     minimumValue = {playTime}
                     maximumValue = {sec}
                     onValueChange={({value}) => setPlayTime(value)}
-                /> */}
+                />
         </View>
       </ImageBackground>
     </View>

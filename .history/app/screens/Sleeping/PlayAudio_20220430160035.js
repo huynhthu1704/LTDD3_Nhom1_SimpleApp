@@ -23,7 +23,8 @@ export default function PlayAudio({ route }) {
       {/* Header bar */}
         <HeaderBar
           bgColor="transparent"
-          color={COLORS.white} rightIcon='heart'
+          color={COLORS.white} rightIcon=
+          {like? "heart-o" : ""}
           
         />
         <View
@@ -64,16 +65,13 @@ export default function PlayAudio({ route }) {
             <View
               style={{
                 borderRadius: 50,
+              //  backgroundColor: "rgba(0, 0, 0, 0.6)",
                 padding: 20,
                 marginTop: 10,
               }}
             >
               <FontAwesome
                 style={{ fontSize: 50, color: COLORS.white }}
-                name="pause"
-              />
-              <FontAwesome
-                style={{ fontSize: 50, color: COLORS.white , display :'none'}}
                 name="play"
               />
             </View>

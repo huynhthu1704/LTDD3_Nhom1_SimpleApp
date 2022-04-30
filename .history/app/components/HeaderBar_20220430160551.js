@@ -12,8 +12,10 @@ import { SIZES, COLORS } from "../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 export default function HeaderBar({ bgColor, color, name, rightIcon }) {
   const navigation = useNavigation();
+  const [rightIconColor, setColor] = useState(COLORS.white);
   let colorWhenTouch = "";
   switch (rightIcon) {
+    case "heart-o":
     case "heart":
       colorWhenTouch = COLORS.red;
       break;
@@ -21,7 +23,6 @@ export default function HeaderBar({ bgColor, color, name, rightIcon }) {
       colorWhenTouch = COLORS.black;
       break;
   }
-  const [isTouched, setIsTouched] = useState(false);
   const [like, setLike] = useState(false);
 
   return (
@@ -46,11 +47,11 @@ export default function HeaderBar({ bgColor, color, name, rightIcon }) {
       </View>
 
       <View style={{ flex: 1, alignItems: "flex-end" }}>
-        <TouchableWithoutFeedback onPress={() => setIsTouched(!isTouched)}>
+        <TouchableWithoutFeedback onPress={() => setColor(colorWhenTouch)}>
           <FontAwesome
             name={rightIcon}
             size={SIZES.h1}
-            color={isTouched? colorWhenTouch : COLORS.white}
+            color={rightIconColor}
           />
         </TouchableWithoutFeedback>
       </View>

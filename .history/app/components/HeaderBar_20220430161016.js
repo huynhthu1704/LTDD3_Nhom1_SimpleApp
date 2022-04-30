@@ -12,6 +12,7 @@ import { SIZES, COLORS } from "../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 export default function HeaderBar({ bgColor, color, name, rightIcon }) {
   const navigation = useNavigation();
+ // const [rightIconColor, setColor] = useState(COLORS.white);
   let colorWhenTouch = "";
   switch (rightIcon) {
     case "heart":

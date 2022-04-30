@@ -5,7 +5,7 @@ import { SIZES, COLORS, FONTS } from "../../constants/index";
 import data from "../../constants/data";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-// import Slider from '@react-native-community/slider';
+import Slider from '@react-native-community/slider';
 
 export default function PlayAudio({ route }) {
   console.log(route.params);
@@ -92,13 +92,13 @@ export default function PlayAudio({ route }) {
             </View>
           </View>
           {/* Slider */}
-          {/* <Slider
+          <Slider
           style = {{width : '100%', height : 2}}
                     value={value}
                     minimumValue = {playTime}
                     maximumValue = {sec}
                     onValueChange={({value}) => setPlayTime(value)}
-                /> */}
+                />
         </View>
       </ImageBackground>
     </View>
