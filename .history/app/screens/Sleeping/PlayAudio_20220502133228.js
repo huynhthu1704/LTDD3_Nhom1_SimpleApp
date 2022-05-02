@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-} from "react-native";
-import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import React, { useState } from "react";
 import HeaderBar from "../../components/HeaderBar";
 import { SIZES, COLORS, FONTS } from "../../constants/index";
 import data from "../../constants/data";
@@ -15,16 +9,12 @@ import Slider from "@react-native-community/slider";
 
 export default function PlayAudio({ route }) {
   const audio = data.audio.find((item) => item.id == route.params.id);
-  const hour = Math.floor(audio.duration / 3600);
-  const minute = Math.floor((audio.duration - hour * 3600) / 60);
+  const minute = Math.floor(audio.duration / 60);
   const sec = audio.duration - minute * 60;
-  const [isPlaying, setPlay] = useState(false);
   const [playTime, setPlayTime] = useState(0);
-  const [playHour, setPlayHour] = useState(0);
   const [playMin, setPlayMin] = useState(0);
   const [playSec, setPlaySec] = useState(0);
   const [like, setLike] = useState(false);
-
   return (
     <View style={{ backgroundColor: "red", flex: 1 }}>
       <ImageBackground
@@ -37,7 +27,7 @@ export default function PlayAudio({ route }) {
           color={COLORS.white}
           rightIcon="heart"
         />
-        <View style={{ flex: 1 }}>
+        <View style = {{flex : 1}}>
           <View
             style={{ flex: 2, justifyContent: "center", alignItems: "center" }}
           >
@@ -56,17 +46,16 @@ export default function PlayAudio({ route }) {
               }}
             >
               <Text style={{ color: COLORS.white }}>
-                {hour > 0 ? hour + " : " : ""}
                 {minute > 10 ? minute : "0" + minute} :
                 {sec > 10 ? sec : "0" + sec}
               </Text>
             </View>
             {/* Replay, play and forward button */}
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableWithoutFeedback
-                onPress={() => setPlayTime(playTime - 30)}
+              <View
                 style={{
                   borderRadius: 50,
+                  // backgroundColor: "rgba(0, 0, 0, 0.6)",
                   padding: 20,
                   marginTop: 10,
                 }}
@@ -75,44 +64,27 @@ export default function PlayAudio({ route }) {
                   style={{ fontSize: 35, color: COLORS.white }}
                   name="replay-30"
                 />
-              </TouchableWithoutFeedback>
-              <View style = {{marginHorizontal : 10}}>
-                <TouchableWithoutFeedback
-                  onPress={() => setPlay(!isPlaying)}
-                  style={{
-                    borderRadius: 50,
-                    padding: 20,
-                    marginTop: 10,
-                  }}
-                >
-                  <FontAwesome
-                    style={{ fontSize: 50, color: COLORS.white,
-                      display: isPlaying ? "flex" : "none"}}
-                    name="pause"
-                  />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
-                  onPress={() => setPlay(!isPlaying)}
-                  style={{
-                    borderRadius: 50,
-                    padding: 20,
-                    marginTop: 10,
-                  }}
-                >
-                  <FontAwesome
-                    style={{
-                      fontSize: 50,
-                      color: COLORS.white,
-                      display: !isPlaying ? "flex" : "none",
-                    }}
-                    name="play"
-                  />
-                </TouchableWithoutFeedback>
               </View>
-              <TouchableWithoutFeedback
-                onPress={() => setPlayTime(playTime + 30)}
+              <View
                 style={{
                   borderRadius: 50,
+                  padding: 20,
+                  marginTop: 10,
+                }}
+              >
+                <FontAwesome
+                  style={{ fontSize: 50, color: COLORS.white }}
+                  name="pause"
+                />
+                <FontAwesome
+                  style={{ fontSize: 50, color: COLORS.white, display: "none" }}
+                  name="play"
+                />
+              </View>
+              <View
+                style={{
+                  borderRadius: 50,
+                  // backgroundColor: "rgba(0, 0, 0, 0.6)",
                   padding: 20,
                   marginTop: 10,
                 }}
@@ -121,42 +93,30 @@ export default function PlayAudio({ route }) {
                   style={{ fontSize: 35, color: COLORS.white }}
                   name="forward-30"
                 />
-              </TouchableWithoutFeedback>
+              </View>
             </View>
+         
           </View>
-          <View style={{ flex: 1, justifyContent: "center" }}>
-            {/* Slider */}
+          <View style = {{flex : 1, justifyContent: 'center'}}>
+               {/* Slider */}
             <Slider
-              style={{ width: "100%", height: 10 }}
+              style={{ width: "100%", height: 10}}
               value={playTime}
               minimumValue={0}
               maximumValue={audio.duration}
               onValueChange={(value) => {
-                setPlayTime(value);
-                console.log(playTime);
-                setPlayHour(Math.floor(playTime / 3600));
-                setPlayMin(Math.floor((playTime - playHour * 3600) / 60));
-                console.log(playMin);
-                setPlaySec(Math.round(playTime - playMin * 60));
-                console.log(playSec);
+                setPlayMin(Math.floor(value / 60));
+                setPlaySec(value - playMin * 60)
               }}
             />
-            <View
-              style={{
-                paddingHorizontal: SIZES.padding / 2,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={{ color: COLORS.white }}>
-                {playHour > 0 ? playHour + " : " : ""}
-                {playMin >= 10 ? playMin : "0" + playMin} :
-                {playSec >= 10 ? playSec : "0" + playSec}
+            <View>
+            <Text style={{ color: COLORS.white }}>
+                {playMin > 10 ? playMin : "0" + playMin} :
+                {playSec > 10 ? playSec : "0" + playSec}
               </Text>
               <Text style={{ color: COLORS.white }}>
-                {hour > 0 ? hour + " : " : ""}
-                {minute >= 10 ? minute : "0" + minute} :
-                {sec >= 10 ? sec : "0" + sec}
+                {minute > 10 ? minute : "0" + minute} :
+                {sec > 10 ? sec : "0" + sec}
               </Text>
             </View>
           </View>

@@ -149,12 +149,12 @@ export default function PlayAudio({ route }) {
               }}
             >
               <Text style={{ color: COLORS.white }}>
-                {playHour > 0 ? playHour + " : " : ""}
+                {playHour > 0 ? playHour + " : " : "0" + playHour}
                 {playMin >= 10 ? playMin : "0" + playMin} :
                 {playSec >= 10 ? playSec : "0" + playSec}
               </Text>
               <Text style={{ color: COLORS.white }}>
-                {hour > 0 ? hour + " : " : ""}
+                {hour > 0 ? hour + " : " : "0" + hour}
                 {minute >= 10 ? minute : "0" + minute} :
                 {sec >= 10 ? sec : "0" + sec}
               </Text>

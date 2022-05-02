@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground, TouchableWithoutFeedback } from "react-native";
 import React, { useState, useEffect } from "react";
 import HeaderBar from "../../components/HeaderBar";
 import { SIZES, COLORS, FONTS } from "../../constants/index";
@@ -18,7 +12,6 @@ export default function PlayAudio({ route }) {
   const hour = Math.floor(audio.duration / 3600);
   const minute = Math.floor((audio.duration - hour * 3600) / 60);
   const sec = audio.duration - minute * 60;
-  const [isPlaying, setPlay] = useState(false);
   const [playTime, setPlayTime] = useState(0);
   const [playHour, setPlayHour] = useState(0);
   const [playMin, setPlayMin] = useState(0);
@@ -64,9 +57,10 @@ export default function PlayAudio({ route }) {
             {/* Replay, play and forward button */}
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableWithoutFeedback
-                onPress={() => setPlayTime(playTime - 30)}
+              onPress = {() => setPlayTime(playTime - 30)}
                 style={{
                   borderRadius: 50,
+                  // backgroundColor: "rgba(0, 0, 0, 0.6)",
                   padding: 20,
                   marginTop: 10,
                 }}
@@ -76,43 +70,27 @@ export default function PlayAudio({ route }) {
                   name="replay-30"
                 />
               </TouchableWithoutFeedback>
-              <View style = {{marginHorizontal : 10}}>
-                <TouchableWithoutFeedback
-                  onPress={() => setPlay(!isPlaying)}
-                  style={{
-                    borderRadius: 50,
-                    padding: 20,
-                    marginTop: 10,
-                  }}
-                >
-                  <FontAwesome
-                    style={{ fontSize: 50, color: COLORS.white,
-                      display: isPlaying ? "flex" : "none"}}
-                    name="pause"
-                  />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
-                  onPress={() => setPlay(!isPlaying)}
-                  style={{
-                    borderRadius: 50,
-                    padding: 20,
-                    marginTop: 10,
-                  }}
-                >
-                  <FontAwesome
-                    style={{
-                      fontSize: 50,
-                      color: COLORS.white,
-                      display: !isPlaying ? "flex" : "none",
-                    }}
-                    name="play"
-                  />
-                </TouchableWithoutFeedback>
-              </View>
-              <TouchableWithoutFeedback
-                onPress={() => setPlayTime(playTime + 30)}
+              <View
                 style={{
                   borderRadius: 50,
+                  padding: 20,
+                  marginTop: 10,
+                }}
+              >
+                <FontAwesome
+                  style={{ fontSize: 50, color: COLORS.white }}
+                  name="pause"
+                />
+                <FontAwesome
+                  style={{ fontSize: 50, color: COLORS.white, display: "none" }}
+                  name="play"
+                />
+              </View>
+              <TouchableWithoutFeedback
+              onPress = {() => setPlayTime(playTime + 30)}
+                style={{
+                  borderRadius: 50,
+                  // backgroundColor: "rgba(0, 0, 0, 0.6)",
                   padding: 20,
                   marginTop: 10,
                 }}
@@ -134,8 +112,7 @@ export default function PlayAudio({ route }) {
               onValueChange={(value) => {
                 setPlayTime(value);
                 console.log(playTime);
-                setPlayHour(Math.floor(playTime / 3600));
-                setPlayMin(Math.floor((playTime - playHour * 3600) / 60));
+                setPlayMin(Math.floor(playTime / 60));
                 console.log(playMin);
                 setPlaySec(Math.round(playTime - playMin * 60));
                 console.log(playSec);
@@ -149,12 +126,10 @@ export default function PlayAudio({ route }) {
               }}
             >
               <Text style={{ color: COLORS.white }}>
-                {playHour > 0 ? playHour + " : " : ""}
                 {playMin >= 10 ? playMin : "0" + playMin} :
                 {playSec >= 10 ? playSec : "0" + playSec}
               </Text>
               <Text style={{ color: COLORS.white }}>
-                {hour > 0 ? hour + " : " : ""}
                 {minute >= 10 ? minute : "0" + minute} :
                 {sec >= 10 ? sec : "0" + sec}
               </Text>
