@@ -6,8 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import 'react-native-gesture-handler';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import HomeScreen from "./HomeScreen";
-import MindfulnessOfBreathing from "./MindfulnessOfBreathing";
-import WelcomeMeditationScreen from "./WelcomeMeditationScreen";
+import MindfulnessOfBreathing from "../screens/Meditation/MindfulnessOfBreathing";
+import WelcomeMeditationScreen from "../screens/Meditation/WelcomeMeditationScreen"
 import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
 import SleepingScreen from "./Sleeping";
@@ -21,7 +21,7 @@ const MeditationNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} />
+      <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
