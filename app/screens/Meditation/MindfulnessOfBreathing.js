@@ -32,7 +32,7 @@ const reducer = (time, action) => {
   }
 }
 
-export default MindfulnessOfBreathing = () => {
+export default MindfulnessOfBreathing = ({ navigation }) => {
   const [useBreathActive, setUseBreathActive] = useState(true);
   const [time, runTime] = useReducer(reducer, {
     hours: "0",
@@ -121,27 +121,27 @@ export default MindfulnessOfBreathing = () => {
         <Text style={styles.title}>{data.title}</Text>
         {/* Two button to use breath or mantra */}
         <View style={styles.btnView}>
-          <Pressable style={{ ...styles.press, backgroundColor: (!useBreathActive?'#19be34':'#3da34e'), borderColor: (!useBreathActive?'black':'#235d2c')}} disabled={useBreathActive} onPress={() => {
+          <Pressable style={{ ...styles.press, backgroundColor: (!useBreathActive ? '#19be34' : '#3da34e'), borderColor: (!useBreathActive ? 'black' : '#235d2c') }} disabled={useBreathActive} onPress={() => {
             setUseBreathActive(true);
           }}>
-            <Text style={{ ...styles.btnTitle, color: (!useBreathActive?'black':'#235d2c') }}>{data.useBreath}</Text>
+            <Text style={{ ...styles.btnTitle, color: (!useBreathActive ? 'black' : '#235d2c') }}>{data.useBreath}</Text>
           </Pressable>
-          <Pressable style={{ ...styles.press, backgroundColor: (useBreathActive?'#ff4a04':'#ff480087'), borderColor: (useBreathActive?'black':'#235d2c')}} disabled={!useBreathActive} onPress={() => {
+          <Pressable style={{ ...styles.press, backgroundColor: (useBreathActive ? '#ff4a04' : '#ff480087'), borderColor: (useBreathActive ? 'black' : '#235d2c') }} disabled={!useBreathActive} onPress={() => {
             setUseBreathActive(false)
           }}>
-            <Text style={{ ...styles.btnTitle, color: (useBreathActive?'black':'#235d2c') }}>{data.useMantra}</Text>
+            <Text style={{ ...styles.btnTitle, color: (useBreathActive ? 'black' : '#235d2c') }}>{data.useMantra}</Text>
           </Pressable>
         </View>
         {/* Choose music */}
         <View style={{ marginTop: 30 }}>
           <Text style={styles.titleSmall}>{data.chooseMs}</Text>
           <Pressable>
-            <View style={{...styles.pressChoose, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 15}}>
+            <View style={{ ...styles.pressChoose, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 15 }}>
               <Text style={styles.yourChoose}>
                 None
               </Text>
               <Text style={styles.yourChoose}>
-               {">>"}
+                {">>"}
               </Text>
             </View>
           </Pressable>
@@ -149,7 +149,7 @@ export default MindfulnessOfBreathing = () => {
         {/* Set time */}
         <View style={{ marginTop: 30 }}>
           <Text style={styles.titleSmall}>{data.setT}</Text>
-          <View style={{ ...styles.chooseTime, flexDirection: 'row', justifyContent: 'center', padding: 10, marginHorizontal: 100, borderRadius: 20}}>
+          <View style={{ ...styles.chooseTime, flexDirection: 'row', justifyContent: 'center', padding: 10, marginHorizontal: 100, borderRadius: 20 }}>
             {/* Hours */}
             <TextInput
               keyboardType='numeric'
@@ -195,8 +195,8 @@ export default MindfulnessOfBreathing = () => {
           </View>
         </View>
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.titleSmall}>{useBreathActive? data.guideBreath : data.guideMantra}</Text>
-          <View style={{...styles.btnView, backgroundColor: '#a3f018', padding: 10, marginHorizontal: 25, borderRadius: 15}}>
+          <Text style={styles.titleSmall}>{useBreathActive ? data.guideBreath : data.guideMantra}</Text>
+          <View style={{ ...styles.btnView, backgroundColor: '#a3f018', padding: 10, marginHorizontal: 25, borderRadius: 15 }}>
             <Pressable style={{ ...styles.press, backgroundColor: '#393744' }} onPress={() => {
               console.log(6);
             }}>
@@ -210,16 +210,21 @@ export default MindfulnessOfBreathing = () => {
           </View>
         </View>
         {/* Button start */}
-        <View style={{marginTop: 60}}>
-        <Pressable style={styles.btnStart} onPress={() => {
-              console.log(6);
-            }}>
-              <Text style={{ ...styles.btnTitle, color: 'black', textAlign: 'center' }}>{data.gtS}</Text>
-            </Pressable>
+        <View style={{ marginTop: 60 }}>
+          <Pressable style={styles.btnStart} onPress={() => {
+            console.log(6);
+          }}>
+            <Text style={{ ...styles.btnTitle, color: 'black', textAlign: 'center' }}>{data.gtS}</Text>
+          </Pressable>
         </View>
-        <View>
-            <Icon name='info' size={15} color="#14e1ae"/>
-        </View>
+        <Pressable onPress={() => {
+          navigation.navigate('Sleeping');
+        }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 30 }}>
+            <Text style={{ color: "#14e1ae", fontFamily: FONTS.body1.fontFamily, fontWeight: 'bold', fontSize: 20 }}>Introduce</Text>
+            <Icon name='info' size={25} color="#14e1ae" style={{ textAlignVertical: 'center', paddingLeft: 13, paddingRight: 10, paddingVertical: 3, marginLeft: 5, marginRight: 10, borderColor: "#14e1ae", borderWidth: 1, borderRadius: 100 }} />
+          </View>
+        </Pressable>
       </LinearGradient>
     </View>
   )
