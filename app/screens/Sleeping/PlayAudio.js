@@ -12,7 +12,7 @@ import data from "../../constants/data";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
-
+import { Audio } from "expo-av";
 export default function PlayAudio({ route }) {
   const audio = data.audio.find((item) => item.id == route.params.id);
   const hour = Math.floor(audio.duration / 3600);
@@ -24,7 +24,25 @@ export default function PlayAudio({ route }) {
   const [playMin, setPlayMin] = useState(0);
   const [playSec, setPlaySec] = useState(0);
   const [like, setLike] = useState(false);
+  const [sound, setSound] = React.useState();
 
+  async function playSound() {
+    console.log("Loadingggg Sound");
+    const { sound } = await Audio.Sound.createAsync(audio.src);
+    setSound(sound);
+    // Audio.setAudioModeAsync({ staysActiveInBackground: true });
+    console.log("Playing Sound");
+    await sound.playAsync();
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          console.log("Unloading Sound");
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
   return (
     <View style={{ backgroundColor: "red", flex: 1 }}>
       <ImageBackground
@@ -76,9 +94,12 @@ export default function PlayAudio({ route }) {
                   name="replay-30"
                 />
               </TouchableWithoutFeedback>
-              <View style = {{marginHorizontal : 10}}>
+              <View style={{ marginHorizontal: 10 }}>
                 <TouchableWithoutFeedback
-                  onPress={() => setPlay(!isPlaying)}
+                  onPress={() => {
+                    setPlay(!isPlaying);
+                    playSound();
+                  }}
                   style={{
                     borderRadius: 50,
                     padding: 20,
@@ -86,8 +107,11 @@ export default function PlayAudio({ route }) {
                   }}
                 >
                   <FontAwesome
-                    style={{ fontSize: 50, color: COLORS.white,
-                      display: isPlaying ? "flex" : "none"}}
+                    style={{
+                      fontSize: 50,
+                      color: COLORS.white,
+                      display: isPlaying ? "flex" : "none",
+                    }}
                     name="pause"
                   />
                 </TouchableWithoutFeedback>

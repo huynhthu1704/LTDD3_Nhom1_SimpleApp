@@ -39,23 +39,26 @@ export const musicCategory = [
  export const audio = [
     {
       id : 1,
-      name : "First audio",
+      name : "Sedative",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
-      duration : 1,
+      duration : 181,
       author : "David",
       idList : 1
     },
     {
       id : 2,
-      name : "Second audio",
+      name : "Order",
+      src: require('../../assets/audio/order-99518.mp3'),
       img : require('../../assets/images/night.jpg'),
-      duration : 400,
+      duration : 104,
       author : "Yushu",
       idList : 1
     },
     {
       id : 3,
       name : "Third audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -64,6 +67,7 @@ export const musicCategory = [
     {
       id : 4,
       name : "4 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -72,6 +76,7 @@ export const musicCategory = [
     {
       id : 5,
       name : "5 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -80,6 +85,7 @@ export const musicCategory = [
     {
       id : 6,
       name : "6 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -88,6 +94,7 @@ export const musicCategory = [
     {
       id : 7,
       name : "7 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -96,6 +103,7 @@ export const musicCategory = [
     {
       id : 8,
       name : "8 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
@@ -104,6 +112,7 @@ export const musicCategory = [
     {
       id : 9,
       name : "9 audio",
+      src: require('../../assets/audio/sedative-110241.mp3'),
       img : require('../../assets/images/night.jpg'),
       duration : 1,
       author : "Aniya",
