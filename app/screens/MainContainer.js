@@ -8,7 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import HomeScreen from "./HomeScreen";
 import MindfulnessOfBreathing from "../screens/Meditation/MindfulnessOfBreathing";
 import WelcomeMeditationScreen from "../screens/Meditation/WelcomeMeditationScreen";
-import IntroduceMindfulScreen from "./Meditation/IntroduceMindfulScreen";
+import TutorialMindfulScreen from "./Meditation/TutorialMindfulScreen";
 import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
 import SleepingScreen from "./Sleeping";
@@ -23,7 +23,7 @@ const MeditationNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
-      <Stack.Screen name="Introduce" component={IntroduceMindfulScreen}/>
+      <Stack.Screen name="Tutorial" component={TutorialMindfulScreen}/>
     </Stack.Navigator>
   );
 }

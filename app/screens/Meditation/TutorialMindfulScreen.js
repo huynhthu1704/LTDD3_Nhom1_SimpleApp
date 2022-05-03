@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default IntroduceMindful = () =>{
+export default TutorialMindFul = () =>{
   return (
     <View>
-      <Text>Introduce</Text>
+      <Text>TutorialMindFul</Text>
     </View>
   )
 }
