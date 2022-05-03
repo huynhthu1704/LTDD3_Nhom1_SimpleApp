@@ -1,0 +1,3 @@
+import {theme, COLORS, FONTS, SIZES} from "./index";
+import images from "./images";
+export default {theme, COLORS, FONTS, SIZES, images};

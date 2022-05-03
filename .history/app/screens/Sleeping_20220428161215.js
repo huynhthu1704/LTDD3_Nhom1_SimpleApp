@@ -1,0 +1,17 @@
+import { StyleSheet, Text, View, ScrollView,Image } from "react-native";
+import React from "react";
+import * as app from '../constants/index'
+import { LinearGradient } from "expo-linear-gradient";
+import HeaderBar from "../components/HeaderBar";
+
+export default function Sleeping() {
+  return (
+    <View>
+    <HeaderBar bgColor = {app. COLORS.purple} color = {COLORS.white}/>
+    <Image style = {{height: SIZES.height, width : SIZES.width}} source = {images.sleepingOnBoardingImg}/>
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({});
