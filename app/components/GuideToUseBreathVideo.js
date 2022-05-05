@@ -13,12 +13,12 @@ const GuideToUseBreathVideo = () => {
             10
         }
     >
-        {/* <Video
-            source={{ url: 'http://link-to-your-video.mp4'}}                  // the video file
+        <Video
+            source={{uri: "https://youtu.be/mpSmBuco6I0"}}                  // the video file
             paused={false}                  // make it start    
-            style={{width: 50, height: 50}}
+            style={{flex: 1}}
             repeat={true}                   // make it a loop
-        /> */}
+        />
     </ScrollView>);
 }
 

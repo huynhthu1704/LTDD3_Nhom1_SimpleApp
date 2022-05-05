@@ -5,7 +5,7 @@ const androidHeightWithStatusBar = {
   statusBar: StatusBar.currentHeight,
   bottomTap: Dimensions.get('screen').height - (Dimensions.get('window').height + StatusBar.currentHeight),
 }
-const androidWidth={
+const androidWidth = {
   device: Dimensions.get('screen').width,
   window: Dimensions.get('window').width
 }
@@ -16,15 +16,15 @@ export const COLORS = {
   black4: "rgba(0, 0, 0, 0.4)",
   black6: "rgba(0, 0, 0, 0.6)",
   black8: "rgba(0, 0, 0, 0.8)",
-  red : "#FF0000",
+  red: "#FF0000",
   white: "#FFF",
-  white2 : "rgba(255, 255, 255, 0.2)",
+  white2: "rgba(255, 255, 255, 0.2)",
   gray: "#3F414E",
   lightGray: "#D3D3D3",
   blue: "#7583CA",
-  lightBlue : "#8E97FD",
+  lightBlue: "#8E97FD",
   purple: "#67447C",
-  darkPurple : "#4E2F61",
+  darkPurple: "#4E2F61",
   green: "#61B15A",
   pink: "#B49797",
   pink50: "rgba(180, 151, 151, 0.5)",
@@ -65,4 +65,4 @@ export const FONTS = {
   body4: { fontFamily: "Poppins-Regular", fontSize: SIZES.h4, lineHeight: 20 },
 };
 
-export const appTheme = {COLORS, SIZES, FONTS};
+export const appTheme = { COLORS, SIZES, FONTS };

@@ -148,7 +148,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
   };
   return (
     <View style={styles.container} blurType="light" blurAmount={30}>
-      <StatusBar backgroundColor="#14e1ae" barStyle="dark-content" />
+      <StatusBar backgroundColor="#C33764" barStyle="dark-content" />
       <LinearGradient
         //Background Linear Gradient
         colors={Gradient.MindfulnessOfBreathing}
@@ -162,7 +162,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
             style={{
               ...styles.press,
               backgroundColor: !useBreathActive ? "#19be34" : "#3da34e",
-              borderColor: !useBreathActive ? "black" : "#235d2c",
+              borderColor: !useBreathActive ? "black" : "#00000082",
             }}
             disabled={useBreathActive}
             onPress={() => {
@@ -172,7 +172,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
             <Text
               style={{
                 ...styles.btnTitle,
-                color: !useBreathActive ? "black" : "#235d2c",
+                color: !useBreathActive ? "black" : "#00000082",
               }}
             >
               {data.useBreath}
@@ -182,7 +182,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
             style={{
               ...styles.press,
               backgroundColor: useBreathActive ? "#ff4a04" : "#ff480087",
-              borderColor: useBreathActive ? "black" : "#235d2c",
+              borderColor: useBreathActive ? "black" : "#00000082",
             }}
             disabled={!useBreathActive}
             onPress={() => {
@@ -192,7 +192,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
             <Text
               style={{
                 ...styles.btnTitle,
-                color: useBreathActive ? "black" : "#235d2c",
+                color: useBreathActive ? "black" : "#00000082",
               }}
             >
               {data.useMantra}
@@ -284,7 +284,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
           <View
             style={{
               ...styles.btnView,
-              backgroundColor: "#a3f018",
+              backgroundColor: "#rgb(114,192,217)",
               padding: 10,
               marginHorizontal: SIZES.androidWidth.window * 0.06,
               borderRadius: 15,
@@ -309,7 +309,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
         {/* Button start */}
         <View style={{ marginTop: SIZES.androidHeightWithStatusBar.window * 0.06 }}>
           <TouchableOpacity
-            style={styles.btnStart}
+            style={{...styles.btnStart, backgroundColor: useBreathActive ? "#19be34" : "#ff4a04"}}
             onPress={() => {
               console.log(6);
             }}
@@ -377,7 +377,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
         <View style={styles.modalView}>
           <View
             style={{
-              marginTop: -10,
+              marginTop: -SIZES.androidHeightWithStatusBar.window * 0.008,
               flexDirection: "row",
               justifyContent: "space-between",
             }}
@@ -387,7 +387,8 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
                 textAlignVertical: "center",
                 fontWeight: "bold",
                 textTransform: "uppercase",
-                ...FONTS.h2,
+                fontFamily: FONTS.h2.fontFamily,
+                fontSize: SIZES.androidHeightWithStatusBar.window * 0.028
               }}
             >
               Guide to use Breath
@@ -398,13 +399,13 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
             >
               <IconFeather
                 name="x-circle"
-                size={35}
+                size={SIZES.androidHeightWithStatusBar.window * 0.05}
                 color="gray"
                 style={{ textAlign: "center" }}
               />
             </TouchableOpacity>
           </View>
-              <GuideToUseBreathText/>
+              <GuideToUseBreathVideo/>
         </View>
       </Modal>
     </View>
@@ -446,7 +447,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.androidHeightWithStatusBar.window * 0.02
   },
   pressChoose: {
-    backgroundColor: "#a3f018",
+    backgroundColor: "#rgb(114,192,217)",
     paddingVertical: SIZES.androidHeightWithStatusBar.window * 0.013,
     paddingLeft: SIZES.androidWidth.device * 0.06,
     marginHorizontal: SIZES.androidWidth.device * 0.06,
@@ -463,7 +464,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   chooseTime: {
-    backgroundColor: "#a3f018",
+    backgroundColor: "rgb(114,192,217)",
     paddingVertical: SIZES.androidHeightWithStatusBar.window * 0.025,
   },
   btnStart: {
@@ -473,22 +474,21 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderStyle: "solid",
     borderWidth: 1.5,
-    backgroundColor: "#c4c4c4",
     marginHorizontal: SIZES.androidWidth.device * 0.06,
   },
   modalView: {
-    margin: 20,
+    margin: SIZES.androidHeightWithStatusBar.window * 0.025,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 20,
+    padding:  SIZES.androidHeightWithStatusBar.window * 0.02,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 20,
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 10,
   },
   button: {
     backgroundColor: "#ffffff00",

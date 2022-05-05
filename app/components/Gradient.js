@@ -1,4 +1,4 @@
 const Gradient = {
-    MindfulnessOfBreathing: ['#14e1ae' , '#109372', '#31594f']
+    MindfulnessOfBreathing: ['#C33764' , '#1D2671']
 }
 export default Gradient;
