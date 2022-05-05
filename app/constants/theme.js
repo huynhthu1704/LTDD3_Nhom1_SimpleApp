@@ -1,5 +1,14 @@
-import { Dimensions } from "react-native";
-
+import { Dimensions, StatusBar } from "react-native";
+const androidHeightWithStatusBar = {
+  device: Dimensions.get('screen').height,
+  window: Dimensions.get('window').height,
+  statusBar: StatusBar.currentHeight,
+  bottomTap: Dimensions.get('screen').height - (Dimensions.get('window').height + StatusBar.currentHeight),
+}
+const androidWidth={
+  device: Dimensions.get('screen').width,
+  window: Dimensions.get('window').width
+}
 const { width, height } = Dimensions.get("window");
 export const COLORS = {
   black: "#000",
@@ -41,6 +50,8 @@ export const SIZES = {
   // App dimension
   width,
   height,
+  androidHeightWithStatusBar,
+  androidWidth
 };
 
 export const FONTS = {
