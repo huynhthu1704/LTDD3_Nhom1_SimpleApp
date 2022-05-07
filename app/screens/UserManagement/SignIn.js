@@ -78,7 +78,6 @@ export default class SignIn {
 }
 
 const styles = StyleSheet.create({
-
   image: {
     height: 220,
     width: 301,
