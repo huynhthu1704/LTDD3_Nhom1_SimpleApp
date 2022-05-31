@@ -27,24 +27,11 @@ const Stack = createStackNavigator();
 const MeditationNavigator = () => {
   return (
     <Stack.Navigator>
-<<<<<<< HEAD
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeMeditationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="MindfulnessOfBreathing"
-        component={MindfulnessOfBreathing}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
-=======
       <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
       <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  />
->>>>>>> meditationVer2
     </Stack.Navigator>
   );
 };
