@@ -19,6 +19,8 @@ import IconFeather from "react-native-vector-icons/Feather";
 import React, { useState, useReducer } from "react";
 import GuideToUseBreathText from "../../components/GuideToUseBreathText";
 import GuideToUseBreathVideo from "../../components/GuideToUseBreathVideo";
+import GuideToUseMantraText from "../../components/GuideToUseMantraText";
+import GuideToUseMantraVideo from "../../components/GuideToUseManTraVideo";
 
 const data = {
   title: "Mindfulness of Anything",
@@ -51,6 +53,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
     minutes: "30",
     seconds: "00",
   });
+  const [text, setText] = useState(true);
   const textToInt = (text) => {
     if (text.length == 2 && text[0] == "0") {
       return eval(text[1]);
@@ -292,14 +295,18 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
           >
             <TouchableOpacity
               style={{ ...styles.press, backgroundColor: "#393744" }}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                setText(true)
+              }}
             >
               <Text style={{ ...styles.btnTitle, color: "white" }}>Text</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ ...styles.press, backgroundColor: "#19be34" }}
               onPress={() => {
-                console.log(6);
+                setModalVisible(!modalVisible)
+                setText(false)
               }}
             >
               <Text style={{ ...styles.btnTitle, color: "black" }}>Video</Text>
@@ -309,9 +316,13 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
         {/* Button start */}
         <View style={{ marginTop: SIZES.androidHeightWithStatusBar.window * 0.06 }}>
           <TouchableOpacity
-            style={{...styles.btnStart, backgroundColor: useBreathActive ? "#19be34" : "#ff4a04"}}
+            style={{ ...styles.btnStart, backgroundColor: useBreathActive ? "#19be34" : "#ff4a04" }}
             onPress={() => {
-              console.log(6);
+              navigation.navigate("Started",{
+                hours: time.hours,
+                minutes: time.minutes,
+                seconds: time.seconds
+              });
             }}
           >
             <Text
@@ -374,7 +385,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
       </LinearGradient>
       {/* Modal for guide to text */}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.modalView}>
+        <View style={{ ...styles.modalView, marginTop: text ? 0 : SIZES.androidHeightWithStatusBar.device * 0.3, backgroundColor: text ? 'white' : 'black' }}>
           <View
             style={{
               marginTop: -SIZES.androidHeightWithStatusBar.window * 0.008,
@@ -405,7 +416,7 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-              <GuideToUseBreathVideo/>
+          {useBreathActive? (text ? <GuideToUseBreathText /> : <GuideToUseBreathVideo />) : (text ? <GuideToUseMantraText /> : <GuideToUseMantraVideo />)}
         </View>
       </Modal>
     </View>
@@ -480,7 +491,7 @@ const styles = StyleSheet.create({
     margin: SIZES.androidHeightWithStatusBar.window * 0.025,
     backgroundColor: "white",
     borderRadius: 20,
-    padding:  SIZES.androidHeightWithStatusBar.window * 0.02,
+    padding: SIZES.androidHeightWithStatusBar.window * 0.02,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
