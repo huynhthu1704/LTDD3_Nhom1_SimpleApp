@@ -1,0 +1,74 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Button,
+  TouchableHighlight,
+} from "react-native";
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+
+import { appTheme, COLORS, FONTS, SIZES, images } from "../../constants/index";
+import { LinearGradient } from "expo-linear-gradient";
+import SleepingOnBoardingScreen from "./SleepingOnBoardingScreen";
+import SleepingHome from "./SleepingHome";
+import ListDetail from "./ListDetail";
+import ListInCategory from "./ListInCategory";
+import PlayAudio from "./PlayAudio";
+import { FontAwesome } from "@expo/vector-icons";
+
+const SleepingStack = createStackNavigator();
+
+export default function Sleeping({ navigation, route }) {
+  //   React.useLayoutEffect(() => {
+  //     const routeName = getFocusedRouteNameFromRoute(route);
+  //     if (routeName === "GroOnBoardingup"){
+  //         navigation.setOptions({tabBarVisible: false});
+  //     }else {
+  //         navigation.setOptions({tabBarVisible: true});
+  //     }
+  // }, [navigation, route]);
+  return (
+    <SleepingStack.Navigator screenOptions={{ headerShown: true }}>
+      <SleepingStack.Screen
+        name="OnBoarding"
+        component={SleepingOnBoardingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <SleepingStack.Screen
+        name="SleepingHome"
+        component={SleepingHome}
+        options={{
+          headerTitle: "Sleeping",
+          headerStyle: {
+            backgroundColor: COLORS.purple,
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 25,
+          },
+          headerRight: () => (
+              <TouchableHighlight
+                style={{ marginRight: 20 }}
+                onPress={() => {}}
+              >
+                <FontAwesome name="bell" size={SIZES.h1} color={COLORS.white} />
+              </TouchableHighlight>
+             
+          ),
+        }}
+      />
+      {/* <SleepingStack.Screen name="ListDetail" component={ListDetail} />
+      <SleepingStack.Screen name="ListInCategory" component={ListInCategory} />
+      <SleepingStack.Screen name="PlayAudio" component={PlayAudio} /> */}
+    </SleepingStack.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({});
