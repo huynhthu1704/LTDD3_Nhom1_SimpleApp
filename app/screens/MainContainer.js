@@ -9,6 +9,7 @@ import HomeScreen from "./HomeScreen";
 import MindfulnessOfBreathing from "../screens/Meditation/MindfulnessOfBreathing";
 import WelcomeMeditationScreen from "../screens/Meditation/WelcomeMeditationScreen";
 import TutorialMindfulScreen from "./Meditation/TutorialMindfulScreen";
+import GettingStartedScreen from "./Meditation/GettingStartedScreen"
 import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
 import Sleeping from "./Sleeping/Sleeping";
@@ -21,9 +22,12 @@ import PlayAudio from "./Sleeping/PlayAudio";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+
+//MeditationStackNavigator
 const MeditationNavigator = () => {
   return (
     <Stack.Navigator>
+<<<<<<< HEAD
       <Stack.Screen
         name="Welcome"
         component={WelcomeMeditationScreen}
@@ -35,6 +39,12 @@ const MeditationNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
+=======
+      <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
+      <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
+      <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  />
+>>>>>>> meditationVer2
     </Stack.Navigator>
   );
 };

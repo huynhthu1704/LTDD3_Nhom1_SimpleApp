@@ -4,7 +4,7 @@ import guidetousebreath from '../../assets/video/guidetousebreath.mp4';
 import { SIZES } from '../constants/theme';
 import React from 'react';
 
-const GuideToUseBreathVideo = () => {
+const GuideToUseMantraVideo = () => {
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
     return (<ScrollView
@@ -14,7 +14,9 @@ const GuideToUseBreathVideo = () => {
         <Video
             ref={video}
             style={styles.video}
-            source={require('../../assets/video/guidetousebreath.mp4')}
+            source={{
+                uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+            }}
             useNativeControls
             resizeMode="contain"
             isLooping
@@ -49,4 +51,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default GuideToUseBreathVideo;
+export default GuideToUseMantraVideo;
