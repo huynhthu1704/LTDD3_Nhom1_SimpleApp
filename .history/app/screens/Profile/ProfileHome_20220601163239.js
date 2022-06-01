@@ -17,7 +17,7 @@ export function ProfileAvatar({ navigation }) {
   };
 
   function tapOnAvatar() {
-    setTapStatus(!didTappedAvartar);
+    alert("Hi " + user.fullName);
   }
 
   function goToSetting() {
@@ -38,8 +38,8 @@ export function ProfileAvatar({ navigation }) {
           // width: "70%",
           position: "absolute",
           zIndex: -1000,
-          right: 5,
-          bottom: -heightView - 5,
+          right: 0,
+          bottom: -heightView,
           backgroundColor: COLORS.blue,
           shadowColor: COLORS.black,
           shadowOffset: {
@@ -60,7 +60,7 @@ export function ProfileAvatar({ navigation }) {
             alignItems: "center",
             width: "100%",
             borderBottomWidth: 1,
-            borderBottomColor: COLORS.white
+            borderBottomColor: "white"
           }
         } onPress={goToSetting}>
           <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>
@@ -74,7 +74,7 @@ export function ProfileAvatar({ navigation }) {
             alignItems: "center",
             width: "100%",
             borderBottomWidth: 1,
-            borderBottomColor:  COLORS.white
+            borderBottomColor: "black"
           }
         } onPress={goToSetting}>
           <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>
@@ -88,7 +88,7 @@ export function ProfileAvatar({ navigation }) {
             alignItems: "center",
             width: "100%",
             borderBottomWidth: 1,
-            borderBottomColor:  COLORS.white
+            borderBottomColor: "black"
           }
         } onPress={goToSetting}>
           <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>

@@ -91,7 +91,7 @@ const HomeTabs = () => {
           headerTitle: "Profile",
           headerShown: false,
           headerStyle: {
-            backgroundColor: COLORS.red,
+            backgroundColor: COLORS.purple,
           },
           headerTintColor: "#fff",
           headerTitleStyle: {

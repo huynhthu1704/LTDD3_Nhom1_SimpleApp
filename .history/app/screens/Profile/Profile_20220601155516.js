@@ -7,7 +7,7 @@ const ProfileStack = createStackNavigator();
 
 export default function ProfileScreen() {
   return (
-    <ProfileStack.Navigator screenOptions={{ headerShown: true }}>
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen
         name="ProfileMain"
         options={{

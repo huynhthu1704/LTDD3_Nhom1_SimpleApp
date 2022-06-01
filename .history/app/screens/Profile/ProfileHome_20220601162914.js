@@ -17,7 +17,7 @@ export function ProfileAvatar({ navigation }) {
   };
 
   function tapOnAvatar() {
-    setTapStatus(!didTappedAvartar);
+    alert("Hi " + user.fullName);
   }
 
   function goToSetting() {
@@ -25,7 +25,7 @@ export function ProfileAvatar({ navigation }) {
   }
   const imgDimension = 40;
   return (
-    <TouchableOpacity onPress={tapOnAvatar}>
+    <TouchableOpacity style={{  }} onPress={tapOnAvatar}>
       <Image
         style={{ width: imgDimension, height: imgDimension, borderRadius: 50 }}
         source={user.avatar}
@@ -38,8 +38,8 @@ export function ProfileAvatar({ navigation }) {
           // width: "70%",
           position: "absolute",
           zIndex: -1000,
-          right: 5,
-          bottom: -heightView - 5,
+          right: 0,
+          bottom: -heightView,
           backgroundColor: COLORS.blue,
           shadowColor: COLORS.black,
           shadowOffset: {
@@ -56,43 +56,11 @@ export function ProfileAvatar({ navigation }) {
           {
             flexDirection: "row",
             paddingVertical: 10,
-            paddingHorizontal: 20,
-            alignItems: "center",
-            width: "100%",
-            borderBottomWidth: 1,
-            borderBottomColor: COLORS.white
+            paddingHorizontal: 20
           }
         } onPress={goToSetting}>
-          <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>
-          <Text style= {{...FONTS.h3, color: COLORS.white, marginLeft: 10}}>Setting</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={
-          {
-            flexDirection: "row",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            alignItems: "center",
-            width: "100%",
-            borderBottomWidth: 1,
-            borderBottomColor:  COLORS.white
-          }
-        } onPress={goToSetting}>
-          <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>
-          <Text style= {{...FONTS.h3, color: COLORS.white, marginLeft: 10}}>Setting</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={
-          {
-            flexDirection: "row",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            alignItems: "center",
-            width: "100%",
-            borderBottomWidth: 1,
-            borderBottomColor:  COLORS.white
-          }
-        } onPress={goToSetting}>
-          <FontAwesome name="gear" color={COLORS.white} size={SIZES.h3}/>
-          <Text style= {{...FONTS.h3, color: COLORS.white, marginLeft: 10}}>Setting</Text>
+          <FontAwesome name="gear" color={COLORS.black} size={SIZES.h3}/>
+          <Text style= {{...FONTS.h3, color: COLORS.white}}>Setting</Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

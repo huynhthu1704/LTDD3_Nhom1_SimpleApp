@@ -5,7 +5,6 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableOpacity
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import HeaderBar from "../../components/HeaderBar";
@@ -81,9 +80,9 @@ export default function PlayAudio({ route, navigation }) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={{ marginRight: 20 }} onPress={addToFavorite}>
+        <TouchableHighlight style={{ marginRight: 20 }} onPress={addToFavorite}>
           <FontAwesome name="heart" size={SIZES.h1} color={like? COLORS.red : COLORS.white} />
-        </TouchableOpacity>
+        </TouchableHighlight>
       ),
     });
   });

@@ -17,7 +17,7 @@ export function ProfileAvatar({ navigation }) {
   };
 
   function tapOnAvatar() {
-    setTapStatus(!didTappedAvartar);
+    alert("Hi " + user.fullName);
   }
 
   function goToSetting() {
@@ -38,8 +38,8 @@ export function ProfileAvatar({ navigation }) {
           // width: "70%",
           position: "absolute",
           zIndex: -1000,
-          right: 5,
-          bottom: -heightView - 5,
+          right: 0,
+          bottom: -heightView,
           backgroundColor: COLORS.blue,
           shadowColor: COLORS.black,
           shadowOffset: {

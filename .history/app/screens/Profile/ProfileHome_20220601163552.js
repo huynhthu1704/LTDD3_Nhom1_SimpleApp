@@ -38,7 +38,7 @@ export function ProfileAvatar({ navigation }) {
           // width: "70%",
           position: "absolute",
           zIndex: -1000,
-          right: 5,
+          right: 0,
           bottom: -heightView - 5,
           backgroundColor: COLORS.blue,
           shadowColor: COLORS.black,

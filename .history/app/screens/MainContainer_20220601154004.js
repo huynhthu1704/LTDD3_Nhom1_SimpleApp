@@ -9,7 +9,7 @@ import HomeScreen from "./HomeScreen";
 import MindfulnessOfBreathing from "../screens/Meditation/MindfulnessOfBreathing";
 import WelcomeMeditationScreen from "../screens/Meditation/WelcomeMeditationScreen";
 import TutorialMindfulScreen from "./Meditation/TutorialMindfulScreen";
-import GettingStartedScreen from "./Meditation/GettingStartedScreen";
+import GettingStartedScreen from "./Meditation/GettingStartedScreen"
 import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
 import Sleeping from "./Sleeping/Sleeping";
@@ -22,26 +22,15 @@ import PlayAudio from "./Sleeping/PlayAudio";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+
 //MeditationStackNavigator
 const MeditationNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeMeditationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="MindfulnessOfBreathing"
-        component={MindfulnessOfBreathing}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
-      <Stack.Screen
-        name="Started"
-        component={GettingStartedScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  />
     </Stack.Navigator>
   );
 };
@@ -84,22 +73,7 @@ const HomeTabs = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={({ route }) => ({
-          headerTitle: "Profile",
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: COLORS.red,
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-            fontSize: 25,
-          },
-        })}
-      />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
@@ -124,6 +98,7 @@ export default function MainContainer() {
             headerStyle: {
               backgroundColor: COLORS.purple,
             },
+            
           }}
         />
       </Stack.Navigator>

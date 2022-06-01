@@ -89,7 +89,7 @@ const HomeTabs = () => {
         component={Profile}
         options={({ route }) => ({
           headerTitle: "Profile",
-          headerShown: false,
+          headerShown: true,
           headerStyle: {
             backgroundColor: COLORS.red,
           },
