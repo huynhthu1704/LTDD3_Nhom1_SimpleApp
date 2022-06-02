@@ -95,7 +95,7 @@ const HomeTabs = () => {
         component={SleepingHome}
         options={{
           headerShown: true,
-          ...headerStyle(COLORS.black, COLORS.purple)
+          ...headerStyle
         }}
       />
       <Tab.Screen

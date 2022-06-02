@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -10,22 +10,27 @@ import MindfulnessOfBreathing from "../screens/Meditation/MindfulnessOfBreathing
 import WelcomeMeditationScreen from "../screens/Meditation/WelcomeMeditationScreen";
 import TutorialMindfulScreen from "./Meditation/TutorialMindfulScreen";
 import GettingStartedScreen from "./Meditation/GettingStartedScreen";
+import LaunchScreen from "./LaunchScreen";
 import WorkspaceScreen from "./WorkspaceScreen";
+import Sleeping from "./Sleeping/Sleeping";
 import {
   UpdateProfile,
-  Profile,
+  ProfileHome,
   Setting,
   Favorites,
 } from "./Profile/index";
+import { StatusBar } from "react-native-web";
 import { COLORS } from "../constants/theme";
-import { SleepingHome, ListDetail, PlayAudio } from "../screens/Sleeping/index";
+import SleepingHome from "./Sleeping/SleepingHome";
+import PlayAudio from "./Sleeping/PlayAudio";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 
 const headerStyle = (color, backgroundColor) => {
   return {
     headerShown: true,
-    headerTintColor: color,
+    headerTintColor:color,
     headerStyle: {
       backgroundColor: backgroundColor,
     },
@@ -92,18 +97,17 @@ const HomeTabs = () => {
       <Tab.Screen name="Workspace" component={WorkspaceScreen} />
       <Tab.Screen
         name="Sleeping"
-        component={SleepingHome}
+        component={Sleeping}
         options={{
-          headerShown: true,
-          ...headerStyle(COLORS.black, COLORS.purple)
+          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileHome"
+        component={ProfileHome}
         options={({ route }) => ({
           headerTitle: "Profile",
-          ...headerStyle(COLORS.black, ""),
+         ...headerStyle(COLORS.black,"")
         })}
       />
     </Tab.Navigator>
@@ -120,52 +124,37 @@ export default function MainContainer() {
         })}
       >
         <HomeStack.Screen name="HomeTabs" component={HomeTabs} />
-
-        {/* Sleeping module */}
-        <HomeStack.Screen
-          name="ListDetail"
-          component={ListDetail}
-          options={ ({route}) => {
-            return {
-              ...headerStyle(COLORS.white, COLORS.purple),
-              headerTitle: route.params.title
-            }
-            
-          }}
-        />
         <HomeStack.Screen
           name="PlayAudio"
           component={PlayAudio}
           options={{
             headerTitle: "",
+            // headerShown: true,
             headerTransparent: true,
-            ...headerStyle(COLORS.white, ""),
+            ...headerStyle("")
           }}
         />
-        {/* Sleeping module */}
-
+        {/* <ProfileStack.Screen
+        name="ProfileHome"
+        options={{
+          headerTitle: "Profile",
+        }}
+        component={ProfileHome}
+      /> */}
         <HomeStack.Screen
           name="Favorites"
           component={Favorites}
           options={{
-            ...headerStyle(COLORS.white, COLORS.pink),
+            ...headerStyle(COLORS.white,COLORS.pink)
           }}
         />
-        <HomeStack.Screen
-          name="UpdateProfile"
-          component={UpdateProfile}
-          options={{
-            headerTitle: "Update",
-            ...headerStyle(COLORS.white, COLORS.pink),
-          }}
-        />
-        <HomeStack.Screen
-          name="Setting"
-          component={Setting}
-          options={{
-            ...headerStyle(COLORS.white, COLORS.pink),
-          }}
-        />
+        <HomeStack.Screen name="UpdateProfile" component={UpdateProfile} options={{
+          headerTitle: "Update",
+          ...headerStyle(COLORS.white,COLORS.pink)
+          }} />
+        <HomeStack.Screen name="Setting" component={Setting} options={{
+            ...headerStyle(COLORS.white,COLORS.pink)
+          }}/>
       </HomeStack.Navigator>
     </NavigationContainer>
   );

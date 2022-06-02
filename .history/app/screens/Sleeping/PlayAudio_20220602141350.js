@@ -198,7 +198,7 @@ export default function PlayAudio({ route, navigation }) {
               }}
             >
               {/* Replay button */}
-              <TouchableWithoutFeedback
+              <TouchableHighlight
                 onPress={async () => {
                   setTapOnFunctionButton(true);
                   console.log("play-30: " + playBackPosition);
@@ -216,12 +216,12 @@ export default function PlayAudio({ route, navigation }) {
                   }}
                   name="replay-30"
                 />
-              </TouchableWithoutFeedback>
+              </TouchableHighlight>
               {/*End Replay button */}
 
               {/* Play, pause button */}
               <View style={{ marginHorizontal: 30 }}>
-                <TouchableWithoutFeedback
+                <TouchableHighlight
                   onPress={async () => {
                     setTapOnFunctionButton(true);
                     setPlay(!isPlaying);
@@ -279,12 +279,12 @@ export default function PlayAudio({ route, navigation }) {
                     }}
                     name={(isPlaying)? "pause" : "play"}
                   />
-                </TouchableWithoutFeedback>
+                </TouchableHighlight>
               </View>
               {/* Play, pause button */}
 
               {/* Forward button */}
-              <TouchableWithoutFeedback
+              <TouchableHighlight
                 onPress={async () => {
                   setTapOnFunctionButton(true);
                   console.log("play+30: " + playBackPosition);
@@ -311,7 +311,7 @@ export default function PlayAudio({ route, navigation }) {
                   }}
                   name="forward-30"
                 />
-              </TouchableWithoutFeedback>
+              </TouchableHighlight>
               {/* End Forward button */}
             </View>
           </View>

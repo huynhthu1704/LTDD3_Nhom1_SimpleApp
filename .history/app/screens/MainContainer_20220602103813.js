@@ -94,8 +94,7 @@ const HomeTabs = () => {
         name="Sleeping"
         component={SleepingHome}
         options={{
-          headerShown: true,
-          ...headerStyle(COLORS.black, COLORS.purple)
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -125,12 +124,8 @@ export default function MainContainer() {
         <HomeStack.Screen
           name="ListDetail"
           component={ListDetail}
-          options={ ({route}) => {
-            return {
-              ...headerStyle(COLORS.white, COLORS.purple),
-              headerTitle: route.params.title
-            }
-            
+          options={{
+            ...headerStyle(COLORS.white, COLORS.purple),
           }}
         />
         <HomeStack.Screen

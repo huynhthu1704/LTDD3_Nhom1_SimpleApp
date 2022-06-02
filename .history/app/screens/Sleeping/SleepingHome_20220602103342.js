@@ -50,9 +50,8 @@ export default function SleepingHome({ navigation }) {
             </View>
               <FlatList
                 horizontal
-                showsHorizontalScrollIndicator = {false}
                 data={section.data}
-                renderItem={({ item }) => <AudioItem item={item} navigation={navigation} size={imgSize} padding={SIZES.padding /4}/>}
+                renderItem={({ item }) => <AudioItem item={item} navigation={navigation} size={imgSize}/>}
               />
             </View>
           )}

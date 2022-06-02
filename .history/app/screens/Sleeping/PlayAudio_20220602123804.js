@@ -5,7 +5,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import HeaderBar from "../../components/HeaderBar";
@@ -23,38 +23,31 @@ export default function PlayAudio({ route, navigation }) {
   const [isPlaying, setPlay] = useState(true);
   const [like, setLike] = useState(false);
   const [sound, setSound] = useState(null);
-  const [didTapOnFunctionButton, setTapOnFunctionButton] = useState(false);
-  const [isFirstTime, setFirstTime] = useState(false);
+  // const sound = new Audio.Sound();
+  const [isFirstTime, setFirstTime] = useState(true);
   const [playBackObj, setPlayBackObj] = useState(null);
   const [playBackPosition, setPlayBackPosition] = useState(null);
   const [playBackDuration, setPlayBackDuration] = useState(null);
   const millis = 30 * 1000;
 
   function onPlaybackStatusUpdate(playBackStatus) {
-    // setPlay(playBackStatus.isPlaying);
+    setPlay(playBackStatus.isPlaying);
     if (playBackStatus.isLoaded && playBackStatus.isPlaying) {
       setPlayBackDuration(playBackStatus.durationMillis);
       setPlayBackPosition(playBackStatus.positionMillis);
     }
-    
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity style={{ marginRight: 20 }} onPress={addToFavorite}>
-          <FontAwesome
-            name="heart"
-            size={SIZES.h1}
-            color={like ? COLORS.red : COLORS.white}
-          />
+          <FontAwesome name="heart" size={SIZES.h1} color={like ? COLORS.red : COLORS.white} />
         </TouchableOpacity>
       ),
     });
     (async () => {
-      setTapOnFunctionButton(false);
       if (sound === null) {
-        setFirstTime(true);
         const obj = new Audio.Sound();
         const status = await obj.loadAsync(audio.src, { shouldPlay: true });
         setSound(status);
@@ -62,41 +55,23 @@ export default function PlayAudio({ route, navigation }) {
         console.log("NOT THE FIRST TIME------------------------");
         return obj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
       }
-
+  
+  
       // resume
       if (sound.isLoaded && !sound.isPlaying) {
-        console.log("resume");
         const status = await playBackObj.playAsync();
         setSound(status);
       }
-    })();
-    // return () => {
-    //   if (playBackPosition != null && playBackPosition >= playBackDuration) {
-    //     playBackObj.unloadAsync();
-    //     console.log("unload");
-    //   }
-    // };
-  }, [isPlaying, like]);
-  React.useEffect(
-    () =>
-      navigation.addListener("beforeRemove", (e) => {
-        // if (!isPlaying) {
-        //   // If we don't have unsaved changes, then we don't need to do anything
-        //   return;
-        // }
-        console.log(playBackObj);
-        if (playBackObj != null) {
-          playBackObj.unloadAsync();
-          console.log("unload");
-        }
-        return;
-        // Prevent default behavior of leaving the screen
-        e.preventDefault();
+    })()
+          return ()=>{
+            if (playBackObj != null) {
+              playBackObj.unloadAsync()
+            }
+          
+         }
+          
+  },[isPlaying])
 
-        // Prompt the user before leaving the screen
-      }),
-    [navigation, playBackObj]
-  );
   // async function playSound() {
   //   // play audio at the first time
   //   if (sound === null) {
@@ -121,30 +96,30 @@ export default function PlayAudio({ route, navigation }) {
   //     setSound(status);
   //   }
   // }
-  // async function playSound() {
-  //   // play audio at the first time
-  //   if (sound === null) {
-  //     const obj = new Audio.Sound();
-  //     const status = await obj.loadAsync(audio.src, { shouldPlay: true });
-  //     setSound(status);
-  //     setPlayBackObj(obj);
-  //     console.log("NOT THE FIRST TIME------------------------");
-  //     return obj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-  //   }
+  async function playSound() {
+    // play audio at the first time
+    if (sound === null) {
+      const obj = new Audio.Sound();
+      const status = await obj.loadAsync(audio.src, { shouldPlay: true });
+      setSound(status);
+      setPlayBackObj(obj);
+      console.log("NOT THE FIRST TIME------------------------");
+      return obj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+    }
 
-  //   // pause audio
-  //   if (sound.isLoaded && sound.isPlaying) {
-  //     const status = await playBackObj.setStatusAsync({ shouldPlay: false });
-  //     setSound(status);
-  //     return;
-  //   }
+    // pause audio
+    if (sound.isLoaded && sound.isPlaying) {
+      const status = await playBackObj.setStatusAsync({ shouldPlay: false });
+      setSound(status);
+      return;
+    }
 
-  //   // resume
-  //   if (sound.isLoaded && !sound.isPlaying) {
-  //     const status = await playBackObj.playAsync();
-  //     setSound(status);
-  //   }
-  // }
+    // resume
+    if (sound.isLoaded && !sound.isPlaying) {
+      const status = await playBackObj.playAsync();
+      setSound(status);
+    }
+  }
 
   const calculateSeekbar = () => {
     if (playBackDuration != null && playBackPosition != null) {
@@ -198,15 +173,14 @@ export default function PlayAudio({ route, navigation }) {
               }}
             >
               {/* Replay button */}
-              <TouchableWithoutFeedback
-                onPress={async () => {
-                  setTapOnFunctionButton(true);
-                  console.log("play-30: " + playBackPosition);
-                  const status = await playBackObj.setPositionAsync(
-                    playBackPosition - millis
-                  );
-                  setSound(status);
-                }}
+              <TouchableHighlight
+                // onPress={async () => {
+                //   console.log("play-30: " + playBackPosition);
+                //   const status = await playBackObj.setPositionAsync(
+                //     playBackPosition - millis
+                //   );
+                //   setSound(status);
+                // }}
               >
                 <MaterialIcons
                   style={{
@@ -216,40 +190,25 @@ export default function PlayAudio({ route, navigation }) {
                   }}
                   name="replay-30"
                 />
-              </TouchableWithoutFeedback>
+              </TouchableHighlight>
               {/*End Replay button */}
 
               {/* Play, pause button */}
               <View style={{ marginHorizontal: 30 }}>
-                <TouchableWithoutFeedback
-                  onPress={async () => {
-                    setTapOnFunctionButton(true);
-                    setPlay(!isPlaying);
-                    if (isPlaying) {
-                      console.log("click on pause");
-                      // pause audio
-                      if (sound.isLoaded && sound.isPlaying) {
-                        const status = await playBackObj.setStatusAsync({
-                          shouldPlay: false,
-                        });
-                        setSound(status);
-                        return;
-                      }
-                    } else if (
-                      playBackPosition != null &&
-                      playBackPosition + 1000 >= playBackDuration
-                    ) {
-                      let status;
-                      status = await playBackObj.setPositionAsync(0);
-                      setSound(status);
-                      status = await playBackObj.loadAsync(audio.src, {
-                        shouldPlay: true,
-                      });
-                      setSound(status);
-                      setPlay(true);
-                      
-                    } 
-                  }}
+                <TouchableHighlight
+                onPress={() => {
+                  setFirstTime(false);
+                  if (isPlaying) {
+                    
+      // pause audio
+      if (sound.isLoaded && sound.isPlaying) {
+        const status = await playBackObj.setStatusAsync({ shouldPlay: false });
+        setSound(status);
+        return;
+      }
+                  }
+                  setPlay(!isPlaying)
+                }}
                   // onPress={async () => {
                   //   console.log("playBackPosition:  " + playBackPosition);
                   //   console.log("playBackDuration:  " + playBackDuration);
@@ -264,12 +223,9 @@ export default function PlayAudio({ route, navigation }) {
                   //       shouldPlay: true,
                   //     });
                   //     setSound(status);
-                  //     setPlay(true);
-                  //   } else {
-                  //     setPlay(!isPlaying);
                   //   }
-
-                  //   // playSound();
+                  //   setPlay(!isPlaying);
+                  //   playSound();
                   // }}
                 >
                   <FontAwesome
@@ -277,31 +233,28 @@ export default function PlayAudio({ route, navigation }) {
                       fontSize: 50,
                       color: COLORS.white,
                     }}
-                    name={(isPlaying)? "pause" : "play"}
+                    name={isPlaying ? "pause" : "play"}
                   />
-                </TouchableWithoutFeedback>
+                </TouchableHighlight>
               </View>
               {/* Play, pause button */}
 
               {/* Forward button */}
-              <TouchableWithoutFeedback
-                onPress={async () => {
-                  setTapOnFunctionButton(true);
-                  console.log("play+30: " + playBackPosition);
-                  let status;
-                  if (playBackPosition < playBackDuration - millis) {
-                    status = await playBackObj.setPositionAsync(
-                      playBackPosition + millis
-                    );
-                    // setPlayBackPosition(playBackPosition + millis);
-                  } else {
-                    status = await playBackObj.setPositionAsync(
-                      playBackDuration
-                    );
-                    setPlay(false);
-                  }
-                  setSound(status);
-                }}
+              <TouchableHighlight
+                // onPress={async () => {
+                //   let status;
+                //   if (playBackPosition < playBackDuration - millis) {
+                //     status = await playBackObj.setPositionAsync(
+                //       playBackPosition + millis
+                //     );
+                //     // setPlayBackPosition(playBackPosition + millis);
+                //   } else {
+                //     status = await playBackObj.setPositionAsync(
+                //       playBackDuration
+                //     );
+                //   }
+                //   setSound(status);
+                // }}
               >
                 <MaterialIcons
                   style={{
@@ -311,12 +264,14 @@ export default function PlayAudio({ route, navigation }) {
                   }}
                   name="forward-30"
                 />
-              </TouchableWithoutFeedback>
+              </TouchableHighlight>
               {/* End Forward button */}
             </View>
           </View>
 
           {/* End button section */}
+
+        
         </View>
       </ImageBackground>
     </View>

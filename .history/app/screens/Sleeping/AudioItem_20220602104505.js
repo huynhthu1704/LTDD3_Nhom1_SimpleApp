@@ -13,13 +13,13 @@ import React, { useState } from "react";
 import { appTheme, COLORS, FONTS, SIZES, images } from "../../constants/index";
 import { NavigationContainer } from "@react-navigation/native";
 
-export default function AudioItem({ item, navigation, size, padding }) {
+export default function AudioItem({ item, navigation, size }) {
   return (
     <TouchableOpacity
       style={{
         borderRadius: 10,
         paddingBottom: SIZES.padding / 3,
-        margin: padding
+        margin: SIZES.padding /2 ,
         // margin: SIZES.padding / 4,
         // width: 100,
       }}
