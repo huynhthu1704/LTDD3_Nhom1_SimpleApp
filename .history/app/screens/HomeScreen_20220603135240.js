@@ -108,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
         {/* Inspirational quote */}
         <View>
-        <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>
+        <Text style={{...FONTS.h2, padding: 10}}>Inspirational quotes</Text>
         <FlatList
                 horizontal
                 pagingEnabled

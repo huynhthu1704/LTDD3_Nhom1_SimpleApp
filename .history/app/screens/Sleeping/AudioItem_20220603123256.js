@@ -16,15 +16,11 @@ import { NavigationContainer } from "@react-navigation/native";
 export default function AudioItem({ item, navigation, size, padding, color }) {
   return (
     <TouchableOpacity
-      style={{
-        borderRadius: 10,
-        paddingBottom: SIZES.padding / 3,
-        margin: padding,
-      }}
+      style={StyleSheet.item}
       onPress={() => navigation.navigate("PlayAudio", { id: item.id })}
     >
       <Image
-        style={{ width: size, height: size, borderRadius: 10 }}
+        style={styles.img}
         source={item.img}
       />
       <View style={{ justifyContent: "flex-start" }}>
@@ -32,17 +28,25 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
           {item.name}
         </Text>
         <Text
-          style={{
-            ...FONTS.body4,
-            color: color ?? COLORS.white,
-            fontFamily: "Poppins-Italic",
-          }}
-        >{item.author}</Text>
+          style={styles.authorName}
+        >
+          {item.author}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  // img : { width: size, height: size, borderRadius: 10 },
-});
+  item: {
+    borderRadius: 10,
+    paddingBottom: SIZES.padding / 3,
+    margin: padding,
+  },
+  img : { width: size, height: size, borderRadius: 10 },
+  authorName : {
+    ...FONTS.body4,
+    color: color ?? COLORS.white,
+    fontFamily: "Poppins-Italic",
+  }
+})

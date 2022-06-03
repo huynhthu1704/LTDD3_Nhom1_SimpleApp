@@ -37,12 +37,10 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
             color: color ?? COLORS.white,
             fontFamily: "Poppins-Italic",
           }}
-        >{item.author}</Text>
+        >
+          {item.author}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  // img : { width: size, height: size, borderRadius: 10 },
-});

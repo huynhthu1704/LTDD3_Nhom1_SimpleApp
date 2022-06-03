@@ -107,8 +107,8 @@ const HomeScreen = ({ navigation }) => {
               />
         </View>
         {/* Inspirational quote */}
-        <View>
-        <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>
+        <View style={{backgroundColor: "green"}}>
+        <Text style={{...FONTS.h2}}>Inspirational quotes</Text>
         <FlatList
                 horizontal
                 pagingEnabled
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   categoryItem: {
     width: (SIZES.width - padding * 3) / 2,
     height: SIZES.width / 2,
-    // backgroundColor: "red",
+    backgroundColor: "red",
     borderRadius: 15,
     overflow: "hidden",
   },

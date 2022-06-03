@@ -37,7 +37,7 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
             color: color ?? COLORS.white,
             fontFamily: "Poppins-Italic",
           }}
-        >{item.author}</Text>
+        ></Text>
       </View>
     </TouchableOpacity>
   );

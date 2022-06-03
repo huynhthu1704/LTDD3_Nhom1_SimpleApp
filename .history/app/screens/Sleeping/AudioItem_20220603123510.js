@@ -17,14 +17,14 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
   return (
     <TouchableOpacity
       style={{
-        borderRadius: 10,
-        paddingBottom: SIZES.padding / 3,
-        margin: padding,
-      }}
+    borderRadius: 10,
+    paddingBottom: SIZES.padding / 3,
+    margin: padding,
+  }}
       onPress={() => navigation.navigate("PlayAudio", { id: item.id })}
     >
       <Image
-        style={{ width: size, height: size, borderRadius: 10 }}
+        style={{width: size, height: size, borderRadius: 10 }}
         source={item.img}
       />
       <View style={{ justifyContent: "flex-start" }}>
@@ -32,17 +32,19 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
           {item.name}
         </Text>
         <Text
-          style={{
-            ...FONTS.body4,
-            color: color ?? COLORS.white,
-            fontFamily: "Poppins-Italic",
-          }}
-        >{item.author}</Text>
+          style={styles.authorName}
+        >
+          {{ ...FONTS.body4,
+    color: color ?? COLORS.white,
+    fontFamily: "Poppins-Italic",}}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+   
   // img : { width: size, height: size, borderRadius: 10 },
-});
+
+})

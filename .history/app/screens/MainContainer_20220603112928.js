@@ -89,7 +89,7 @@ const HomeTabs = () => {
     >
       {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
       <Tab.Screen name="Home" component={HomeScreen}  options={{
-          headerShown: false,
+          headerShown: true,
           // ...headerStyle(COLORS.black, COLORS.purple)
         }}/>
       <Tab.Screen name="Meditation" component={MeditationNavigator} />

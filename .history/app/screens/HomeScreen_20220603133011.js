@@ -16,14 +16,13 @@ import { user } from "../constants/data";
 import { musicCategory2, musicCategory, listInCategory, audio, quotes } from "../constants/data";
 import AudioItem from "../screens/Sleeping/AudioItem";
 import InspirationalQuote from "./InspirationalQuote";
-import { useRef } from "react/cjs/react.production.min";
 const padding = 15;
 const imgSize = 120;
 
 
 const HomeScreen = ({ navigation }) => {
   const userName = user.fullName;
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const scrollX = React.useRef(Animated.Value(0)).current;
   const [hour, setHour] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
@@ -34,11 +33,6 @@ const HomeScreen = ({ navigation }) => {
     const currentHour = date.getHours();
     setHour(currentHour);
   }
-  // const onViewableItemsChanged = useRef(({ viewAbleItems}) => {
-  //   setCurrentIndex(viewAbleItems[0].index)
-
-  // }).current;
-
   return (
     <ScrollView>
       <View style={{ flex: 1}}>
@@ -107,20 +101,19 @@ const HomeScreen = ({ navigation }) => {
               />
         </View>
         {/* Inspirational quote */}
-        <View>
-        <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>
+        <View style={{backgroundColor: "green"}}>
+        <Text style={{...FONTS.h2}}>Inspirational quotes</Text>
         <FlatList
                 horizontal
                 pagingEnabled
                 bounces={false}
-                keyExtractor={(item) => item.id}
+                keyExtractor={() => item.id}
                 showsHorizontalScrollIndicator = {false}
                 data={quotes}
                 renderItem={({ item }) => <InspirationalQuote item={item} />}
                 onScroll={Animated.event([{nativeEvent: {contentOffset: {x : scrollX}}}], {
                   useNativeDriver : false
                 })}
-                // onViewableItemsChanged={onViewableItemsChanged}
               />
         </View>
       </View>
@@ -139,7 +132,7 @@ const styles = StyleSheet.create({
   categoryItem: {
     width: (SIZES.width - padding * 3) / 2,
     height: SIZES.width / 2,
-    // backgroundColor: "red",
+    backgroundColor: "red",
     borderRadius: 15,
     overflow: "hidden",
   },
