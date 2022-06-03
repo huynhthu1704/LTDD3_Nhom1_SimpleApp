@@ -1,17 +1,25 @@
 /*Author: Nguyen Thi Quynh Anh
   Date: 05/04/2022
 */
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
 import { SIZES } from '../../constants';
+import { authentication } from '../../firebase/firebase';
+
 
 
 export default SignInSignUp = ({ navigation }) => {
+  console.log(JSON.stringify(authentication.currentUser, null, 4));
+  const [email, setEmail] = useState(null);
+  useEffect(() => {
+    setEmail(authentication.currentUser?.email);
+  })
+
   return (
     <View>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_signup_bg.png')}>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.simplehabit}>SIMPLE HABIT</Text>
+          <Text style={styles.simplehabit}>SIMPLE HABIT {email}</Text>
           <Image style={styles.image} source={require('../../../assets/images/signin_signup.png')} />
           <TouchableOpacity
             onPress={() => {

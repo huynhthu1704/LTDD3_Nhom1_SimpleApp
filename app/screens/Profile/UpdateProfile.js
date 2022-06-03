@@ -13,6 +13,7 @@ import { FONTS, COLORS, SIZES } from "../../constants/index";
 import { NativeScreenNavigationContainer } from "react-native-screens";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { authentication } from "../../firebase/firebase";
 const avatarSize = 150;
 
 export default function UpdateProfile({ navigation }) {
@@ -65,6 +66,7 @@ export default function UpdateProfile({ navigation }) {
           </View>
 
           <View style={styles.infoSection}>
+            <Text>{authentication.currentUser?.email}</Text>
             <Text style={[styles.content, { width: "30%" }]}>Name : </Text>
             <View style={styles.textInputView}>
               <TextInput
