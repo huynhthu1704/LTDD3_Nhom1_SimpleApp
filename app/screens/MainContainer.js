@@ -19,32 +19,34 @@ import { COLORS } from "../constants/theme";
 import Profile from "./Profile/Profile";
 import SleepingHome from "./Sleeping/SleepingHome";
 import PlayAudio from "./Sleeping/PlayAudio";
+import ChoseMusicForMeditatingScreen from "./Meditation/ChoseMusicForMeditatingScreen";
+import SignIn from "./UserManagement/SignIn"
+import SignInSignUp from "./UserManagement/SignInSignUp";
+import SignUp from "./UserManagement/SignUp";
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-
+const signUpsignInStack = createStackNavigator();
+//SignInSignUpNavigator
+const SignInSignUpNavigator = () => {
+  return(
+    <signUpsignInStack.Navigator>
+      <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }}/>
+      <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
+      <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+    </signUpsignInStack.Navigator>
+  );
+}
 //MeditationStackNavigator
 const MeditationNavigator = () => {
   return (
     <Stack.Navigator>
-<<<<<<< HEAD
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeMeditationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="MindfulnessOfBreathing"
-        component={MindfulnessOfBreathing}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
-=======
       <Stack.Screen name="Welcome" component={WelcomeMeditationScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MindfulnessOfBreathing" component={MindfulnessOfBreathing} options={{ headerShown: false }} />
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
-      <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  />
->>>>>>> meditationVer2
+      <Stack.Screen name="Music" component={ChoseMusicForMeditatingScreen} />
+      {/* <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  /> */}
     </Stack.Navigator>
   );
 };
@@ -100,6 +102,7 @@ export default function MainContainer() {
           headerShown: false,
         })}
       >
+        <HomeStack.Screen name="User" component={SignInSignUpNavigator}/>
         <HomeStack.Screen name="HomeTabs" component={HomeTabs} />
         <HomeStack.Screen
           name="PlayAudio"
@@ -114,6 +117,7 @@ export default function MainContainer() {
             },
           }}
         />
+        <HomeStack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { COLORS } from '../constants/theme';
+import User from "./UserManagement/UserData";
 
 const HomeScreen = ({navigation}) => {
   return (
     <View>
-    <Text>Home</Text>
+    <Text>{User.getCurrentUser().username}</Text>
     </View>
   );
 };

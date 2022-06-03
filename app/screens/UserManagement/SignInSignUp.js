@@ -3,40 +3,50 @@
 */
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
-import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SIZES } from '../../constants';
 
-export default class SignInSignUp {
-  render(){
-    return (
-      <ImageBackground
-      source={require('../../assets/images/signin_signup_bg.png')}
-            style={{ flex: 1,
-              width: null,
-              height: null,
-              }}>
+
+export default SignInSignUp = ({ navigation }) => {
+  return (
+    <View>
+      <ImageBackground style={styles.background} source={require('../../../assets/images/signin_signup_bg.png')}>
         <SafeAreaView style={styles.container}>
           <Text style={styles.simplehabit}>SIMPLE HABIT</Text>
-          <Image style={styles.image} source={require('../../assets/images/signin_signup.png')} />
+          <Image style={styles.image} source={require('../../../assets/images/signin_signup.png')} />
           <TouchableOpacity
-            style={styles.signup}
-            onPress={this.props.navigation.navigate('SignUp')}>
-            <Text style={styles.buttonText}>SIGN UP</Text>
+            onPress={() => {
+              navigation.navigate('SignUp')
+            }}
+          >
+            <View style={styles.signup}>
+              <Text style={styles.buttonText}>SIGN UP</Text>
+            </View>
           </TouchableOpacity>
-          <Text>ALREADY HAVE AN ACCOUNT?</Text>
           <TouchableOpacity
-          onPress={this.props.navigation.navigate('SignIn')}>
-            <Text>LOG IN</Text>
+            onPress={() => {
+              navigation.navigate('SignIn')
+            }}
+          >
+            <View style={styles.signup}>
+              <Text style={styles.buttonText}>SIGN IN</Text>
+            </View>
           </TouchableOpacity>
-  
         </SafeAreaView>
       </ImageBackground>
-  
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    display: 'flex',
+    width: SIZES.width,
+    height: (Platform.OS === 'ios') ? SIZES.androidHeightWithStatusBar.window : SIZES.androidHeightWithStatusBar.window,
+    flex: 1,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   image: {
     height: 220,
     width: 301,

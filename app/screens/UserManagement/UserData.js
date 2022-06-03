@@ -1,8 +1,15 @@
-var users = [
-    {
-      "email": "quynhanh0298@gmail.com",
-      "name": "Quynh Anh",
-      "password": "abc12345"
-    }
-  ]
-  module.exports = users;
+class User {
+  static currentUser = null;
+
+  //other relevant code here
+
+  static getCurrentUser() {
+      return this.currentUser;
+  }
+
+  static setCurrentUser(user){
+    this.currentUser = user;
+  }
+}
+
+export default User;

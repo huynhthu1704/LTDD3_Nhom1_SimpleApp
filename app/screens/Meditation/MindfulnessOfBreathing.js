@@ -205,7 +205,9 @@ export default MindfulnessOfBreathing = ({ navigation }) => {
         {/* Choose music */}
         <View style={{ marginTop: SIZES.androidHeightWithStatusBar.window * 0.03 }}>
           <Text style={styles.titleSmall}>{data.chooseMs}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('Music');
+          }}>
             <View
               style={{
                 ...styles.pressChoose,
