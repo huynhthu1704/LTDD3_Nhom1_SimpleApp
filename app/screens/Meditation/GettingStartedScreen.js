@@ -5,6 +5,12 @@ import React, { useEffect, useState } from 'react';
 
 export default function GettingStartedScreen({ route }) {
     const defaulRemainingTime = route.params;
+    useEffect(() =>{
+        const intervalID = setInterval(() => {
+        updateRemainingTime();
+        }, 1000);
+        return () => clearInterval(intervalID);
+      },[]);
     //const initialSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
     const [remainingTime, setRemainingTime] = useState(defaulRemainingTime);
     return (
@@ -12,6 +18,7 @@ export default function GettingStartedScreen({ route }) {
             <StatusBar backgroundColor="black" barStyle="dark-content" />
             <ImageBackground style={styles.background} source={require('../../../assets/images/Profile/start.jpg')}>
                 <Text style={styles.timer}>{remainingTime.hours} : {remainingTime.minutes} : {remainingTime.seconds}</Text>
+
             </ImageBackground>
         </View>
     )
