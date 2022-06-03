@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { user } from "../../constants/data";
 import { FONTS, COLORS, SIZES } from "../../constants/index";
 import { NativeScreenNavigationContainer } from "react-native-screens";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+
 const avatarSize = 150;
 
 export default function UpdateProfile({ navigation }) {
@@ -20,48 +20,13 @@ export default function UpdateProfile({ navigation }) {
   const fullName = user.fullName;
   const [nameAfterChange, setNameAfterChange] = useState(fullName);
   const [didEdit, setEditStatus] = useState(false);
-  const [image, setImage] = useState(null);
-  const [hasPermission, setHasPermission] = useState(null);
-  const pickImage = async () => {
-    //No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-  useEffect(() => {
-    (async () => {
-      const status = ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasPermission(status.status === "granted");
-    })();
-  }, []);
   return (
     <View>
       <ScrollView>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <View style={styles.avatarView}>
-            <Image
-              style={styles.avatar}
-              source={image ? {uri:image}  : userInfo.avatar}
-            />
-            <TouchableOpacity
-              style={{
-                position: "absolute",
-                bottom: 20,
-                right: 0,
-              }}
-              onPress={pickImage }
-            >
-              <FontAwesome name="camera" size={SIZES.h2} />
-            </TouchableOpacity>
+            <Image style={styles.avatar} source={userInfo.avatar} />
+            <View><FontAwesome name="edit" size={SIZES.h3}/></View>
           </View>
 
           <View style={styles.infoSection}>

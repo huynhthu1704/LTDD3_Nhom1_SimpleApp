@@ -1,6 +1,6 @@
 export const user = {
   id: 1,
-  fullName: "Huynh Thi Ngoc Thu",
+  fullName: "Huynh Thi Ngoc Thu ",
   birthday: "17/04/2001",
   password: "Huynhthu1704",
   avatar : require("../../assets/images/launch_screen.png")

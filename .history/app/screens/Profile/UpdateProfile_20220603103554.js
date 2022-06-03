@@ -50,7 +50,7 @@ export default function UpdateProfile({ navigation }) {
           <View style={styles.avatarView}>
             <Image
               style={styles.avatar}
-              source={image ? {uri:image}  : userInfo.avatar}
+              source={image ? image : userInfo.avatar}
             />
             <TouchableOpacity
               style={{
@@ -58,7 +58,7 @@ export default function UpdateProfile({ navigation }) {
                 bottom: 20,
                 right: 0,
               }}
-              onPress={pickImage }
+              onPress={pickImage}
             >
               <FontAwesome name="camera" size={SIZES.h2} />
             </TouchableOpacity>
