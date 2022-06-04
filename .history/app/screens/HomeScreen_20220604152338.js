@@ -66,20 +66,16 @@ const HomeScreen = ({ navigation }) => {
 
   async function getCategories() {
     const cateCol = collection(db, "categories");
-    const cateSnapshot = await getDocs(cateCol);
-    const cateList = cateSnapshot.docs.map(doc => doc.data());
+    const cateSnapshot = await getDocs(quoteCol);
+    const cateList = quoteSnapshot.docs.map(doc => doc.data());
     console.log(JSON.stringify(cateList));
     setCategories(cateList);
   }
-  
-const goToScreen = (name) => {
-  console.log("selected cate name: " + name)
- if (name == "Meditation") {
- navigation.navigate("Meditation");
- } else if (name == "Sleeping") {
-  navigation.navigate("Sleeping");
- }
-}
+  // const onViewableItemsChanged = useRef(({ viewAbleItems}) => {
+  //   setCurrentIndex(viewAbleItems[0].index)
+
+  // }).current;
+
   return (
     <ScrollView>
       <View style={{ flex: 1}}>
@@ -104,23 +100,37 @@ const goToScreen = (name) => {
         {/* Feature Category */}
         <View style={[ styles.view,{ flexDirection: "row", justifyContent: "space-between" , }]}>
           {/* Meditation item */}
-          {categories?.map((item, index) => {
-            return (
-            <View style={styles.categoryItem}>
+          <View style={styles.categoryItem}>
             <ImageBackground
               style={styles.imgBg}
               resizeMode="cover"
-              source={{uri : item.img}}
+              source={images.launchScreenImg}
             >
-              <Text style={styles.textInsideCategoryItem}>{item.name}</Text>
-              <TouchableOpacity style={styles.btnInCategoryItem} onPress={() => goToScreen(item.name)}>
+              <Text style={styles.textInsideCategoryItem}>Mediation</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem}>
                 <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
                   Start
                 </Text>
               </TouchableOpacity>
             </ImageBackground>
-          </View>)
-          })}
+          </View>
+          {/* End Meditation item */}
+          {/* Sleeping item */}
+          <View style={styles.categoryItem}>
+            <ImageBackground
+              style={styles.imgBg}
+              resizeMode="cover"
+              source={images.sleepingOnBoardingImg}
+            >
+              <Text style={styles.textInsideCategoryItem}>Sleeping</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem} onPress={getQuote}>
+                <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
+                  Start
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+          {/* End Sleeping item */}
         </View>
         {/* End Feature Category */}
         {/* Recommend */}

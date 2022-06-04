@@ -73,11 +73,10 @@ const HomeScreen = ({ navigation }) => {
   }
   
 const goToScreen = (name) => {
-  console.log("selected cate name: " + name)
  if (name == "Meditation") {
- navigation.navigate("Meditation");
+ navigation.navigate("");
  } else if (name == "Sleeping") {
-  navigation.navigate("Sleeping");
+  navigation.navigate("");
  }
 }
   return (
@@ -113,7 +112,7 @@ const goToScreen = (name) => {
               source={{uri : item.img}}
             >
               <Text style={styles.textInsideCategoryItem}>{item.name}</Text>
-              <TouchableOpacity style={styles.btnInCategoryItem} onPress={() => goToScreen(item.name)}>
+              <TouchableOpacity style={styles.btnInCategoryItem} onPress={goToScreen(item.name)}>
                 <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
                   Start
                 </Text>
@@ -121,6 +120,37 @@ const goToScreen = (name) => {
             </ImageBackground>
           </View>)
           })}
+          <View style={styles.categoryItem}>
+            <ImageBackground
+              style={styles.imgBg}
+              resizeMode="cover"
+              source={images.launchScreenImg}
+            >
+              <Text style={styles.textInsideCategoryItem}>Mediation</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem}>
+                <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
+                  Start
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+          {/* End Meditation item */}
+          {/* Sleeping item */}
+          <View style={styles.categoryItem}>
+            <ImageBackground
+              style={styles.imgBg}
+              resizeMode="cover"
+              source={images.sleepingOnBoardingImg}
+            >
+              <Text style={styles.textInsideCategoryItem}>Sleeping</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem} onPress={getQuote}>
+                <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
+                  Start
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+          {/* End Sleeping item */}
         </View>
         {/* End Feature Category */}
         {/* Recommend */}

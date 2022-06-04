@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
   }
   
 const goToScreen = (name) => {
-  console.log("selected cate name: " + name)
+  console.log("selected cate name" + name)
  if (name == "Meditation") {
  navigation.navigate("Meditation");
  } else if (name == "Sleeping") {
@@ -113,7 +113,7 @@ const goToScreen = (name) => {
               source={{uri : item.img}}
             >
               <Text style={styles.textInsideCategoryItem}>{item.name}</Text>
-              <TouchableOpacity style={styles.btnInCategoryItem} onPress={() => goToScreen(item.name)}>
+              <TouchableOpacity style={styles.btnInCategoryItem} onPress={goToScreen(item.name)}>
                 <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
                   Start
                 </Text>

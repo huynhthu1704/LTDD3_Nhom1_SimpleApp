@@ -30,11 +30,6 @@ export default function InspirationalQuote({ item }) {
           position: "absolute",
           top: 20,
         };
-      case "bottom center":
-        return {
-          position: "absolute",
-          bottom: 20,
-        };
     }
     // return positionAfter;
   };
@@ -58,14 +53,7 @@ export default function InspirationalQuote({ item }) {
         source={{ uri: item.img }}
         resizeMode="cover"
       >
-        <Text
-          style={{
-            ...FONTS.h3,
-            textAlign: "center",
-            ...transformPosition(item.text_position),
-            color: item.color,
-          }}
-        >
+        <Text style={{ ...FONTS.h3, textAlign: "center", ...transformPosition(item.text_position), color: item.color }}>
           {item.quote}
         </Text>
       </ImageBackground>
