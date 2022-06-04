@@ -109,7 +109,7 @@ export default SignUp = ({ navigation }) => {
         //console.log(re);
         //When authenticating user successfully will add that user to firestore
         addUserToFirestore(fullname, email, password, lastUser.id);
-        alert("Congratulations " + fullname + " has successfully registered an account for simple app");
+        alert("Congratulations " + fullname + " has successfully registered an account for simple app!");
         getLastUser();
       })
       .catch((re) => {
