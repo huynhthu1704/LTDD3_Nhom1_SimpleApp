@@ -3,12 +3,23 @@
 */
 import React, { useState } from "react";
 import { SIZES } from '../../constants';
-import { Text, View, Icon, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground, TextInput } from 'react-native';
+import { Text, View, Icon, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native';
 import User from "./UserData";
 // import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { authentication } from "../../firebase/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default SignIn = ({ navigation }) => {
+  const signInUser = () => {
+    signInWithEmailAndPassword(authentication, email, password)
+      .then((re) => {
+        setIsSignedIn(true);
+      })
+      .catch((re) => {
+        console.log(re);
+      })
+  }
   //Check textinput email
   const checkEmail = () => {
     if (email.length == 0) {
@@ -53,11 +64,13 @@ export default SignIn = ({ navigation }) => {
       console.log("Error: " + error.message);
     }
   }
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newUser, setNewUser] = useState(null);
   return (
-    <View>
+    <KeyboardAvoidingView behavior={"position"}
+      style={{ flex: 1 }}>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_bg.png')}>
         <SafeAreaView style={styles.container}>
           <Text style={styles.simplehabit}>Welcome Back!</Text>
@@ -104,30 +117,34 @@ export default SignIn = ({ navigation }) => {
             style={styles.login}
             onPress={() => {
               if (checkEmail() && checkPassword()) {
-                if (newUser.length > 0) {
-                  //If match with entered password
-                  if (newUser[0].password == password) {
-                    switch (newUser[0].role) {
-                      //If role == 1 go to HomeTabs
-                      case 1:
-                        alert("Welcome " + newUser[0].username + " to Simple App");
-                        User.setCurrentUser(newUser[0]);
-                        navigation.navigate('HomeTabs');
-                        break;
-                      //If role == 0 go to Admin page
-                      case 0:
-                        console.warn("Go to admin page!");
-                      default:
-                        break;
-                    }
-                  } else {
-                    alert("Your password is uncorrect, please try again!");
-                    passwordTextInput.focus();
-                  }
-                } else {
-                  alert("Your email is unregistered, please try again!");
-                  emailTextInput.focus();
+                signInUser();
+                if (isSignedIn) {
+                  navigation.navigate('HomeTabs');
                 }
+                // if (newUser.length > 0) {
+                //   //If match with entered password
+                //   if (newUser[0].password == password) {
+                //     switch (newUser[0].role) {
+                //       //If role == 1 go to HomeTabs
+                //       case 1:
+                //         alert("Welcome " + newUser[0].username + " to Simple App");
+                //         User.setCurrentUser(newUser[0]);
+                //         navigation.navigate('HomeTabs');
+                //         break;
+                //       //If role == 0 go to Admin page
+                //       case 0:
+                //         console.warn("Go to admin page!");
+                //       default:
+                //         break;
+                //     }
+                //   } else {
+                //     alert("Your password is uncorrect, please try again!");
+                //     passwordTextInput.focus();
+                //   }
+                // } else {
+                //   alert("Your email is unregistered, please try again!");
+                //   emailTextInput.focus();
+                // }
               }
             }}>
             <Text style={styles.buttonTextFaceBook}>LOG IN</Text>
@@ -137,7 +154,7 @@ export default SignIn = ({ navigation }) => {
           </TouchableOpacity>
         </SafeAreaView>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

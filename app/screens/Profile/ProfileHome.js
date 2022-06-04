@@ -14,6 +14,8 @@ import HeaderBar from "../../components/HeaderBar";
 import { COLORS, FONTS, images, SIZES } from "../../constants";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import { authentication } from "../../firebase/firebase";
+import { signOut } from "firebase/auth";
 
 export default function Profile({ navigation }) {
   const imgDimension = 40;
@@ -42,10 +44,29 @@ export default function Profile({ navigation }) {
       icon: "quote-right",
       goToRoute: "Setting",
     },
+    {
+      id: 5,
+      title: "Logout",
+      icon: "quote-right",
+      goToRoute: "Setting",
+      function: "Logout",
+    }
   ];
   const goToRoute = () => {
     alert("Go to setting");
   };
+  //Sign out user
+  const SignOutUser = () => {
+    signOut(authentication)
+    .then((re) => {
+      alert("Log out successfully");
+      navigation.navigate("User");
+    })
+    .catch((re) => {
+      console.log(re);
+    })
+  }
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -86,8 +107,12 @@ export default function Profile({ navigation }) {
                   borderRadius: 10,
                 }}
                 onPress={() => {
-                 
-                  navigation.navigate(item.goToRoute);
+                  if (item.function == "Logout") {
+                    SignOutUser();
+                    navigation.navigate("User");
+                  } else {
+                    navigation.navigate(item.goToRoute);
+                  }
                 }}
               >
                 <FontAwesome
