@@ -15,10 +15,14 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SIZES } from "../../constants";
 import { authentication } from "../../firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore/lite";
+import { db } from "../../firebase/firebase";
+import { async } from "@firebase/util";
+import User from "./UserData";
 // Add user
 const postUser = (fullname, email, password) => {
   // Create form data to send data
@@ -41,7 +45,9 @@ const postUser = (fullname, email, password) => {
   }
 };
 
+
 export default SignUp = ({ navigation }) => {
+  ///CHECK TEXT INPUT
   //Check textinput email
   const checkEmail = () => {
     if (email.length == 0) {
@@ -70,9 +76,7 @@ export default SignUp = ({ navigation }) => {
     return true;
   }
 
-  emailTextInput = React.createRef();
-  fullnameTP = React.createRef();
-  passwordTextInput = React.createRef();
+  ///METHOD FOR API PHP 
   // Search student
   async function searchUserByEmail(email) {
     // Create form data
@@ -97,35 +101,58 @@ export default SignUp = ({ navigation }) => {
       console.log("Error: " + error.message);
     }
   }
-  const [fullname, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [newUser, setNewUser] = useState(null);
-
+  ///METHOD FOR FIRESTORE
+  //SignUp with authentication
   const handleSignUp = () => {
-    // authentication
-    // .createUserWithEmailAndPassword(email, password)
-    // .then(userCredentials =>{
-    //   const user = userCredentials.user;
-    //   console.warn(user.email);
-    // })
-    // .catch(error => alert(error.message))
     createUserWithEmailAndPassword(authentication, email, password)
       .then((re) => {
-        console.log(re);
+        //console.log(re);
+        //When authenticating user successfully will add that user to firestore
+        addUserToFirestore(fullname, email, password, lastUser.id);
+        alert("Congratulations " + fullname + " has successfully registered an account for the application");
+        getLastUser();
       })
       .catch((re) => {
-        console.log(re);
+        alert("Sign up for failed!\nDetail error: " + re);
       })
   }
-
-  const getUsers = async () => {
+  //Get user from firestore
+  const getLastUser = async () => {
     const usersCol = collection(db, 'users');
     const userSnapshot = await getDocs(usersCol);
     const userList = userSnapshot.docs.map(doc => doc.data());
-    console.log("USER");
-    console.log(userList);
+    lastUser = userList[userList.length - 1];
   }
+  //Add user to firestore
+  const addUserToFirestore = async (fullname, email, password, id) => {
+    id = id + 1;
+    let date = new Date();
+    // Add a new document in collection "users"
+    await setDoc(doc(db, "users", ("user" + id)), {
+      id: id,
+      username: fullname,
+      email: email,
+      password: password,
+      user_image: "https://firebasestorage.googleapis.com/v0/b/fir-simpleapp-894a6.appspot.com/o/user_image%2Fuser_default.png?alt=media&token=d39ba0b5-30df-45f9-bceb-42ae49b8bd04",
+      created_at: date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes(),
+      role: 1,
+      disable: false,
+    });
+  }
+
+  ///PROPERTIES
+  emailTextInput = React.createRef();
+  fullnameTP = React.createRef();
+  passwordTextInput = React.createRef();
+  const [fullname, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  var lastUser = null;
+  //useEffect to get last user to set id
+  useEffect(() => {
+    getLastUser();
+  });
+  //const [newUser, setNewUser] = useState(null);
   return (
     <KeyboardAvoidingView
       behavior={"position"}
@@ -207,13 +234,13 @@ export default SignUp = ({ navigation }) => {
               }
             }}
           >
-            <Text style={styles.buttonTextFaceBook}>GET STARTED</Text>
+            <Text style={styles.buttonTextFaceBook}>SIGN UP</Text>
           </TouchableOpacity>
           <Text>ALREADY HAVE AN ACCOUNT?</Text>
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate('SignIn')
-              getUsers();
+              navigation.navigate('SignIn');
+              //console.log(lastUser.id)
             }}>
             <Text style={{ color: 'blue' }}>LOG IN</Text>
           </TouchableOpacity>
