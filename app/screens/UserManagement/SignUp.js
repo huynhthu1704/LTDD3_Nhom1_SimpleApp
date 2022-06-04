@@ -18,8 +18,7 @@ import {
 import React, { useState } from "react";
 import { SIZES } from "../../constants";
 import { authentication } from "../../firebase/firebase";
-import {createUserWithEmailAndPassword} from "firebase/auth";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
 // Add user
 const postUser = (fullname, email, password) => {
   // Create form data to send data
@@ -103,7 +102,7 @@ export default SignUp = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [newUser, setNewUser] = useState(null);
 
-  const handleSignUp = () =>{
+  const handleSignUp = () => {
     // authentication
     // .createUserWithEmailAndPassword(email, password)
     // .then(userCredentials =>{
@@ -112,17 +111,25 @@ export default SignUp = ({ navigation }) => {
     // })
     // .catch(error => alert(error.message))
     createUserWithEmailAndPassword(authentication, email, password)
-    .then((re) => {
-      console.log(re);
-    })
-    .catch((re) => {
-      console.log(re);
-    })
+      .then((re) => {
+        console.log(re);
+      })
+      .catch((re) => {
+        console.log(re);
+      })
+  }
+
+  const getUsers = async () => {
+    const usersCol = collection(db, 'users');
+    const userSnapshot = await getDocs(usersCol);
+    const userList = userSnapshot.docs.map(doc => doc.data());
+    console.log("USER");
+    console.log(userList);
   }
   return (
-    <KeyboardAvoidingView 
-    behavior={"position"}
-    style={{ flex : 1}}
+    <KeyboardAvoidingView
+      behavior={"position"}
+      style={{ flex: 1 }}
     >
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_bg.png')}>
         <SafeAreaView style={styles.container}>
@@ -205,7 +212,8 @@ export default SignUp = ({ navigation }) => {
           <Text>ALREADY HAVE AN ACCOUNT?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SignIn')
+              // navigation.navigate('SignIn')
+              getUsers();
             }}>
             <Text style={{ color: 'blue' }}>LOG IN</Text>
           </TouchableOpacity>

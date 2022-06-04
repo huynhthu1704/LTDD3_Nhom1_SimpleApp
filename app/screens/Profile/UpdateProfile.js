@@ -44,6 +44,7 @@ export default function UpdateProfile({ navigation }) {
       setHasPermission(status.status === "granted");
     })();
   }, []);
+  console.log(authentication.currentUser);
   return (
     <View>
       <ScrollView>
@@ -66,13 +67,13 @@ export default function UpdateProfile({ navigation }) {
           </View>
 
           <View style={styles.infoSection}>
-            <Text>{authentication.currentUser?.email}</Text>
             <Text style={[styles.content, { width: "30%" }]}>Name : </Text>
             <View style={styles.textInputView}>
               <TextInput
                 multiline={true}
                 style={styles.textInput}
-                value={nameAfterChange}
+                value={authentication.currentUser?.email}
+                //value={nameAfterChange}
                 onChangeText={(text) => {
                   setNameAfterChange(text);
                   console.log("nameAfterChange:" + nameAfterChange);

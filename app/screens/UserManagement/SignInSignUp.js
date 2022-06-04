@@ -9,17 +9,18 @@ import { authentication } from '../../firebase/firebase';
 
 
 export default SignInSignUp = ({ navigation }) => {
-  console.log(JSON.stringify(authentication.currentUser, null, 4));
-  const [email, setEmail] = useState(null);
+  //console.log(JSON.stringify(authentication.currentUser, null, 4));
   useEffect(() => {
-    setEmail(authentication.currentUser?.email);
+    if (authentication.currentUser != null) {
+      navigation.navigate("HomeTabs");
+    }
   })
 
   return (
     <View>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_signup_bg.png')}>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.simplehabit}>SIMPLE HABIT {email}</Text>
+          <Text style={styles.simplehabit}>SIMPLE HABIT</Text>
           <Image style={styles.image} source={require('../../../assets/images/signin_signup.png')} />
           <TouchableOpacity
             onPress={() => {

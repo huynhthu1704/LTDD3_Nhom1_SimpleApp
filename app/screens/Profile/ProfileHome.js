@@ -109,6 +109,7 @@ export default function Profile({ navigation }) {
                 onPress={() => {
                   if (item.function == "Logout") {
                     SignOutUser();
+                    navigation.navigate("User");
                   } else {
                     navigation.navigate(item.goToRoute);
                   }

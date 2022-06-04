@@ -130,8 +130,8 @@ export default function MainContainer() {
           headerShown: false,
         })}
       >
-                <HomeStack.Screen name="HomeTabs" component={HomeTabs} />
         <HomeStack.Screen name="User" component={SignInSignUpNavigator}/>
+        <HomeStack.Screen name="HomeTabs" component={HomeTabs} />
 
         {/* Sleeping module */}
         <HomeStack.Screen
