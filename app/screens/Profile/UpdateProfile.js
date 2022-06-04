@@ -6,23 +6,28 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { user } from "../../constants/data";
 import { FONTS, COLORS, SIZES } from "../../constants/index";
 import { NativeScreenNavigationContainer } from "react-native-screens";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { authentication } from "../../firebase/firebase";
+import User from "../UserManagement/UserData";
+import { updateDoc, doc } from "firebase/firestore/lite";
+import { db } from "../../firebase/firebase";
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 const avatarSize = 150;
 
 export default function UpdateProfile({ navigation }) {
-  const userInfo = user;
-  const fullName = user.fullName;
-  const [nameAfterChange, setNameAfterChange] = useState(fullName);
+  const [nameAfterChange, setNameAfterChange] = useState(User.currentUser.username);
   const [didEdit, setEditStatus] = useState(false);
-  const [image, setImage] = useState(null);
-  const [hasPermission, setHasPermission] = useState(null);
+  const [image, setImage] = useState(User.currentUser.user_image);
+  const storage = getStorage();
+  //const [hasPermission, setHasPermission] = useState(null);
+  const storageRef = ref(storage, "user_image/user" + User.currentUser.id + ".jpg");
+  //Upload image to storage firebase
+
   const pickImage = async () => {
     //No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -32,19 +37,47 @@ export default function UpdateProfile({ navigation }) {
       quality: 1,
     });
 
-    console.log(result);
+    //console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
+
+      //convert image to array of bytes
+      const img = await fetch(result.uri);
+      const bytes = await img.blob();
+      const uploadImage = uploadBytesResumable(storageRef, bytes);
+      uploadImage.then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+        //Get url after upload image for user
+        getDownloadURL(uploadImage.snapshot.ref).then((downloadURL) => {
+          updateCurrentUserWithImage(downloadURL);
+        });
+      });
     }
   };
-  useEffect(() => {
-    (async () => {
-      const status = ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasPermission(status.status === "granted");
-    })();
-  }, []);
-  console.log(authentication.currentUser);
+
+  //METHOD FOR FIRESTORE
+  //Update user with username
+  const updateCurrentUser = async () => {
+    const userRef = doc(db, "users", "user" + User.currentUser.id);
+
+    // Remove the 'capital' field from the document
+    await updateDoc(userRef, {
+      username: nameAfterChange
+    });
+    User.currentUser.username = nameAfterChange;
+  };
+  //Update user with image
+  const updateCurrentUserWithImage = async (imageLink) => {
+    const userRef = doc(db, "users", "user" + User.currentUser.id);
+
+    // Remove the 'capital' field from the document
+    await updateDoc(userRef, {
+      user_image: imageLink
+    });
+    User.currentUser.user_image = imageLink;
+  };
+
   return (
     <View>
       <ScrollView>
@@ -52,7 +85,7 @@ export default function UpdateProfile({ navigation }) {
           <View style={styles.avatarView}>
             <Image
               style={styles.avatar}
-              source={image ? {uri:image}  : userInfo.avatar}
+              source={image ? { uri: image } : User.currentUser.user_image}
             />
             <TouchableOpacity
               style={{
@@ -60,28 +93,27 @@ export default function UpdateProfile({ navigation }) {
                 bottom: 20,
                 right: 0,
               }}
-              onPress={pickImage }
+              onPress={pickImage}
             >
               <FontAwesome name="camera" size={SIZES.h2} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.infoSection}>
-            <Text style={[styles.content, { width: "30%" }]}>Name : </Text>
+            <Text style={[styles.content, { width: "33%", fontWeight: 'bold' }]}>Username : </Text>
             <View style={styles.textInputView}>
               <TextInput
                 multiline={true}
                 style={styles.textInput}
-                value={authentication.currentUser?.email}
-                //value={nameAfterChange}
+                //value={User.currentUser.email}
+                value={nameAfterChange}
                 onChangeText={(text) => {
                   setNameAfterChange(text);
-                  console.log("nameAfterChange:" + nameAfterChange);
                   setEditStatus(true);
                 }}
-                onBlur={() => {
-                  setEditStatus(false);
-                }}
+                // onBlur={() => {
+                //   setEditStatus(true);
+                // }}
                 returnKeyType="done"
               />
             </View>
@@ -89,44 +121,44 @@ export default function UpdateProfile({ navigation }) {
             {/* <Text style={[styles.content, {flex: 1, flexWrap: "wrap", }]}>{userInfo.fullName}</Text> */}
           </View>
           <View style={styles.infoSection}>
+            <Text style={[styles.content, { width: "33%", fontWeight: 'bold' }]}>Email : </Text>
+            <View style={styles.textInputView}>
+              <Text style={styles.text}>{User.currentUser.email}</Text>
+            </View>
+          </View>
+          <View style={styles.infoSection}>
+            <Text style={[styles.content, { width: "33%", fontWeight: 'bold' }]}>Created at : </Text>
+            <View style={styles.textInputView}>
+              <Text style={styles.text}>{User.currentUser.created_at}</Text>
+            </View>
+          </View>
+          {/* <View style={styles.infoSection}>
             <Text style={[styles.content, { width: "30%" }]}>Birthday : </Text>
             <Text style={[styles.content, { flex: 1, flexWrap: "wrap" }]}>
-              {userInfo.birthday}
             </Text>
-          </View>
+          </View> */}
           <TouchableOpacity
             style={[
               styles.btn,
               styles.btnDone,
-              { display: didEdit ? "flex" : "none" },
             ]}
             onPress={() => {
-              alert("Information is updated");
-              console.log("nameAfterChange:" + nameAfterChange);
-              setEditStatus(false);
+              if (didEdit) {
+                updateCurrentUser();
+                alert("Change username successfully!");
+                setEditStatus(false);
+              }else{
+                navigation.navigate("ChangePassword");
+              }
             }}
           >
-            <Text style={[styles.content, { color: COLORS.white }]}>DONE</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              styles.changePwdBtn,
-              { display: !didEdit ? "flex" : "none" },
-            ]}
-            onPress={() => {
-              // alert("hi");
-              navigation.navigate("ChangePassword");
-            }}
-          >
-            <Text style={[styles.content, { color: COLORS.white }]}>
-              Change password
-            </Text>
+            <Text style={[styles.content, { color: COLORS.black, fontWeight: 'bold' }]}>{didEdit ? "EDIT MY INFOMATION " : "CHANGE PASSWORD "}</Text>
             <FontAwesome
-              name="arrow-right"
-              color={COLORS.white}
-              size={SIZES.h2}
-            />
+                name="arrow-right"
+                color={COLORS.black}
+                size={SIZES.h2}
+                style={{display: didEdit ? "none" : "flex"}}
+              />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -154,15 +186,29 @@ const styles = StyleSheet.create({
   textInputView: {
     paddingVertical: 5,
     // paddingHorizontal: 20,
-    // backgroundColor: COLORS.lightGray,
-    width: "70%",
+    //backgroundColor: COLORS.lightGray,
+    width: "67%",
+  },
+  text: {
+    fontFamily: FONTS.body3.fontFamily,
+    lineHeight: FONTS.body3.lineHeight,
+    fontSize: SIZES.androidHeightWithStatusBar.window * 0.023,
+    width: "120%",
+    padding: 5,
+    color: 'black'
+    //backgroundColor: "green"
   },
   textInput: {
-    color: COLORS.black,
-    ...FONTS.body3,
+    fontFamily: FONTS.body3.fontFamily,
+    lineHeight: FONTS.body3.lineHeight,
+    fontSize: SIZES.androidHeightWithStatusBar.window * 0.023,
     width: "100%",
     padding: 5,
-    // backgroundColor: "green"
+    color: 'black',
+    borderColor: "black",
+    borderRadius: 10,
+    borderWidth: 1,
+    color: COLORS.black,
   },
   btn: {
     flexDirection: "row",

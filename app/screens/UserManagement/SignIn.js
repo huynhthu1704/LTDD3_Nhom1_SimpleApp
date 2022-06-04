@@ -73,10 +73,10 @@ export default SignIn = ({ navigation }) => {
   //PROPERTIES
   emailTextInput = React.createRef();
   passwordTextInput = React.createRef();
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  //const [isSignedIn, setIsSignedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [newUser, setNewUser] = useState(null);
+  //const [newUser, setNewUser] = useState(null);
 
   ///RETURN
   return (

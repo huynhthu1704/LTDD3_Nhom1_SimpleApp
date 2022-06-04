@@ -18,7 +18,8 @@ import { db } from "../../firebase/firebase";
 import { async } from "@firebase/util";
 
 export default class User{
-  constructor(users) {
+  static currentUser = null;
+  constructor(user) {
     this.users = users;
   }
   getUsers = async () => {
