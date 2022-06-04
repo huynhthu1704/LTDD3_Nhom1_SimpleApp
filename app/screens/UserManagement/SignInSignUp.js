@@ -1,12 +1,21 @@
 /*Author: Nguyen Thi Quynh Anh
   Date: 05/04/2022
 */
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
 import { SIZES } from '../../constants';
+import { authentication } from '../../firebase/firebase';
+
 
 
 export default SignInSignUp = ({ navigation }) => {
+  //console.log(JSON.stringify(authentication.currentUser, null, 4));
+  useEffect(() => {
+    if (authentication.currentUser != null) {
+      navigation.navigate("HomeTabs");
+    }
+  })
+
   return (
     <View>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_signup_bg.png')}>

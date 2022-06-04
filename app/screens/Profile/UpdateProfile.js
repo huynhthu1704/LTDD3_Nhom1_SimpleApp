@@ -13,6 +13,7 @@ import { FONTS, COLORS, SIZES } from "../../constants/index";
 import { NativeScreenNavigationContainer } from "react-native-screens";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { authentication } from "../../firebase/firebase";
 const avatarSize = 150;
 
 export default function UpdateProfile({ navigation }) {
@@ -43,6 +44,7 @@ export default function UpdateProfile({ navigation }) {
       setHasPermission(status.status === "granted");
     })();
   }, []);
+  console.log(authentication.currentUser);
   return (
     <View>
       <ScrollView>
@@ -70,7 +72,8 @@ export default function UpdateProfile({ navigation }) {
               <TextInput
                 multiline={true}
                 style={styles.textInput}
-                value={nameAfterChange}
+                value={authentication.currentUser?.email}
+                //value={nameAfterChange}
                 onChangeText={(text) => {
                   setNameAfterChange(text);
                   console.log("nameAfterChange:" + nameAfterChange);

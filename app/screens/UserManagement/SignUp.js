@@ -11,12 +11,14 @@ import {
   Modal,
   ScrollView,
   ImageBackground,
-  SafeAreaView
+  SafeAreaView,
+  KeyboardAvoidingView
 } from "react-native";
 
 import React, { useState } from "react";
 import { SIZES } from "../../constants";
-
+import { authentication } from "../../firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 // Add user
 const postUser = (fullname, email, password) => {
   // Create form data to send data
@@ -53,7 +55,7 @@ export default SignUp = ({ navigation }) => {
   const checkUsername = () => {
     if (fullname.length == 0) {
       alert("Please enter your fullname!");
-      usernameTextInput.focus();
+      fullnameTP.focus();
       return false;
     }
     return true;
@@ -69,7 +71,7 @@ export default SignUp = ({ navigation }) => {
   }
 
   emailTextInput = React.createRef();
-  usernameTextInput = React.createRef();
+  fullnameTP = React.createRef();
   passwordTextInput = React.createRef();
   // Search student
   async function searchUserByEmail(email) {
@@ -99,8 +101,36 @@ export default SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newUser, setNewUser] = useState(null);
+
+  const handleSignUp = () => {
+    // authentication
+    // .createUserWithEmailAndPassword(email, password)
+    // .then(userCredentials =>{
+    //   const user = userCredentials.user;
+    //   console.warn(user.email);
+    // })
+    // .catch(error => alert(error.message))
+    createUserWithEmailAndPassword(authentication, email, password)
+      .then((re) => {
+        console.log(re);
+      })
+      .catch((re) => {
+        console.log(re);
+      })
+  }
+
+  const getUsers = async () => {
+    const usersCol = collection(db, 'users');
+    const userSnapshot = await getDocs(usersCol);
+    const userList = userSnapshot.docs.map(doc => doc.data());
+    console.log("USER");
+    console.log(userList);
+  }
   return (
-    <View>
+    <KeyboardAvoidingView
+      behavior={"position"}
+      style={{ flex: 1 }}
+    >
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_bg.png')}>
         <SafeAreaView style={styles.container}>
           <Text style={styles.simplehabit}>Create your account</Text>
@@ -121,7 +151,7 @@ export default SignUp = ({ navigation }) => {
           <Text style={{ marginBottom: 30 }}>OR LOG IN WITH EMAIL</Text>
           <TextInput
             ref={(ref) => {
-              usernameTextInput = ref;
+              fullnameTP = ref;
             }}
             style={styles.textInput}
             placeholder="Enter your fullname"
@@ -160,19 +190,20 @@ export default SignUp = ({ navigation }) => {
             style={styles.login}
             onPress={() => {
               if (checkUsername() && checkEmail() && checkPassword()) {
-                if (newUser != null) {
-                  if (newUser.length != 1) {
-                    alert("Create user with email " + email + " successfully!");
-                    postUser(fullname, email, password);
-                    setEmail("");
-                    setFullName("");
-                    setPassword(""); 7
-                  } else {
-                    alert("Create user with email " + email + " fail!\nMaybe duplicate email, please enter another email");
-                  }
-                } else {
-                  alert("Create user with email " + email + " fail!\nMaybe duplicate email, please enter another email");
-                }
+                // if (newUser != null) {
+                //   if (newUser.length != 1) {
+                //     alert("Create user with email " + email + " successfully!");
+                //     postUser(fullname, email, password);
+                //     setEmail("");
+                //     setFullName("");
+                //     setPassword(""); 7
+                //   } else {
+                //     alert("Create user with email " + email + " fail!\nMaybe duplicate email, please enter another email");
+                //   }
+                // } else {
+                //   alert("Create user with email " + email + " fail!\nMaybe duplicate email, please enter another email");
+                // }
+                handleSignUp();
               }
             }}
           >
@@ -181,13 +212,14 @@ export default SignUp = ({ navigation }) => {
           <Text>ALREADY HAVE AN ACCOUNT?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SignIn')
+              // navigation.navigate('SignIn')
+              getUsers();
             }}>
             <Text style={{ color: 'blue' }}>LOG IN</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
