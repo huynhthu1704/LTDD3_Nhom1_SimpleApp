@@ -113,7 +113,7 @@ export default SignUp = ({ navigation }) => {
         getLastUser();
       })
       .catch((re) => {
-        alert("Sign up for failed!\nDetail error: " + re);
+        alert("Sign up for failed!\nDetailed error: " + re);
       })
   }
   //Get user from firestore
