@@ -38,7 +38,7 @@ export default function SleepingHome({ navigation }) {
     const playlistCol = collection(db, "playlists");
     const playlistSnapshot = await getDocs(playlistCol);
     const playlist = playlistSnapshot.docs.map((doc) => doc.data());
-    // console.log(JSON.stringify(playlist));
+    console.log(JSON.stringify(playlist));
     setPlaylist(playlist);
   }
 
@@ -46,7 +46,7 @@ export default function SleepingHome({ navigation }) {
     const audioCol = collection(db, "audios");
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
-    // console.log(JSON.stringify(audioList));
+    console.log(JSON.stringify(audioList));
     setAudios(audioList);
   }
 
@@ -59,7 +59,7 @@ export default function SleepingHome({ navigation }) {
       item.data = audioArr;
     });
     console.log("temp");
-    // console.log(JSON.stringify(temp));
+    console.log(JSON.stringify(temp));
     setPlaylistWithAudio(temp);
   }
 
@@ -100,7 +100,7 @@ export default function SleepingHome({ navigation }) {
         <SectionList
           style={{ marginLeft: 10 }}
           sections={playlistWithAudio}
-          keyExtractor={(item, index) => "playlist_" + index}
+          keyExtractor={(item, index) => item.playlist_id}
           renderItem={({ item }) => {
             return null;
             return (
@@ -154,10 +154,14 @@ export default function SleepingHome({ navigation }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={section.data}
-                keyExtractor={(item, index) => "audio" + item.audio_id}
-                renderItem={({ item }) => (
+                keyExtractor={(item2, index) => 
+                {
+                  console.log("item.audio_id" + item2.audio_id);
+                  return "audio"+ item2.audio_id 
+                }}
+                renderItem={({ item2 }) => (
                   <AudioItem
-                    item={item}
+                    item={item2}
                     navigation={navigation}
                     size={imgSize}
                     padding={SIZES.padding / 4}
