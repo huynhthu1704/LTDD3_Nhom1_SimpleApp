@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar} from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -24,16 +24,27 @@ import SignIn from "./UserManagement/SignIn"
 import SignInSignUp from "./UserManagement/SignInSignUp";
 import SignUp from "./UserManagement/SignUp";
 import { SleepingHome, ListDetail, PlayAudio } from "../screens/Sleeping/index";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import UserManagementScreen from "../screens/admin/UserManagementScreen";
 
+///DRAWER FOR ADMIN
+const AdminDrawer = createDrawerNavigator();
 
+const AdminDrawerNavigator = () => {
+  return (
+    <AdminDrawer.Navigator initialRouteName="FAHASA ABOUT">
+      <AdminDrawer.Screen name="USER MANAGEMENT" component={UserManagementScreen} />
+    </AdminDrawer.Navigator>
+  );
+}
 const signUpsignInStack = createStackNavigator();
 //SignInSignUpNavigator
 const SignInSignUpNavigator = () => {
-  return(
+  return (
     <signUpsignInStack.Navigator>
-      <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }}/>
-      <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
-      <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+      <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} />
+      <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+      <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
     </signUpsignInStack.Navigator>
   );
 }
@@ -62,7 +73,7 @@ const MeditationNavigator = () => {
       <Stack.Screen name="Tutorial" component={TutorialMindfulScreen} />
       <Stack.Screen name="Music" component={ChoseMusicForMeditatingScreen} />
       {/* <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  /> */}
-      <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }}  />
+      <Stack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
@@ -95,10 +106,10 @@ const HomeTabs = () => {
       inactiveTintColor={COLORS.red}
     >
       {/* <Tab.Screen name="LaunchScreen" component={LaunchScreen} /> */}
-      <Tab.Screen name="Home" component={HomeScreen}  options={{
-          headerShown: false,
-          // ...headerStyle(COLORS.black, COLORS.purple)
-        }}/>
+      <Tab.Screen name="Home" component={HomeScreen} options={{
+        headerShown: false,
+        // ...headerStyle(COLORS.black, COLORS.purple)
+      }} />
       <Tab.Screen name="Meditation" component={MeditationNavigator} />
       <Tab.Screen name="Workspace" component={WorkspaceScreen} />
       <Tab.Screen
@@ -130,19 +141,19 @@ export default function MainContainer() {
           headerShown: false,
         })}
       >
-        <HomeStack.Screen name="User" component={SignInSignUpNavigator}/>
+        <HomeStack.Screen name="User" component={SignInSignUpNavigator} />
         <HomeStack.Screen name="HomeTabs" component={HomeTabs} />
 
         {/* Sleeping module */}
         <HomeStack.Screen
           name="ListDetail"
           component={ListDetail}
-          options={ ({route}) => {
+          options={({ route }) => {
             return {
               ...headerStyle(COLORS.white, COLORS.purple),
               headerTitle: route.params.title
             }
-            
+
           }}
         />
         <HomeStack.Screen
@@ -156,7 +167,7 @@ export default function MainContainer() {
         />
         {/* End Sleeping module */}
 
-{/* Profile module */}
+        {/* Profile module */}
         <HomeStack.Screen
           name="Favorites"
           component={Favorites}
@@ -188,6 +199,7 @@ export default function MainContainer() {
           }}
         />
         <HomeStack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }} />
+        <HomeStack.Screen name="Admin" component={AdminDrawerNavigator} options={{ headerShown: false }} />
         {/* End profile module */}
       </HomeStack.Navigator>
     </NavigationContainer>

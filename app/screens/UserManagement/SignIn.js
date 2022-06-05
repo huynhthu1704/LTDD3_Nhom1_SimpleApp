@@ -5,10 +5,9 @@ import React, { useState } from "react";
 import { SIZES } from '../../constants';
 import { Text, View, Icon, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native';
 import User from "./UserData";
-// import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { authentication } from "../../firebase/firebase";
+import { authentication, db } from "../../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore/lite";
 
 export default SignIn = ({ navigation }) => {
   ///METHOD FOR CHECKING TEXTINPUT
@@ -33,37 +32,60 @@ export default SignIn = ({ navigation }) => {
 
   ///METHOD FOR API WITH API
   // Search student
-  async function searchUserByEmail(email) {
-    // Create form data
-    let formdata = new FormData();
-    formdata.append("email", email);
-    formdata.append("type", "search");
-    // Fetch data
-    try {
-      const response = await fetch(
-        "https://studentmanagementapi.000webhostapp.com/API_User.php",
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          body: formdata,
-        }
-      );
-      const json = await response.json();
-      setNewUser(json);
-    } catch (error) {
-      console.log("Error: " + error.message);
-    }
-  }
+  // async function searchUserByEmail(email) {
+  //   // Create form data
+  //   let formdata = new FormData();
+  //   formdata.append("email", email);
+  //   formdata.append("type", "search");
+  //   // Fetch data
+  //   try {
+  //     const response = await fetch(
+  //       "https://studentmanagementapi.000webhostapp.com/API_User.php",
+  //       {
+  //         method: "post",
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //         body: formdata,
+  //       }
+  //     );
+  //     const json = await response.json();
+  //     setNewUser(json);
+  //   } catch (error) {
+  //     console.log("Error: " + error.message);
+  //   }
+  // }
   ///METHOD WITH API FOR FIREBASE
+  //Get current user
+  const getCurrentUser = async () => {
+    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      User.currentUser = doc.data();
+      switch (User.currentUser.role) {
+        //Check if role == 0 => navigate to Admin
+        case 0:
+          navigation.navigate("Admin");
+          break;
+        //Check if role == 1 => navigate to HomeTabs
+        case 1:
+          navigation.navigate("HomeTabs");
+        default:
+          break;
+      }
+    });
+  };
   //Sign in user with authentication
   const signInUser = () => {
     signInWithEmailAndPassword(authentication, email, password)
       .then((re) => {
         // setIsSignedIn(true);
         alert("Sign in with " + email + " successfully!");
-        navigation.navigate("HomeTabs");
+        //Get current user info
+        getCurrentUser();
       })
       .catch((re) => {
         alert("Sign in failed!\nDetailed error: " + re);

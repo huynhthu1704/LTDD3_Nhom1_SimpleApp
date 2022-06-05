@@ -13,8 +13,8 @@
 // }
 
 // export default User;
-import { collection, getDocs } from "firebase/firestore/lite";
-import { db } from "../../firebase/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import { db, authentication } from "../../firebase/firebase";
 import { async } from "@firebase/util";
 
 export default class User{
@@ -22,10 +22,14 @@ export default class User{
   constructor(user) {
     this.users = users;
   }
-  getUsers = async () => {
-    const usersCol = collection(db, 'users');
-    const userSnapshot = await getDocs(usersCol);
-    const userList = userSnapshot.docs.map(doc => doc.data());
-    this.users = userList;
-  }
+  static async getCurrentUser(){
+    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      User.currentUser = doc.data();
+    });
+  };
 }
