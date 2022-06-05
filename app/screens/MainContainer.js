@@ -26,6 +26,8 @@ import SignUp from "./UserManagement/SignUp";
 import { SleepingHome, ListDetail, PlayAudio } from "../screens/Sleeping/index";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import UserManagementScreen from "../screens/admin/UserManagementScreen";
+import UserDetailScreen from "./admin/UserDetailScreen";
+import StatisticalScreen from "./admin/StatisticalScreen";
 
 ///DRAWER FOR ADMIN
 const AdminDrawer = createDrawerNavigator();
@@ -33,6 +35,7 @@ const AdminDrawer = createDrawerNavigator();
 const AdminDrawerNavigator = () => {
   return (
     <AdminDrawer.Navigator initialRouteName="FAHASA ABOUT">
+      <AdminDrawer.Screen name="STATISTICAL APP" component={StatisticalScreen} />
       <AdminDrawer.Screen name="USER MANAGEMENT" component={UserManagementScreen} />
     </AdminDrawer.Navigator>
   );
@@ -42,7 +45,7 @@ const signUpsignInStack = createStackNavigator();
 const SignInSignUpNavigator = () => {
   return (
     <signUpsignInStack.Navigator>
-      <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} />
+      {/* <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} /> */}
       <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
     </signUpsignInStack.Navigator>
@@ -200,6 +203,7 @@ export default function MainContainer() {
         />
         <HomeStack.Screen name="Started" component={GettingStartedScreen} options={{ headerShown: false }} />
         <HomeStack.Screen name="Admin" component={AdminDrawerNavigator} options={{ headerShown: false }} />
+        <HomeStack.Screen name="UserDetails" component={UserDetailScreen} options={{ headerShown: true }} />
         {/* End profile module */}
       </HomeStack.Navigator>
     </NavigationContainer>

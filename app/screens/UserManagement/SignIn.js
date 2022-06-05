@@ -1,7 +1,7 @@
 /*Author: Nguyen Thi Quynh Anh
   Date: 05/04/2022
 */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SIZES } from '../../constants';
 import { Text, View, Icon, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native';
 import User from "./UserData";
@@ -100,26 +100,21 @@ export default SignIn = ({ navigation }) => {
   const [password, setPassword] = useState("");
   //const [newUser, setNewUser] = useState(null);
 
+  //console.log(JSON.stringify(authentication.currentUser.email, null, 4));
+  useEffect(() => {
+    if (authentication.currentUser != null) {
+      getCurrentUser();
+      //console.log(JSON.stringify(authentication.currentUser, null, 4));
+    }
+  })
   ///RETURN
   return (
     <KeyboardAvoidingView behavior={"position"}
       style={{ flex: 1 }}>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_bg.png')}>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.simplehabit}>Welcome Back!</Text>
-          <TouchableOpacity
-            style={styles.facebook}>
-            <View style={{ flexDirection: 'row', ustifyContent: 'center' }}>
-              <Text style={styles.buttonTextFaceBook}>CONTINUE WITH FACEBOOK</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.google}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-              <Text style={styles.buttonTextGoogle}>CONTINUE WITH GOOGLE</Text>
-            </View>
-          </TouchableOpacity>
-          <Text style={{ marginBottom: 30 }}>OR LOG IN WITH EMAIL</Text>
+          <Text style={styles.simplehabit}>SIMPLE HABIT</Text>
+          <Image style={styles.image} source={require('../../../assets/images/signin_signup.png')} />
           <TextInput
             ref={(ref) => {
               emailTextInput = ref;
@@ -130,9 +125,9 @@ export default SignIn = ({ navigation }) => {
             onChangeText={(text) => {
               setEmail(text);
             }}
-            // onEndEditing={() => {
-            //   searchUserByEmail(email);
-            // }}
+          // onEndEditing={() => {
+          //   searchUserByEmail(email);
+          // }}
           />
           <TextInput
             ref={(ref) => {
@@ -182,8 +177,8 @@ export default SignIn = ({ navigation }) => {
             }}>
             <Text style={styles.buttonTextFaceBook}>LOG IN</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Forgot Password?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Text>Sign up</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </ImageBackground>
@@ -285,5 +280,20 @@ const styles = StyleSheet.create({
     borderRadius: 38,
     alignItems: 'center',
     marginBottom: 50
-  }
+  },
+  image: {
+    height: 120,
+    width: 301,
+    marginBottom: 130
+  },
+  simplehabit: {
+    paddingTop: 70,
+    paddingBottom: 90,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 28,
+    lineHeight: 52,
+    letterSpacing: 5,
+    color: '#000000',
+  },
 });

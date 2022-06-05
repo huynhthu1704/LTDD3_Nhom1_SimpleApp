@@ -86,8 +86,7 @@ export default function Profile({ navigation }) {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ alignItems: "center" }}>
         {/* Chart */}
-        <View style={{ height: 400 }}>{/* Put the chart here */}</View>
-
+        {/* <View style={{ height: 400 }}></View> */}
         {/* Selection */}
         <View style={{ width: "80%" }}>
           {data.map((item, i) => {
