@@ -25,9 +25,8 @@ import {
 import AudioItem from "./AudioItem";
 import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from "../../firebase/firebase";
-import { async } from "@firebase/util";
 
-const imgSize = 140;
+const imgSize = 120;
 
 export default function SleepingHome({ navigation }) {
   const [audios, setAudios] = useState(null);
@@ -36,57 +35,33 @@ export default function SleepingHome({ navigation }) {
 
   async function getPlaylists() {
     const playlistCol = collection(db, "playlists");
+
     const playlistSnapshot = await getDocs(playlistCol);
+    // console.log(playlistSnapshot);
     const playlist = playlistSnapshot.docs.map((doc) => doc.data());
     console.log(JSON.stringify(playlist));
+    //
     setPlaylist(playlist);
   }
-
   async function getAudios() {
     const audioCol = collection(db, "audios");
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
     console.log(JSON.stringify(audioList));
+    const temp = playlists;
+    console.log("temp");
+    temp.map((item, index) => {
+      const audioArr = audioList.filter((item2) => item2.playlist_id == item.playlist_id)
+      item.data = audioArr;
+    });
+    setPlaylistWithAudio(temp);
+    // console.log(JSON.stringify(temp));
     setAudios(audioList);
   }
 
-  async function getPlaylistWithAudio() {
-    const temp = playlists;
-    temp.map((item, index) => {
-      const audioArr = audios.filter(
-        (item2) => item2.playlist_id == item.playlist_id
-      );
-      item.data = audioArr;
-    });
-    console.log("temp");
-    console.log(JSON.stringify(temp));
-    setPlaylistWithAudio(temp);
-  }
-
-  function hihi() {
-    const promise = new Promise(getPlaylists);
-    console.log("hi");
-    promise.then(
-      async function () {
-        const audioCol = collection(db, "audios");
-        const audioSnapshot = await getDocs(audioCol);
-        const audioList = audioSnapshot.docs.map((doc) => doc.data());
-        console.log(JSON.stringify(audioList));
-        setAudios(audioList);
-      },
-      function (error) {
-        console.log("Promise rejected.");
-        console.log(error.message);
-      }
-    );
-  }
   useEffect(() => {
-    (async () => {
-      await getAudios();
-      await getPlaylists();
-    
-      await getPlaylistWithAudio();
-    })();
+    getPlaylists();
+    getAudios();
   }, []);
 
   return (
@@ -101,7 +76,7 @@ export default function SleepingHome({ navigation }) {
         <SectionList
           style={{ marginLeft: 10 }}
           sections={playlistWithAudio}
-          keyExtractor={(item, index) => item.playlist_id}
+          keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => {
             return null;
             return (
@@ -118,14 +93,7 @@ export default function SleepingHome({ navigation }) {
                 }}
               >
                 <Text
-                  numberOfLines={2}
-                  ellipsizeMode={"tail"}
-                  style={{
-                    ...FONTS.h2,
-                    color: COLORS.white,
-                    opacity: 0.9,
-                    flex: 0.8,
-                  }}
+                  style={{ ...FONTS.h2, color: COLORS.white, opacity: 0.9 }}
                 >
                   {section.name}
                 </Text>
@@ -133,21 +101,15 @@ export default function SleepingHome({ navigation }) {
                   onPress={() => {
                     navigation.navigate("ListDetail", { title: section.name });
                   }}
-                  style={{
-                    flex: 0.2,
-                    alignItems: "flex-end",
-                    justifyContent: "flex-start",
-                    paddingRight: 10,
-                  }}
                 >
                   <Text
                     style={{
-                      ...FONTS.body4,
+                      ...FONTS.body3,
                       color: COLORS.white,
                       opacity: 0.9,
                     }}
                   >
-                    View all
+                    View all{" "}
                   </Text>
                 </Pressable>
               </View>
@@ -155,7 +117,6 @@ export default function SleepingHome({ navigation }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={section.data}
-                keyExtractor={(item) => item.audio_id }
                 renderItem={({ item }) => (
                   <AudioItem
                     item={item}

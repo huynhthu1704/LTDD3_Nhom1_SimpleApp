@@ -129,16 +129,16 @@ const goToScreen = (name) => {
         </View>
         {/* End Feature Category */}
         {/* Recommend */}
-        {/* <View style={styles.view}>
+        <View style={styles.view}>
           <Text style={{...FONTS.h2}}>Recommend for you</Text>
           <FlatList
            horizontal
                 showsHorizontalScrollIndicator = {false}
                 keyExtractor={(item) => item.audio_id}
-                data={audios}
+                data={audio}
                 renderItem={({ item }) => <AudioItem item={item} navigation={navigation} size={imgSize} padding={SIZES.padding /4} color={COLORS.black}/>}
               />
-        </View> */}
+        </View>
         {/* Inspirational quote */}
         <View>
         <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>

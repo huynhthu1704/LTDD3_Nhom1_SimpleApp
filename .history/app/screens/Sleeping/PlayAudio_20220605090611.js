@@ -43,6 +43,7 @@ export default function PlayAudio({ route, navigation }) {
   }
 
   useEffect(() => {
+    // setCurrentUser = 
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity style={{ marginRight: 20 }} onPress={addToFavorite}>

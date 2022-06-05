@@ -44,16 +44,12 @@ const HomeScreen = ({ navigation }) => {
   const [hour, setHour] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quotes, setQuotes] = useState(null)
-  const [featureCategories, setFeatureCategories] = useState(null);
-
-  // useEffect
+  const [categories, setCategories] = useState(null)
   useEffect(() => {
     getHour();
     getQuote();
     getCategories();
   }, []);
-
-  // get current hour
   function getHour() {
     const date = new Date();
     const currentHour = date.getHours();
@@ -73,8 +69,7 @@ const HomeScreen = ({ navigation }) => {
     const cateSnapshot = await getDocs(cateCol);
     const cateList = cateSnapshot.docs.map(doc => doc.data());
     console.log(JSON.stringify(cateList));
-    //
-    setFeatureCategories(cateList.splice(0, 2));
+    setCategories(cateList);
   }
   
 const goToScreen = (name) => {
@@ -109,7 +104,7 @@ const goToScreen = (name) => {
         {/* Feature Category */}
         <View style={[ styles.view,{ flexDirection: "row", justifyContent: "space-between" , }]}>
           {/* Meditation item */}
-          {featureCategories?.map((item, index) => {
+          {categories?.map((item, index) => {
             return (
             <View style={styles.categoryItem}>
             <ImageBackground
@@ -129,16 +124,15 @@ const goToScreen = (name) => {
         </View>
         {/* End Feature Category */}
         {/* Recommend */}
-        {/* <View style={styles.view}>
+        <View style={styles.view}>
           <Text style={{...FONTS.h2}}>Recommend for you</Text>
           <FlatList
-           horizontal
+                horizontal
                 showsHorizontalScrollIndicator = {false}
-                keyExtractor={(item) => item.audio_id}
-                data={audios}
+                data={audio}
                 renderItem={({ item }) => <AudioItem item={item} navigation={navigation} size={imgSize} padding={SIZES.padding /4} color={COLORS.black}/>}
               />
-        </View> */}
+        </View>
         {/* Inspirational quote */}
         <View>
         <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>

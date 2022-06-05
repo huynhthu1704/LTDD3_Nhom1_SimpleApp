@@ -101,7 +101,7 @@ export default function SleepingHome({ navigation }) {
         <SectionList
           style={{ marginLeft: 10 }}
           sections={playlistWithAudio}
-          keyExtractor={(item, index) => item.playlist_id}
+          keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => {
             return null;
             return (
@@ -155,7 +155,6 @@ export default function SleepingHome({ navigation }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={section.data}
-                keyExtractor={(item) => item.audio_id }
                 renderItem={({ item }) => (
                   <AudioItem
                     item={item}

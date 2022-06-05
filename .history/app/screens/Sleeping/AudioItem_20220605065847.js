@@ -21,10 +21,10 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
         paddingBottom: SIZES.padding / 3,
         margin: padding,
         overflow: "hidden",
-        // backgroundColor: "red",
+        backgroundColor: "red",
         width: size
       }}
-      onPress={() => navigation.navigate("PlayAudio", { audio : item })}
+      onPress={() => navigation.navigate("PlayAudio", { audio_id: item.id })}
     >
       <Image
         style={{ width: size, height: size, borderRadius: 10 }}

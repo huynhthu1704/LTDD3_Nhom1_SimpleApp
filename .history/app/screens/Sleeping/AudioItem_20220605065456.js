@@ -21,25 +21,15 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
         paddingBottom: SIZES.padding / 3,
         margin: padding,
         overflow: "hidden",
-        // backgroundColor: "red",
-        width: size
-      }}
-      onPress={() => navigation.navigate("PlayAudio", { audio : item })}
+        backgroundColor: "red"      }}
+      onPress={() => navigation.navigate("PlayAudio", { audio_id: item.id })}
     >
       <Image
         style={{ width: size, height: size, borderRadius: 10 }}
-        source={{ uri: item.img }}
+        source={{uri : item.img}}
       />
       <View style={{ justifyContent: "flex-start" }}>
-        <Text
-        numberOfLines={2} ellipsizeMode='tail'
-          style={{
-            ...FONTS.h3,
-            color: color ?? COLORS.white,
-            overflow: "hidden",
-            width: "100%",
-          }}
-        >
+        <Text style={{ ...FONTS.h3, color: color ?? COLORS.white, overflow: "hidden", width: "100%"}}>
           {item.name}
         </Text>
         <Text
@@ -48,9 +38,7 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
             color: color ?? COLORS.white,
             fontFamily: "Poppins-Italic",
           }}
-        >
-          {item.author}
-        </Text>
+        >{item.author}</Text>
       </View>
     </TouchableOpacity>
   );
