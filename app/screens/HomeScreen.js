@@ -43,7 +43,6 @@ const HomeScreen = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     getHour();
-    getCurrentUser();
   }, []);
   function getHour() {
     const date = new Date();
