@@ -40,17 +40,6 @@ const FeatureCategory = () => {
   </View>)
 }
 const HomeScreen = ({ navigation }) => {
-  //Get current user
-  const getCurrentUser = async () => {
-    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
-      User.currentUser = doc.data();
-    });
-  };
   const userName = user.fullName;
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [hour, setHour] = useState(0);
@@ -63,7 +52,6 @@ const HomeScreen = ({ navigation }) => {
     getHour();
     getQuote();
     getCategories();
-    getCurrentUser();
   }, []);
 
   // get current hour

@@ -4,15 +4,37 @@
 import React, {useEffect, useState} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
 import { SIZES } from '../../constants';
-import { authentication } from '../../firebase/firebase';
-
-
-
+import { authentication, db } from '../../firebase/firebase';
+import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import User from './UserData';
 export default SignInSignUp = ({ navigation }) => {
-  //console.log(JSON.stringify(authentication.currentUser, null, 4));
+  //Get current user
+  const getCurrentUser = async () => {
+    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      User.currentUser = doc.data();
+      switch (User.currentUser.role) {
+        //Check if role == 0 => navigate to Admin
+        case 0:
+          navigation.navigate("Admin");
+          break;
+        //Check if role == 1 => navigate to HomeTabs
+        case 1:
+          navigation.navigate("HomeTabs");
+        default:
+          break;
+      }
+    });
+  };
+  //console.log(JSON.stringify(authentication.currentUser.email, null, 4));
   useEffect(() => {
     if (authentication.currentUser != null) {
-      navigation.navigate("HomeTabs");
+      getCurrentUser();
+      //console.log(JSON.stringify(authentication.currentUser, null, 4));
     }
   })
   return (
