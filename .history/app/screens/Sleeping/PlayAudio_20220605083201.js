@@ -14,9 +14,6 @@ import data from "../../constants/data";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
-import {db, authentication} from "../../firebase/firebase"
-import {collection, getDocs} from "firebase/firestore/lite"
-
 
 export default function PlayAudio({ route, navigation }) {
   const audio = route.params.audio;
@@ -24,8 +21,7 @@ export default function PlayAudio({ route, navigation }) {
   const minute = Math.floor((audio.duration - hour * 3600) / 60);
   const sec = audio.duration - minute * 60;
   const [isPlaying, setPlay] = useState(true);
-  const [curentUser, setCurrentUser] = useState(null);
-  const [didLike, setLike] = useState(false);
+  const [like, setLike] = useState(false);
   const [sound, setSound] = useState(null);
   const [didTapOnFunctionButton, setTapOnFunctionButton] = useState(false);
   const [isFirstTime, setFirstTime] = useState(false);
@@ -49,7 +45,7 @@ export default function PlayAudio({ route, navigation }) {
           <FontAwesome
             name="heart"
             size={SIZES.h1}
-            color={didLike ? COLORS.red : COLORS.white}
+            color={like ? COLORS.red : COLORS.white}
           />
         </TouchableOpacity>
       ),
@@ -76,7 +72,7 @@ export default function PlayAudio({ route, navigation }) {
         setSound(status);
       }
     })();
-  }, [isPlaying, didLike]);
+  }, [isPlaying, like]);
 
   useEffect(
     () =>
@@ -156,13 +152,7 @@ export default function PlayAudio({ route, navigation }) {
   };
 
   function addToFavorite() {
-    setLike(!didLike);
-    if (didLike) {
-      db.firestore().collection('users').add({
-        audio_id: audio.id,
-        user_id: false,
-      })
-    }
+    setLike(!like);
   }
 
   // useEffect(() => {
@@ -188,11 +178,10 @@ export default function PlayAudio({ route, navigation }) {
           {/* Audio information */}
           <View
             style={{
-              flex: 2,
+              // flex: 1,
               marginVertical: 10,
               alignItems: "center",
               justifyContent: "center",
-              // backgroundColor: "yellow"
             }}
           >
             <Text style={{ ...FONTS.h1, color: COLORS.white }}>
@@ -203,7 +192,6 @@ export default function PlayAudio({ route, navigation }) {
                 ...FONTS.body2,
                 color: COLORS.white,
                 textAlign: "center",
-                marginTop: 20
               }}
             >
               {audio.author}
@@ -216,8 +204,8 @@ export default function PlayAudio({ route, navigation }) {
             style={{
               flex: 2,
               flexDirection: "row",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {/* Replay button */}

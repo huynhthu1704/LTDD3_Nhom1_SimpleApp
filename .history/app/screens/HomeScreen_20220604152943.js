@@ -15,10 +15,9 @@ import { user } from "../constants/data";
 import { musicCategory2, musicCategory, listInCategory, audio, } from "../constants/data";
 import AudioItem from "../screens/Sleeping/AudioItem";
 import InspirationalQuote from "./InspirationalQuote";
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import User from "./UserManagement/UserData";
-import { authentication } from "../firebase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import {collection, getDocs} from "firebase/firestore/lite"
 import { db } from "../firebase/firebase";
 const padding = 15;
 const imgSize = 120;
@@ -40,36 +39,17 @@ const FeatureCategory = () => {
   </View>)
 }
 const HomeScreen = ({ navigation }) => {
-  //Get current user
-  const getCurrentUser = async () => {
-    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
-      User.currentUser = doc.data();
-    });
-  };
   const userName = user.fullName;
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [hour, setHour] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quotes, setQuotes] = useState(null)
-  const [featureCategories, setFeatureCategories] = useState(null);
-
-  // useEffect
+  const [categories, setCategories] = useState(null)
   useEffect(() => {
     getHour();
-<<<<<<< HEAD
-=======
     getQuote();
     getCategories();
-    getCurrentUser();
->>>>>>> origin/master
   }, []);
-
-  // get current hour
   function getHour() {
     const date = new Date();
     const currentHour = date.getHours();
@@ -86,25 +66,17 @@ const HomeScreen = ({ navigation }) => {
 
   async function getCategories() {
     const cateCol = collection(db, "categories");
-    const cateSnapshot = await getDocs(cateCol);
-    const cateList = cateSnapshot.docs.map(doc => doc.data());
+    const cateSnapshot = await getDocs(quoteCol);
+    const cateList = quoteSnapshot.docs.map(doc => doc.data());
     console.log(JSON.stringify(cateList));
-    //
-    setFeatureCategories(cateList.splice(0, 2));
+    setCategories(cateList);
   }
   
-const goToScreen = (name) => {
-  console.log("selected cate name: " + name)
- if (name == "Meditation") {
- navigation.navigate("Meditation");
- } else if (name == "Sleeping") {
-  navigation.navigate("Sleeping");
- }
-}
+
   return (
     <ScrollView>
-      <View style={{ flex: 1 }}>
-        <View style={[styles.view, { height: 80, justifyContent: "center" }]}>
+      <View style={{ flex: 1}}>
+        <View style={[ styles.view,{ height: 80, justifyContent: "center"}]}>
           <Text
             style={{
               ...FONTS.h1,
@@ -123,9 +95,9 @@ const goToScreen = (name) => {
         </View>
 
         {/* Feature Category */}
-        <View style={[styles.view, { flexDirection: "row", justifyContent: "space-between", }]}>
+        <View style={[ styles.view,{ flexDirection: "row", justifyContent: "space-between" , }]}>
           {/* Meditation item */}
-          {featureCategories?.map((item, index) => {
+          {categories?.map((item, index) => {
             return (
             <View style={styles.categoryItem}>
             <ImageBackground
@@ -134,7 +106,7 @@ const goToScreen = (name) => {
               source={{uri : item.img}}
             >
               <Text style={styles.textInsideCategoryItem}>{item.name}</Text>
-              <TouchableOpacity style={styles.btnInCategoryItem} onPress={() => goToScreen(item.name)}>
+              <TouchableOpacity style={styles.btnInCategoryItem}>
                 <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
                   Start
                 </Text>
@@ -142,19 +114,49 @@ const goToScreen = (name) => {
             </ImageBackground>
           </View>)
           })}
+          <View style={styles.categoryItem}>
+            <ImageBackground
+              style={styles.imgBg}
+              resizeMode="cover"
+              source={images.launchScreenImg}
+            >
+              <Text style={styles.textInsideCategoryItem}>Mediation</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem}>
+                <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
+                  Start
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+          {/* End Meditation item */}
+          {/* Sleeping item */}
+          <View style={styles.categoryItem}>
+            <ImageBackground
+              style={styles.imgBg}
+              resizeMode="cover"
+              source={images.sleepingOnBoardingImg}
+            >
+              <Text style={styles.textInsideCategoryItem}>Sleeping</Text>
+              <TouchableOpacity style={styles.btnInCategoryItem} onPress={getQuote}>
+                <Text style={{ color: COLORS.blue, ...FONTS.body4 }}>
+                  Start
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+          {/* End Sleeping item */}
         </View>
         {/* End Feature Category */}
         {/* Recommend */}
-        {/* <View style={styles.view}>
+        <View style={styles.view}>
           <Text style={{...FONTS.h2}}>Recommend for you</Text>
           <FlatList
-           horizontal
+                horizontal
                 showsHorizontalScrollIndicator = {false}
-                keyExtractor={(item) => item.audio_id}
-                data={audios}
+                data={audio}
                 renderItem={({ item }) => <AudioItem item={item} navigation={navigation} size={imgSize} padding={SIZES.padding /4} color={COLORS.black}/>}
               />
-        </View> */}
+        </View>
         {/* Inspirational quote */}
         <View>
         <Text style={{...FONTS.h2, padding: 15}}>Inspirational quotes</Text>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: "red",
   },
-  view: {
+  view : {
     marginVertical: 10,
     paddingHorizontal: 15
   },

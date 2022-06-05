@@ -203,7 +203,6 @@ export default function PlayAudio({ route, navigation }) {
                 ...FONTS.body2,
                 color: COLORS.white,
                 textAlign: "center",
-                marginTop: 20
               }}
             >
               {audio.author}

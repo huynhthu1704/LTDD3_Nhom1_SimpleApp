@@ -19,7 +19,6 @@ export default function InspirationalQuote({ item }) {
   const height = 300;
   const transformPosition = (text_position) => {
     const positionAfter = {};
-    console.log(text_position);
     switch (text_position) {
       case "center":
         return {
@@ -29,11 +28,6 @@ export default function InspirationalQuote({ item }) {
         return {
           position: "absolute",
           top: 20,
-        };
-      case "bottom center":
-        return {
-          position: "absolute",
-          bottom: 20,
         };
     }
     // return positionAfter;
@@ -58,14 +52,7 @@ export default function InspirationalQuote({ item }) {
         source={{ uri: item.img }}
         resizeMode="cover"
       >
-        <Text
-          style={{
-            ...FONTS.h3,
-            textAlign: "center",
-            ...transformPosition(item.text_position),
-            color: item.color,
-          }}
-        >
+        <Text style={{ ...FONTS.h3, textAlign: "center", ...transformPosition(item.text_position), color: item.color }}>
           {item.quote}
         </Text>
       </ImageBackground>

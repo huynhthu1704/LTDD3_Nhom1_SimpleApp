@@ -43,13 +43,14 @@ export default function PlayAudio({ route, navigation }) {
   }
 
   useEffect(() => {
+    // setCurrentUser = 
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity style={{ marginRight: 20 }} onPress={addToFavorite}>
           <FontAwesome
             name="heart"
             size={SIZES.h1}
-            color={didLike ? COLORS.red : COLORS.white}
+            color={like ? COLORS.red : COLORS.white}
           />
         </TouchableOpacity>
       ),
@@ -203,7 +204,6 @@ export default function PlayAudio({ route, navigation }) {
                 ...FONTS.body2,
                 color: COLORS.white,
                 textAlign: "center",
-                marginTop: 20
               }}
             >
               {audio.author}

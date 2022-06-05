@@ -14,8 +14,6 @@ import { appTheme, COLORS, FONTS, SIZES, images } from "../../constants/index";
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function AudioItem({ item, navigation, size, padding, color }) {
-  console.log(JSON.stringify(item));
-  console.log("name: " +item.name);
   return (
     <TouchableOpacity
       style={{
@@ -26,7 +24,7 @@ export default function AudioItem({ item, navigation, size, padding, color }) {
         // backgroundColor: "red",
         width: size
       }}
-      onPress={() => navigation.navigate("PlayAudio", { audio : item })}
+      onPress={() => navigation.navigate("PlayAudio", { audio_id: item.id })}
     >
       <Image
         style={{ width: size, height: size, borderRadius: 10 }}

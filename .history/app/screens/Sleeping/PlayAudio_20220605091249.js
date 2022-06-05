@@ -49,7 +49,7 @@ export default function PlayAudio({ route, navigation }) {
           <FontAwesome
             name="heart"
             size={SIZES.h1}
-            color={didLike ? COLORS.red : COLORS.white}
+            color={like ? COLORS.red : COLORS.white}
           />
         </TouchableOpacity>
       ),
@@ -203,7 +203,6 @@ export default function PlayAudio({ route, navigation }) {
                 ...FONTS.body2,
                 color: COLORS.white,
                 textAlign: "center",
-                marginTop: 20
               }}
             >
               {audio.author}

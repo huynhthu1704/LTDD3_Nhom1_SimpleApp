@@ -61,12 +61,9 @@ const HomeScreen = ({ navigation }) => {
   // useEffect
   useEffect(() => {
     getHour();
-<<<<<<< HEAD
-=======
     getQuote();
     getCategories();
     getCurrentUser();
->>>>>>> origin/master
   }, []);
 
   // get current hour
