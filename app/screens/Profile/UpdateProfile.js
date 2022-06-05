@@ -16,7 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import User from "../UserManagement/UserData";
 import { updateDoc, doc } from "firebase/firestore/lite";
 import { db } from "../../firebase/firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 const avatarSize = 150;
 
 export default function UpdateProfile({ navigation }) {
