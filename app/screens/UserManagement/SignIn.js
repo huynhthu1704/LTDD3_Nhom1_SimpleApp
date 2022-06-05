@@ -11,15 +11,7 @@ import { authentication } from "../../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default SignIn = ({ navigation }) => {
-  const signInUser = () => {
-    signInWithEmailAndPassword(authentication, email, password)
-      .then((re) => {
-        setIsSignedIn(true);
-      })
-      .catch((re) => {
-        console.log(re);
-      })
-  }
+  ///METHOD FOR CHECKING TEXTINPUT
   //Check textinput email
   const checkEmail = () => {
     if (email.length == 0) {
@@ -38,8 +30,8 @@ export default SignIn = ({ navigation }) => {
     }
     return true;
   }
-  emailTextInput = React.createRef();
-  passwordTextInput = React.createRef();
+
+  ///METHOD FOR API WITH API
   // Search student
   async function searchUserByEmail(email) {
     // Create form data
@@ -64,10 +56,29 @@ export default SignIn = ({ navigation }) => {
       console.log("Error: " + error.message);
     }
   }
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  ///METHOD WITH API FOR FIREBASE
+  //Sign in user with authentication
+  const signInUser = () => {
+    signInWithEmailAndPassword(authentication, email, password)
+      .then((re) => {
+        // setIsSignedIn(true);
+        alert("Sign in with " + email + " successfully!");
+        navigation.navigate("HomeTabs");
+      })
+      .catch((re) => {
+        alert("Sign in failed!\nDetailed error: " + re);
+      })
+  }
+
+  //PROPERTIES
+  emailTextInput = React.createRef();
+  passwordTextInput = React.createRef();
+  //const [isSignedIn, setIsSignedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [newUser, setNewUser] = useState(null);
+  //const [newUser, setNewUser] = useState(null);
+
+  ///RETURN
   return (
     <KeyboardAvoidingView behavior={"position"}
       style={{ flex: 1 }}>
@@ -118,9 +129,9 @@ export default SignIn = ({ navigation }) => {
             onPress={() => {
               if (checkEmail() && checkPassword()) {
                 signInUser();
-                if (isSignedIn) {
-                  navigation.navigate('HomeTabs');
-                }
+                // if (isSignedIn) {
+                //   navigation.navigate('HomeTabs');
+                // }
                 // if (newUser.length > 0) {
                 //   //If match with entered password
                 //   if (newUser[0].password == password) {

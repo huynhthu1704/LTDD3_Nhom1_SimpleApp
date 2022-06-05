@@ -15,7 +15,6 @@ export default SignInSignUp = ({ navigation }) => {
       navigation.navigate("HomeTabs");
     }
   })
-
   return (
     <View>
       <ImageBackground style={styles.background} source={require('../../../assets/images/signin_signup_bg.png')}>
