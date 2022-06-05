@@ -30,31 +30,31 @@ export default SignIn = ({ navigation }) => {
     return true;
   }
 
-  ///METHOD FOR API WITH API
+  // /METHOD FOR API WITH API
   // Search student
-  // async function searchUserByEmail(email) {
-  //   // Create form data
-  //   let formdata = new FormData();
-  //   formdata.append("email", email);
-  //   formdata.append("type", "search");
-  //   // Fetch data
-  //   try {
-  //     const response = await fetch(
-  //       "https://studentmanagementapi.000webhostapp.com/API_User.php",
-  //       {
-  //         method: "post",
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //         body: formdata,
-  //       }
-  //     );
-  //     const json = await response.json();
-  //     setNewUser(json);
-  //   } catch (error) {
-  //     console.log("Error: " + error.message);
-  //   }
-  // }
+  async function searchUserByEmail(email) {
+    // Create form data
+    let formdata = new FormData();
+    formdata.append("email", email);
+    formdata.append("type", "search");
+    // Fetch data
+    try {
+      const response = await fetch(
+        "https://studentmanagementapi.000webhostapp.com/API_User.php",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: formdata,
+        }
+      );
+      const json = await response.json();
+      setNewUser(json);
+    } catch (error) {
+      console.log("Error: " + error.message);
+    }
+  }
   ///METHOD WITH API FOR FIREBASE
   //Get current user
   const getCurrentUser = async () => {
@@ -130,9 +130,9 @@ export default SignIn = ({ navigation }) => {
             onChangeText={(text) => {
               setEmail(text);
             }}
-            onEndEditing={() => {
-              searchUserByEmail(email);
-            }}
+            // onEndEditing={() => {
+            //   searchUserByEmail(email);
+            // }}
           />
           <TextInput
             ref={(ref) => {

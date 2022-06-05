@@ -33,7 +33,8 @@ export default SignInSignUp = ({ navigation }) => {
   //console.log(JSON.stringify(authentication.currentUser.email, null, 4));
   useEffect(() => {
     if (authentication.currentUser != null) {
-      getCurrentUser();
+      //getCurrentUser();
+      console.log(JSON.stringify(authentication.currentUser, null, 4));
     }
   })
   return (
