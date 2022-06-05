@@ -87,7 +87,6 @@ export default function Profile({ navigation }) {
       <View style={{ alignItems: "center" }}>
         {/* Chart */}
         {/* <View style={{ height: 400 }}></View> */}
-
         {/* Selection */}
         <View style={{ width: "80%" }}>
           {data.map((item, i) => {

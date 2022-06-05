@@ -45,7 +45,7 @@ const signUpsignInStack = createStackNavigator();
 const SignInSignUpNavigator = () => {
   return (
     <signUpsignInStack.Navigator>
-      <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} />
+      {/* <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} /> */}
       <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
     </signUpsignInStack.Navigator>
