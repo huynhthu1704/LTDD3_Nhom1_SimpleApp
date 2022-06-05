@@ -15,10 +15,9 @@ import { user } from "../constants/data";
 import { musicCategory2, musicCategory, listInCategory, audio, } from "../constants/data";
 import AudioItem from "../screens/Sleeping/AudioItem";
 import InspirationalQuote from "./InspirationalQuote";
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import User from "./UserManagement/UserData";
-import { authentication } from "../firebase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import {collection, getDocs} from "firebase/firestore/lite"
 import { db } from "../firebase/firebase";
 const padding = 15;
 const imgSize = 120;
@@ -40,17 +39,6 @@ const FeatureCategory = () => {
   </View>)
 }
 const HomeScreen = ({ navigation }) => {
-  //Get current user
-  const getCurrentUser = async () => {
-    const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
-      User.currentUser = doc.data();
-    });
-  };
   const userName = user.fullName;
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [hour, setHour] = useState(0);
@@ -63,7 +51,6 @@ const HomeScreen = ({ navigation }) => {
     getHour();
     getQuote();
     getCategories();
-    getCurrentUser();
   }, []);
 
   // get current hour
@@ -100,8 +87,8 @@ const goToScreen = (name) => {
 }
   return (
     <ScrollView>
-      <View style={{ flex: 1 }}>
-        <View style={[styles.view, { height: 80, justifyContent: "center" }]}>
+      <View style={{ flex: 1}}>
+        <View style={[ styles.view,{ height: 80, justifyContent: "center"}]}>
           <Text
             style={{
               ...FONTS.h1,
@@ -120,7 +107,7 @@ const goToScreen = (name) => {
         </View>
 
         {/* Feature Category */}
-        <View style={[styles.view, { flexDirection: "row", justifyContent: "space-between", }]}>
+        <View style={[ styles.view,{ flexDirection: "row", justifyContent: "space-between" , }]}>
           {/* Meditation item */}
           {featureCategories?.map((item, index) => {
             return (
@@ -178,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: "red",
   },
-  view: {
+  view : {
     marginVertical: 10,
     paddingHorizontal: 15
   },
