@@ -61,22 +61,12 @@ const HomeScreen = ({ navigation }) => {
   const [recommendAudios, setRecommendAudios] = useState([]);
 
   // useEffect
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getHour();
-      getQuote();
-      getCategories();
-      getRecommendAudios();
-    });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [navigation]);
-  // useEffect(() => {
-  //   getHour();
-  //   getQuote();
-  //   getCategories();
-  //   getRecommendAudios();
-  // }, []);
+  useEffect(() => {
+    getHour();
+    getQuote();
+    getCategories();
+    getRecommendAudios();
+  }, []);
 
   // get current hour
   function getHour() {
@@ -89,7 +79,7 @@ const HomeScreen = ({ navigation }) => {
     const quoteCol = collection(db, "inspirational_quotes");
     const quoteSnapshot = await getDocs(quoteCol);
     const quoteList = quoteSnapshot.docs.map((doc) => doc.data());
-    // console.log(JSON.stringify(quotes));
+    console.log(JSON.stringify(quotes));
     setQuotes(quoteList);
   }
 
@@ -102,7 +92,7 @@ const HomeScreen = ({ navigation }) => {
       );
       return doc.data();
     });
-    // console.log(JSON.stringify(cateList));
+    console.log(JSON.stringify(cateList));
     //
     setFeatureCategories(cateList.splice(0, 2));
   }
@@ -110,13 +100,12 @@ const HomeScreen = ({ navigation }) => {
   async function getRecommendAudios() {
     const audioCol = query(
       collection(db, "audios"),
-      orderBy("total_likes", "desc"),
+      orderBy("total_likes"),
       limit(5)
     );
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
     setRecommendAudios(audioList);
-    console.log(JSON.stringify(audioList));
   }
 
   const goToScreen = (name) => {

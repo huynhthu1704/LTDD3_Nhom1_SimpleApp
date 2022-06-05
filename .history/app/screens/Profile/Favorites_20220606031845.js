@@ -16,16 +16,25 @@ import {
 import { async } from "@firebase/util";
 import User from "../UserManagement/UserData";
 
-export default function Favorites({ route, navigation }) {
-  const [favList, setFavList] = useState([]);
- 
-  useEffect(async () => {
-    
-   setFavList( await getFavList());
-    console.log(`arr1: ${JSON.stringify(await getFavList())}`);
-  }, []);
 
+export default function Favorites({ route, navigation }) {
+  // getFavList();
+  const [favList, setFavList] = useState([]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async() => {
+      // getHour();
+      // getQuote();
+      // getCategories();
+      // getRecommendAudios();
+      await getFavList();
+    });
+    return unsubscribe;
+  }, [navigation]);
+  useEffect(async() => {
+   await getFavList();
+  }, []);
   async function getFavList() {
+    
     const favCol = query(
       collection(db, "favorites"),
       where("user_id", "==", User.currentUser?.id)
@@ -33,17 +42,17 @@ export default function Favorites({ route, navigation }) {
     const favSnapshot = await getDocs(favCol);
     const list = favSnapshot.docs.map((doc) => doc.data());
     const arr = [];
-    list.map(async (item, index) => {
-      console.log(JSON.stringify(list))
+    list.forEach(async (item) => {
       const audioCol = doc(db, "audios", `${item.audio_id}`);
       const audioSnapshot = await getDoc(audioCol);
-      console.log(`arr1: ${JSON.stringify(item)}`);
       arr.push(audioSnapshot.data());
-      setFavList(arr);
-    })
-    // .then(() => {
-    return list;
-    // });
+      console.log(`arr: ${JSON.stringify(arr)}`);
+    
+      // console.log(`item ${JSON.stringify(audioSnapshot.data())}`);
+    });
+    setFavList(arr);
+    console.log(`arr: ${JSON.stringify(arr)}`);
+   
   }
   //   const list = data.listInCategory.find((item) => item.id == route.params.list);
   return (

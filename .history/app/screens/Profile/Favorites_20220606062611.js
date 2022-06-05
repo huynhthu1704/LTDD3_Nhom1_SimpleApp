@@ -37,9 +37,12 @@ export default function Favorites({ route, navigation }) {
       console.log(JSON.stringify(list))
       const audioCol = doc(db, "audios", `${item.audio_id}`);
       const audioSnapshot = await getDoc(audioCol);
-      console.log(`arr1: ${JSON.stringify(item)}`);
-      arr.push(audioSnapshot.data());
-      setFavList(arr);
+      // console.log(`arr1: ${JSON.stringify(item)}`);
+      // setFavList(favList.push(audioSnapshot.data()));
+      // arr.push(audioSnapshot.data());
+     console.log(`arr1: ${JSON.stringify( audioSnapshot.data())}`);
+     return audioSnapshot.data();
+      // console.log(`arr1: ${JSON.stringify(audioSnapshot.data())}`);
     })
     // .then(() => {
     return list;

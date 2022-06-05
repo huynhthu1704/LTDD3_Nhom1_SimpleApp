@@ -61,22 +61,12 @@ const HomeScreen = ({ navigation }) => {
   const [recommendAudios, setRecommendAudios] = useState([]);
 
   // useEffect
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getHour();
-      getQuote();
-      getCategories();
-      getRecommendAudios();
-    });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [navigation]);
-  // useEffect(() => {
-  //   getHour();
-  //   getQuote();
-  //   getCategories();
-  //   getRecommendAudios();
-  // }, []);
+  useEffect(() => {
+    getHour();
+    getQuote();
+    getCategories();
+    getRecommendAudios();
+  }, []);
 
   // get current hour
   function getHour() {

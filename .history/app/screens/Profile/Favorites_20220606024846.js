@@ -15,16 +15,21 @@ import {
 } from "firebase/firestore/lite";
 import { async } from "@firebase/util";
 import User from "../UserManagement/UserData";
-
 export default function Favorites({ route, navigation }) {
   const [favList, setFavList] = useState([]);
- 
-  useEffect(async () => {
-    
-   setFavList( await getFavList());
-    console.log(`arr1: ${JSON.stringify(await getFavList())}`);
-  }, []);
-
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // getHour();
+      // getQuote();
+      // getCategories();
+      // getRecommendAudios();
+      getFavList();
+    });
+    return unsubscribe;
+  }, [navigation]);
+useEffect(() => {
+getFavList();
+}, [])
   async function getFavList() {
     const favCol = query(
       collection(db, "favorites"),
@@ -33,28 +38,26 @@ export default function Favorites({ route, navigation }) {
     const favSnapshot = await getDocs(favCol);
     const list = favSnapshot.docs.map((doc) => doc.data());
     const arr = [];
-    list.map(async (item, index) => {
-      console.log(JSON.stringify(list))
+    list.forEach(async(item) => {
       const audioCol = doc(db, "audios", `${item.audio_id}`);
       const audioSnapshot = await getDoc(audioCol);
-      console.log(`arr1: ${JSON.stringify(item)}`);
-      arr.push(audioSnapshot.data());
-      setFavList(arr);
-    })
-    // .then(() => {
-    return list;
-    // });
+      arr.push(audioSnapshot.data())
+      console.log(`item ${JSON.stringify(audioSnapshot.data())}`)
+    });
+    setFavList(arr);
   }
   //   const list = data.listInCategory.find((item) => item.id == route.params.list);
+  const listAudio = data.musicCategory[0].data;
   return (
     <View style={{ backgroundColor: COLORS.pink, flex: 1 }}>
       <View style={{ alignItems: "center" }}>
         <FlatList
           data={favList}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.audio_id}
+          //  horizontal={true}
           numColumns={2}
           extraData={favList}
+          //   showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <AudioItem
               item={item}

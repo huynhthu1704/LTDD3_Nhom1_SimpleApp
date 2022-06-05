@@ -40,6 +40,9 @@ export default function Favorites({ route, navigation }) {
       console.log(`arr1: ${JSON.stringify(item)}`);
       arr.push(audioSnapshot.data());
       setFavList(arr);
+    //  console.log(`arr1: ${JSON.stringify( audioSnapshot.data())}`);
+    //  return audioSnapshot.data();
+      // console.log(`arr1: ${JSON.stringify(audioSnapshot.data())}`);
     })
     // .then(() => {
     return list;
