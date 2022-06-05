@@ -15,8 +15,8 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { db, authentication } from "../../firebase/firebase";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore/lite";
-import {curentUser} from "../UserManagement/UserData"
+import { collection, getDocs } from "firebase/firestore/lite";
+import { async } from "@firebase/util";
 
 export default function PlayAudio({ route, navigation }) {
   const audio = route.params.audio;
@@ -45,7 +45,10 @@ export default function PlayAudio({ route, navigation }) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={{ marginRight: 20 }} onPress={addToFavorite}>
+        <TouchableOpacity
+          style={{ marginRight: 20 }}
+          onPress={() => addToFavorite}
+        >
           <FontAwesome
             name="heart"
             size={SIZES.h1}
@@ -155,25 +158,17 @@ export default function PlayAudio({ route, navigation }) {
     return 0;
   };
 
-  async function addToFavorite() {
+  const addToFavorite = async () => {
     if (!didLike) {
-      const user = curentUser?.email;
-      console.log(user);
-      console.log(route.params);
-      // const favsCol = collection(db, "favorites");
-      const favs = await getDocs(collection(db, "favorites"));
-      const size = (favs.docs.map((doc) => doc.data())).length;
-      console.log(size);
-      await setDoc(doc(db, "favorites", "fav"+size), {
-      
-        audio_id: audio?.audio_id,
+      await setDoc(doc(db, "favorites"), {
+        audio_id: audio.id,
         user_id: false,
       });
     } else {
       console.log("remove");
     }
     setLike(!didLike);
-  }
+  };
 
   // useEffect(() => {
   //   navigation.setOptions({

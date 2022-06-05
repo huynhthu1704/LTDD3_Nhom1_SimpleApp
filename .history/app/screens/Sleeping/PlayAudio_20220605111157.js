@@ -159,14 +159,12 @@ export default function PlayAudio({ route, navigation }) {
     if (!didLike) {
       const user = curentUser?.email;
       console.log(user);
-      console.log(route.params);
       // const favsCol = collection(db, "favorites");
       const favs = await getDocs(collection(db, "favorites"));
       const size = (favs.docs.map((doc) => doc.data())).length;
       console.log(size);
       await setDoc(doc(db, "favorites", "fav"+size), {
-      
-        audio_id: audio?.audio_id,
+        audio_id: audio.id,
         user_id: false,
       });
     } else {

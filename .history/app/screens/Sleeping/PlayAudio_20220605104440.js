@@ -14,9 +14,9 @@ import data from "../../constants/data";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
-import { db, authentication } from "../../firebase/firebase";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore/lite";
-import {curentUser} from "../UserManagement/UserData"
+import {db, authentication} from "../../firebase/firebase"
+import {collection, getDocs} from "firebase/firestore/lite"
+
 
 export default function PlayAudio({ route, navigation }) {
   const audio = route.params.audio;
@@ -155,20 +155,12 @@ export default function PlayAudio({ route, navigation }) {
     return 0;
   };
 
-  async function addToFavorite() {
+  function addToFavorite() {
     if (!didLike) {
-      const user = curentUser?.email;
-      console.log(user);
-      console.log(route.params);
-      // const favsCol = collection(db, "favorites");
-      const favs = await getDocs(collection(db, "favorites"));
-      const size = (favs.docs.map((doc) => doc.data())).length;
-      console.log(size);
-      await setDoc(doc(db, "favorites", "fav"+size), {
-      
-        audio_id: audio?.audio_id,
+      collection(db, 'favorites').add({
+        audio_id: audio.id,
         user_id: false,
-      });
+      })
     } else {
       console.log("remove");
     }
@@ -213,7 +205,7 @@ export default function PlayAudio({ route, navigation }) {
                 ...FONTS.body2,
                 color: COLORS.white,
                 textAlign: "center",
-                marginTop: 20,
+                marginTop: 20
               }}
             >
               {audio.author}

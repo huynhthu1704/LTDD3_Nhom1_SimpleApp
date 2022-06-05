@@ -166,7 +166,7 @@ export default function PlayAudio({ route, navigation }) {
       console.log(size);
       await setDoc(doc(db, "favorites", "fav"+size), {
       
-        audio_id: audio?.audio_id,
+        audio_id: audio?.id,
         user_id: false,
       });
     } else {
