@@ -5,25 +5,28 @@ import AudioItem from "./AudioItem";
 import HeaderBar from "../../components/HeaderBar";
 import { SIZES, COLORS } from "../../constants/index";
 import { db } from "../../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore/lite";
+import {collection, getDocs} from "firebase/firestore/lite";
+
 
 export default function ListDetail({ route, navigation }) {
   const playlist_id = route.params.playlist_id;
-  const [audios, setAudios] = useState(null);
-
-  // get audios
+  console.log("pl_id: " + playlist_id);
+  console.log("pl_name: " + route.params.title);
+  console.log(route.params);
   async function getAudios() {
     const audioCol = collection(db, "audios");
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
+    // console.log(JSON.stringify(audioList));
     setAudios(audioList.filter((item) => item.playlist_id == playlist_id));
   }
 
-  // use Effect
+  const [audios, setAudios] = useState(null);
+  const [playlists, setPlaylist] = useState(null);
   useEffect(() => {
     getAudios();
   }, []);
-
+  //   const list = data.listInCategory.find((item) => item.id == route.params.list);
   return (
     <View style={{ backgroundColor: COLORS.purple, flex: 1 }}>
       <View style={{ alignItems: "center" }}>
@@ -33,7 +36,7 @@ export default function ListDetail({ route, navigation }) {
           //  horizontal={true}
           numColumns={2}
           extraData={audios}
-          keyExtractor = {(item) => item.audio_id}
+          //   showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <AudioItem
               item={item}

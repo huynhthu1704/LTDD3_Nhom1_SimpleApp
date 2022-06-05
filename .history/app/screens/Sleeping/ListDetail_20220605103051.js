@@ -33,7 +33,7 @@ export default function ListDetail({ route, navigation }) {
           //  horizontal={true}
           numColumns={2}
           extraData={audios}
-          keyExtractor = {(item) => item.audio_id}
+          //   showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <AudioItem
               item={item}

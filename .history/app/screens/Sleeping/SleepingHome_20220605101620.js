@@ -130,7 +130,7 @@ export default function SleepingHome({ navigation }) {
                 </Text>
                 <Pressable
                   onPress={() => {
-                   return navigation.navigate("ListDetail", {playlist_id: section.playlist_id, title: section.name });
+                    navigation.navigate("ListDetail", { title: section.name });
                   }}
                   style={{
                     flex: 0.2,
