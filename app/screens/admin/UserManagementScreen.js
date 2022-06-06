@@ -6,66 +6,62 @@ import {
     FlatList,
     Button,
     TouchableOpacity,
-    SafeAreaView,
-    Image,
-    ScrollView,
 } from 'react-native';
-import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from '../../firebase/firebase';
-import { authentication } from "../../firebase/firebase";
-import { signOut } from "firebase/auth";
 import UserItem from '../../components/UserItem';
+import { FontAwesome } from "@expo/vector-icons";
+import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import { async } from "@firebase/util";
 
-const UserManagementScreen = ({navigation}) => {
+const UserManagementScreen = ({ navigation }) => {
     //PROPERTIES:
     const [users, setUsers] = useState(null);
 
     //METHOD
     //Get all users from firestore
-    const getLastUser = async () => {
-        const usersCol = collection(db, 'users');
+    const getAllUsers = async () => {
+        const usersCol = query(collection(db, "users"), where("role", "==", 1));
         const userSnapshot = await getDocs(usersCol);
         const userList = userSnapshot.docs.map(doc => doc.data());
         setUsers(userList);
-    }
-
-    //Sign out user
-    const SignOutUser = () => {
-        signOut(authentication)
-            .then((re) => {
-                alert("Log out successfully");
-                navigation.navigate("User");
-            })
-            .catch((re) => {
-                console.log(re);
-            })
     };
+
+    //useEffect to get all user
+    useEffect(() => {
+        getAllUsers();
+    }, []);
     return (
-        <SafeAreaView>
-            <ScrollView horizontal={false} style={{ height: 800, marginTop: 10 }}>
-                <Button
-                    title='Logout'
-                    style={{ width: 20 }}
-                    onPress={() => {
-                        SignOutUser();
-                        navigation.navigate("User");
-                    }}
-                />
-                <FlatList
-                    data={users}
-                    keyExtractor={(item) => item.email}
-                    renderItem={({ item }) => {
-                        <TouchableOpacity
-                            onPress={() => {
-                                alert(item.email);
-                            }}>
-                            <UserItem item={item} />
-                        </TouchableOpacity>
-                    }}
-                />
-            </ScrollView>
-        </SafeAreaView>
+        <View>
+            <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+                <Text style={styles.qty}>Quantity: {users?.length}</Text>
+                <TouchableOpacity style={{ margin: 5 }} onPress={getAllUsers}>
+                    <FontAwesome name="refresh" size={25} />
+                </TouchableOpacity>
+            </View>
+            <FlatList
+                data={users}
+                keyExtractor={(item) => item.email}
+                renderItem={({ item }) => {
+                    return (<TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate("UserDetails", {
+                                item: item
+                            });
+                        }}>
+
+                        <UserItem item={item} />
+                    </TouchableOpacity>)
+                }}
+            />
+        </View>
     );
 }
 
+const styles = StyleSheet.create({
+    qty: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginLeft: 10
+    }
+})
 export default UserManagementScreen;
