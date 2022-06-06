@@ -84,11 +84,11 @@ export default function Profile({ navigation }) {
   });
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{alignItems: "center", justifyContent: "center"}}>
+      <View style={{flex : 1,alignItems: "center", justifyContent: "center" }}>
         {/* Chart */}
-        <View style={{ height: 200 }}></View>
+        <View style={{ height: 400 }}></View>
         {/* Selection */}
-        <View style={{ width: "80%", justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: "80%" }}>
           {data.map((item, i) => {
             return (
               <TouchableOpacity
