@@ -45,7 +45,7 @@ export default function SleepingHome({ navigation }) {
     const audioCol = collection(db, "audios");
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
-    setAudios(audioList);
+    // setAudios(audioList);
     // console.log(JSON.stringify(audioList));
 
     const temp = playlists;

@@ -38,7 +38,7 @@ export default function SleepingHome({ navigation }) {
     const playlistCol = collection(db, "playlists");
     const playlistSnapshot = await getDocs(playlistCol);
     const playlist = playlistSnapshot.docs.map((doc) => doc.data());
-    // console.log(JSON.stringify(playlist));
+    console.log(JSON.stringify(playlist));
     setPlaylist(playlist);
 
 
@@ -46,7 +46,7 @@ export default function SleepingHome({ navigation }) {
     const audioSnapshot = await getDocs(audioCol);
     const audioList = audioSnapshot.docs.map((doc) => doc.data());
     setAudios(audioList);
-    // console.log(JSON.stringify(audioList));
+    console.log(JSON.stringify(audioList));
 
     const temp = playlists;
     temp.map((item, index) => {
@@ -56,7 +56,7 @@ export default function SleepingHome({ navigation }) {
       item.data = audioArr;
     });
     console.log("temp");
-    console.log(JSON.stringify(temp));
+    // console.log(JSON.stringify(temp));
     setPlaylistWithAudio(temp);
   }
 
