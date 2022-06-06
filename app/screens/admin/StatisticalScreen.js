@@ -66,7 +66,7 @@ export default StatisticalScreen = ({ navigation }) => {
         const userSnapshot = await getDocs(usersCol);
         const userList = userSnapshot.docs.map(doc => doc.data());
         allUser = userList;
-         
+        console.log(allUser);
     };
 
     //useEffect to get all user
