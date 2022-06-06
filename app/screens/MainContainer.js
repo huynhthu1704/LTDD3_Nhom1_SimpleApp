@@ -33,9 +33,9 @@ const AdminDrawer = createDrawerNavigator();
 
 const AdminDrawerNavigator = () => {
   return (
-    <AdminDrawer.Navigator initialRouteName="FAHASA ABOUT">
+    <AdminDrawer.Navigator initialRouteName="ADIN">
+            <AdminDrawer.Screen name="STATISTICAL APP" component={StatisticalScreen} />
       <AdminDrawer.Screen name="USER MANAGEMENT" component={UserManagementScreen} />
-      <AdminDrawer.Screen name="STATISTICAL APP" component={StatisticalScreen} />
     </AdminDrawer.Navigator>
   );
 }

@@ -7,7 +7,7 @@ export default function GettingStartedScreen({ route }) {
     const defaulRemainingTime = route.params;
     useEffect(() =>{
         const intervalID = setInterval(() => {
-        updateRemainingTime();
+        //updateRemainingTime();
         }, 1000);
         return () => clearInterval(intervalID);
       },[]);

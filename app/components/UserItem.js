@@ -27,7 +27,7 @@ const UserItem = ({ item }) => {
     return (
         <View style={styles.itemContainer}>
             <Image
-                style={{ width: 60, height: 90, marginRight: 20, alignSelf: 'center' }}
+                style={{ width: 80, height: 130, marginRight: 20, alignSelf: 'center' }}
                 source={{
                     uri: item.user_image,
                 }}
@@ -56,7 +56,9 @@ const UserItem = ({ item }) => {
 };
 const styles = StyleSheet.create({
     itemContainer: {
-        backgroundColor: 'pink',
+        borderWidth: 1,
+        borderColor: 'black',
+        backgroundColor: '#baffbf',
         flexDirection: 'row',
         margin: 10,
         paddingVertical: 10,
@@ -71,10 +73,10 @@ const styles = StyleSheet.create({
     },
     items: {
         fontWeight: 'bold',
-        width: '30%'
+        width: '33%'
     },
     values: {
-        width: '70%'
+        width: '67%'
     }
 });
 export default UserItem;

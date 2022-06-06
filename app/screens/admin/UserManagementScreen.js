@@ -12,6 +12,7 @@ import UserItem from '../../components/UserItem';
 import { FontAwesome } from "@expo/vector-icons";
 import { collection, query, where, getDocs } from "firebase/firestore/lite";
 import { async } from "@firebase/util";
+import { SIZES } from '../../constants';
 
 const UserManagementScreen = ({ navigation }) => {
     //PROPERTIES:
@@ -38,6 +39,7 @@ const UserManagementScreen = ({ navigation }) => {
                     <FontAwesome name="refresh" size={25} />
                 </TouchableOpacity>
             </View>
+            <View style={{height: SIZES.androidHeightWithStatusBar.window * 0.9}}>
             <FlatList
                 data={users}
                 keyExtractor={(item) => item.email}
@@ -53,6 +55,7 @@ const UserManagementScreen = ({ navigation }) => {
                     </TouchableOpacity>)
                 }}
             />
+            </View>
         </View>
     );
 }

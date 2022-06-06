@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -22,7 +22,18 @@ import { collection, query, where, getDocs } from "firebase/firestore/lite";
 import { db } from '../../firebase/firebase';
 
 export default StatisticalScreen = ({ navigation }) => {
-    var allUser = null;
+    const [mo1, setMo1] = useState(0);
+    const [mo2, setMo2] = useState(0);
+    const [mo3, setMo3] = useState(0);
+    const [mo4, setMo4] = useState(0);
+    const [mo5, setMo5] = useState(0);
+    const [mo6, setMo6] = useState(0);
+    const [mo7, setMo7] = useState(0);
+    const [mo8, setMo8] = useState(0);
+    const [mo9, setMo9] = useState(0);
+    const [mo10, setMo10] = useState(0);
+    const [mo11, setMo11] = useState(0);
+    const [mo12, setMo12] = useState(0);
     //PROPERTIES
     const chartConfig = {
         backgroundColor: '#1cc910',
@@ -39,7 +50,7 @@ export default StatisticalScreen = ({ navigation }) => {
         labels: ["July", "Aug", "Sepr", "Oct", "Nov", "Dec"],
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43]
+                data: [mo7, mo8, mo9, mo10, mo11, mo12]
             }
         ]
     };
@@ -62,11 +73,97 @@ export default StatisticalScreen = ({ navigation }) => {
     };
     //Get all users from firestore
     const getAllUsers = async () => {
+        var arrayMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         const usersCol = query(collection(db, "users"), where("role", "==", 1));
         const userSnapshot = await getDocs(usersCol);
         const userList = userSnapshot.docs.map(doc => doc.data());
-        allUser = userList;
-        console.log(allUser);
+        userList.forEach((item) => {
+            const createdatArray = item.created_at.split("/");
+            switch (createdatArray[0]) {
+                case "1":
+                    arrayMonth[0]++;
+                    break;
+                case "2":
+                    arrayMonth[1]++;
+                    break;
+                case "3":
+                    arrayMonth[2]++;
+                    break;
+                case "4":
+                    arrayMonth[3]++;
+                    break;
+                case "5":
+                    arrayMonth[4]++;
+                    break;
+                case "6": 
+                    arrayMonth[5]++;
+                    break;
+                case "7":
+                    arrayMonth[6]++;
+                    break;
+                case "8":
+                    arrayMonth[7]++;
+                    break;
+                case "9":
+                    arrayMonth[8]++;
+                    break;
+                case "10":
+                    arrayMonth[9]++;
+                    break;
+                case "11":
+                    arrayMonth[10]++;
+                    break;
+                case "12":
+                    arrayMonth[11]++;
+                    break;
+
+                default:
+                    break;
+            }
+        })
+        for (let index = 0; index < 12; index++) {
+            const element = arrayMonth[index];
+            switch (index) {
+                case 0:
+                    setMo1(element);
+                    break;
+                case 1:
+                    setMo2(element);
+                    break;
+                case 2:
+                    setMo3(element);
+                    break;
+                case 3:
+                    setMo4(element);
+                    break;
+                case 4:
+                    setMo5(element);
+                    break;
+                case 5:
+                    setMo6(element);
+                    break;
+                case 6:
+                    setMo7(element);
+                    break;
+                case 7:
+                    setMo8(element);
+                    break;
+                case 8:
+                    setMo9(element);
+                    break;
+                case 9:
+                    setMo10(element);
+                    break;
+                case 10:
+                    setMo11(element);
+                    break;
+                case 11:
+                    setMo12(element);
+                    break;
+                default:
+                    break;
+            }
+        }
     };
 
     //useEffect to get all user
@@ -82,12 +179,12 @@ export default StatisticalScreen = ({ navigation }) => {
                             labels: ['January', 'February', 'March', 'April', 'May', 'June'],
                             datasets: [{
                                 data: [
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100
+                                    mo1,
+                                    mo2,
+                                    mo3,
+                                    mo4,
+                                    mo5,
+                                    mo6
                                 ]
                             }]
                         }}
@@ -118,10 +215,13 @@ export default StatisticalScreen = ({ navigation }) => {
                         style={graphStyle}
                         data={data}
                         width={screenWidth}
-                        height={320}
-                        yAxisLabel="$"
+                        height={300}
+                        yAxisLabel=""
                         chartConfig={chartConfig}
                     />
+                    <Text>
+                        Number of registered users from July to December
+                    </Text>
                 </View>
                 <Button
                     title='Logout'
