@@ -27,6 +27,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import UserManagementScreen from "../screens/admin/UserManagementScreen";
 import UserDetailScreen from "./admin/UserDetailScreen";
 import StatisticalScreen from "./admin/StatisticalScreen";
+import SignInNew from "./UserManagement/SignInNew"
 
 ///DRAWER FOR ADMIN
 const AdminDrawer = createDrawerNavigator();
@@ -34,7 +35,7 @@ const AdminDrawer = createDrawerNavigator();
 const AdminDrawerNavigator = () => {
   return (
     <AdminDrawer.Navigator initialRouteName="ADIN">
-            <AdminDrawer.Screen name="STATISTICAL APP" component={StatisticalScreen} />
+      <AdminDrawer.Screen name="STATISTICAL APP" component={StatisticalScreen} />
       <AdminDrawer.Screen name="USER MANAGEMENT" component={UserManagementScreen} />
     </AdminDrawer.Navigator>
   );
@@ -44,6 +45,7 @@ const signUpsignInStack = createStackNavigator();
 const SignInSignUpNavigator = () => {
   return (
     <signUpsignInStack.Navigator>
+      <signUpsignInStack.Screen name="SignInNew" component={SignInNew} options={{headerShown: false}}/>
       {/* <signUpsignInStack.Screen name="SignInSignUp" component={SignInSignUp} options={{ headerShown: false }} /> */}
       <signUpsignInStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <signUpsignInStack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
