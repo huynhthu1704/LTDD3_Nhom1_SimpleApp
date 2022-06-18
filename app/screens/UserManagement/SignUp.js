@@ -239,7 +239,7 @@ export default SignUp = ({ navigation }) => {
           <Text>ALREADY HAVE AN ACCOUNT?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SignIn');
+              navigation.navigate('SignInNew');
               //console.log(lastUser.id)
             }}>
             <Text style={{ color: 'blue' }}>LOG IN</Text>

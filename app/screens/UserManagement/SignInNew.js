@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -15,13 +15,23 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import User from './UserData';
+import { authentication, db, firebase } from "../../firebase/firebase";
+import { signInWithEmailAndPassword, sendPasswordResetEmail, getAuth } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore/lite";
+import { SIZES } from '../../constants';
 
 
 
 const SignInScreen = ({ navigation }) => {
-
+    //PROPERTIES
+    //const auth = getAuth();
+    const emailTextInput = useRef(null);
+    const passwordTextInput = useRef(null);
+    // emailTextInput = createRef();
+    // passwordTextInput = createRef();
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
         check_textInputChange: false,
         secureTextEntry: true,
@@ -29,38 +39,123 @@ const SignInScreen = ({ navigation }) => {
         isValidPassword: true,
     });
 
+    ///METHOD CHECK TEXTINPUT
+
+    const checkUserInfoAndSignIn = (email, password) => {
+        if (!User.isEmail(email)) {
+            alert("Your email is not valid!");
+            emailTextInput.current.focus();
+            return;
+        } else if (!User.checkPassword(password)) {
+            alert("Your password is not valid!");
+            passwordTextInput.current.focus();
+            return;
+        }
+        signInUser(email.toLowerCase(), password);
+    }
+    ///METHOD WITH API FOR FIREBASE
+    const forgotPassword = (email) => {
+        if (!User.isEmail(email)) {
+            alert("Please enter an valid email to send reset password mail!");
+            emailTextInput.current.focus();
+            return;
+        }
+        sendPasswordResetEmail(authentication, email)
+            .then(() => {
+                alert("Reset password to " + email);
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    }
+
+    //Get current user
+    const getCurrentUser = async () => {
+        const q = query(collection(db, "users"), where("email", "==", authentication.currentUser.email));
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //console.log(doc.id, " => ", doc.data());
+            User.currentUser = doc.data();
+            switch (User.currentUser.role) {
+                //Check if role == 0 => navigate to Admin
+                case 0:
+                    navigation.navigate("Admin");
+                    break;
+                //Check if role == 1 => navigate to HomeTabs
+                case 1:
+                    navigation.navigate("HomeTabs");
+                default:
+                    break;
+            }
+        });
+    };
+    //Sign in user with authentication
+    const signInUser = (email, password) => {
+        signInWithEmailAndPassword(authentication, email, password)
+            .then((re) => {
+                // setIsSignedIn(true);
+                alert("Sign in with " + email + " successfully!");
+                //Get current user info
+                getCurrentUser();
+            })
+            .catch((re) => {
+                alert("Sign in failed!\nDetailed error: " + re);
+            })
+    }
 
     // const { signIn } = React.useContext(AuthContext);
 
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
+    const textInputChange = (val, dataToChange) => {
+        // if (User.isEmail(val.trim())) {
+        //     setData({
+        //         ...data,
+        //         email: val,
+        //         check_textInputChange: true,
+        //         isValidUser: true
+        //     });
+        // } else {
+        //     setData({
+        //         ...data,
+        //         email: val,
+        //         check_textInputChange: false,
+        //         isValidUser: false
+        //     });
+        // }
+        switch (dataToChange) {
+            case "email":
+                setData({
+                    ...data,
+                    email: val
+                });
+                break;
+            case "password":
+                setData({
+                    ...data,
+                    password: val
+                });
+                break;
+            default:
+                break;
         }
+        // setData({
+        //     ...data,
+        //     email: val
+        // });
     }
 
     const handlePasswordChange = (val) => {
-        if (val.trim().length >= 8) {
+        if (User.checkPassword(val)) {
             setData({
                 ...data,
-                password: val,
+                //password: val,
                 isValidPassword: true
             });
         } else {
             setData({
                 ...data,
-                password: val,
+                //password: val,
                 isValidPassword: false
             });
         }
@@ -74,41 +169,27 @@ const SignInScreen = ({ navigation }) => {
     }
 
     const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
+        if (User.isEmail(val)) {
             setData({
                 ...data,
+                check_textInputChange: true,
                 isValidUser: true
             });
         } else {
             setData({
                 ...data,
+                check_textInputChange: false,
                 isValidUser: false
             });
         }
     }
 
-    // const loginHandle = (userName, password) => {
-
-    //     const foundUser = Users.filter( item => {
-    //         return userName == item.username && password == item.password;
-    //     } );
-
-    //     if ( data.username.length == 0 || data.password.length == 0 ) {
-    //         Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-    //             {text: 'Okay'}
-    //         ]);
-    //         return;
-    //     }
-
-    //     if ( foundUser.length == 0 ) {
-    //         Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-    //             {text: 'Okay'}
-    //         ]);
-    //         return;
-    //     }
-    //     signIn(foundUser);
-    // }
-
+    useEffect(() => {
+        if (authentication.currentUser != null) {
+            getCurrentUser();
+            //console.log(JSON.stringify(authentication.currentUser, null, 4));
+        }
+    })
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387'
@@ -116,7 +197,7 @@ const SignInScreen = ({ navigation }) => {
                 translucent={true}
             />
             <View style={styles.header}>
-                <Image style={{...styles.image, marginBottom: 10}} source={require('../../../assets/images/signin_signup.png')} />
+                <Image style={{ ...styles.image, marginBottom: 10 }} source={require('../../../assets/images/signin_signup.png')} />
 
                 <Text style={styles.text_header}>Welcome to Simple App!</Text>
             </View>
@@ -128,7 +209,7 @@ const SignInScreen = ({ navigation }) => {
             >
                 <Text style={[styles.text_footer, {
                     // color: colors.text
-                }]}>Username</Text>
+                }]}>Email</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -136,13 +217,14 @@ const SignInScreen = ({ navigation }) => {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Your Username"
+                        ref={emailTextInput}
+                        placeholder="Your email"
                         placeholderTextColor="#666666"
                         style={[styles.textInput, {
                             // color: colors.text
                         }]}
                         autoCapitalize="none"
-                        onChangeText={(val) => textInputChange(val)}
+                        onChangeText={(val) => textInputChange(val, "email")}
                         onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                     />
                     {data.check_textInputChange ?
@@ -161,7 +243,7 @@ const SignInScreen = ({ navigation }) => {
                 {data.isValidUser ? null :
                     // Animation
                     <View animation="fadeInLeft" duration={500}>
-                        <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+                        <Text style={styles.errorMsg}>Your email is not valid!</Text>
                     </View>
                 }
 
@@ -177,6 +259,7 @@ const SignInScreen = ({ navigation }) => {
                         size={20}
                     />
                     <TextInput
+                        ref={passwordTextInput}
                         placeholder="Your Password"
                         placeholderTextColor="#666666"
                         secureTextEntry={data.secureTextEntry ? true : false}
@@ -184,7 +267,10 @@ const SignInScreen = ({ navigation }) => {
                             // color: colors.text
                         }]}
                         autoCapitalize="none"
-                        onChangeText={(val) => handlePasswordChange(val)}
+                        onChangeText={(val) => textInputChange(val, "password")}
+                        onEndEditing={(e) => {
+                            handlePasswordChange(e.nativeEvent.text);
+                        }}
                     />
                     <TouchableOpacity
                         onPress={updateSecureTextEntry}
@@ -207,18 +293,22 @@ const SignInScreen = ({ navigation }) => {
                 {data.isValidPassword ? null :
                     // Animation
                     <View animation="fadeInLeft" duration={500}>
-                        <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                        <Text style={styles.errorMsg}>Password is longer than 8 characters and has at least 1 lowercase character, 1 uppercase character, 1 number character</Text>
                     </View>
                 }
 
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => forgotPassword(data.email)}>
                     <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
                 </TouchableOpacity>
+                {/* Button signIn */}
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={() => { loginHandle(data.username, data.password) }}
+                        onPress={() => {
+                            //signInUser(data.email, data.password);
+                            checkUserInfoAndSignIn(data.email, data.password);
+                        }}
                     >
                         <LinearGradient
                             colors={['#08d4c4', '#01ab9d']}
@@ -231,7 +321,9 @@ const SignInScreen = ({ navigation }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('SignUpScreen')}
+                        onPress={() => {
+                            navigation.navigate('SignUp')
+                        }}
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,
@@ -258,67 +350,67 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 50,
+        paddingHorizontal: SIZES.androidWidth.window * 0.05,
+        paddingBottom: SIZES.androidHeightWithStatusBar.window * 0.05
     },
     footer: {
         flex: 3,
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingHorizontal: 20,
-        paddingVertical: 30
+        paddingHorizontal: SIZES.androidWidth.window * 0.05,
+        paddingVertical: SIZES.androidHeightWithStatusBar.window * 0.035
     },
     text_header: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 30
+        fontSize: SIZES.androidHeightWithStatusBar.window * 0.035
     },
     text_footer: {
         color: '#05375a',
-        fontSize: 18
+        fontSize: SIZES.androidHeightWithStatusBar.window * 0.022
     },
     action: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: SIZES.androidHeightWithStatusBar.window * 0.013,
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2',
-        paddingBottom: 5
+        paddingBottom: SIZES.androidHeightWithStatusBar.window * 0.006
     },
     actionError: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: SIZES.androidHeightWithStatusBar.window * 0.013,
         borderBottomWidth: 1,
         borderBottomColor: '#FF0000',
-        paddingBottom: 5
+        paddingBottom: SIZES.androidHeightWithStatusBar.window * 0.006
     },
     textInput: {
         flex: 1,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,
-        paddingLeft: 10,
+        marginTop: Platform.OS === 'ios' ? 0 : -SIZES.androidHeightWithStatusBar.window * 0.006,
+        paddingLeft: SIZES.androidWidth.window * 0.02,
         color: '#05375a',
     },
     errorMsg: {
         color: '#FF0000',
-        fontSize: 14,
+        fontSize: SIZES.androidHeightWithStatusBar.window * 0.017,
     },
     button: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: SIZES.androidHeightWithStatusBar.window * 0.05
     },
     signIn: {
         width: '100%',
-        height: 50,
+        height: SIZES.androidHeightWithStatusBar.window * 0.063,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10
     },
     textSign: {
-        fontSize: 18,
+        fontSize: SIZES.androidHeightWithStatusBar.window * 0.022,
         fontWeight: 'bold'
     },
     image: {
-        height: 120,
-        width: 160,
+        height: SIZES.androidHeightWithStatusBar.window * 0.15,
+        width: SIZES.androidHeightWithStatusBar.window * 0.2
     },
 });

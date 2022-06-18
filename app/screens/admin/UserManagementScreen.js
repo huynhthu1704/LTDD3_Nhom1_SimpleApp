@@ -39,7 +39,7 @@ const UserManagementScreen = ({ navigation }) => {
                     <FontAwesome name="refresh" size={25} />
                 </TouchableOpacity>
             </View>
-            <View style={{height: SIZES.androidHeightWithStatusBar.window * 0.9}}>
+            <View style={{height: SIZES.androidHeightWithStatusBar.window * 0.9 }}>
             <FlatList
                 data={users}
                 keyExtractor={(item) => item.email}

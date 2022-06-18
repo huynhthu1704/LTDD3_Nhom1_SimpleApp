@@ -5,6 +5,7 @@ import { SIZES } from '../constants/theme';
 import React from 'react';
 
 const GuideToUseMantraVideo = () => {
+    4
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
     return (<ScrollView
